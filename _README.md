@@ -1,12 +1,12 @@
-# Project Name
+Colorz.io
 
-> Pithy project description
+Many app developers lack the artistic savvy to create an aesthetically pleasing UI for their app clients. Our goal is to simplify the process of UI creation by helping developers pick the color scheme for their projects. Informed by some of the leading research in color theory, we aggregate and serve color schemes that suit developers needs.
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Ethan Harry
+  - __Scrum Master__: Graham Perich
+  - __Development Team Members__: Ethan Harry, Graham Perich, Vinh Vu, Steve Graves
 
 ## Table of Contents
 
