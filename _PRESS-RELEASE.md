@@ -17,28 +17,30 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  Colorz.io
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  UI tool to assist developers in color selection
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > The User Interface is an integral part of creating a good UX, and creating a good UX is at the core of creating a good product. The most successful user interfaces are created by talented designers who are closer to artists than developers. We aim to assist the "everyday" developer in creating an interface on par with those of their designer peers.
+
+  Our product will assist developers in selecting the color scheme for their UI. We are researching color theory to seed the project with some of the best color schemes, and hope to allow our users to submit more combinations as time progresses. We will serve the best color schemes available to our users based on their needs.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > Our product helps engineers create elegant interfaces by selecting colors that mesh well together and fit with their product vision.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > In addition to the "generic" color picker outlined above, we will allow the user to declare what they would like their primary color to be, and serve them different color combinations based on their choice. We will render an example webpage with the selected color scheme to help inform the user's choice, and copy the relevant CSS directly to their clipboard for use on stylesheets.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > "Colorz.io is a lightweight tool to help a developer create the UI their product deserves."
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > In less than five minutes, anyone can generate a seamless color scheme for their app.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "I love developing small apps on my own time for fun, but they never end up looking how I imagine. Colorz.io helped me spin up a functional and fashionable interface in minutes."
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Visit colorz.io now to get started -- what are you waiting for?!?
