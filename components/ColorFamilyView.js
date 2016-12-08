@@ -6,7 +6,7 @@ class ColorFamilyView extends React.Component {
     super(props);
     this.state = {
       currentFilter: 'mostClicked',
-      colorFamilies: null
+      colorFamilies: []
     };
   }
 
@@ -14,16 +14,21 @@ class ColorFamilyView extends React.Component {
     $.ajax({
       url: '/api/colors',
       success: function(data) {
-        console.log('successfully retrieved', data)
-      },
+        this.setState({ colorFamilies: data });
+
+        console.log(this.state.colorFamilies);
+      }.bind(this),
       dataType: 'JSON'
     });
   }
 
   render() {
     return (
+      // todo: render ethan's component array.length times
       <div>
-        
+        {this.state.colorFamilies.map(function(obj) {
+          
+        })}
       </div>
     );
   }
