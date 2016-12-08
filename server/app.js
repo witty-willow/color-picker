@@ -1,14 +1,25 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+var bodyParser = require('body-parser');
 var ColorFamily = require('./db.js');
 
 app.use(express.static("client"));
 
+app.use(bodyParser.urlencoded({ extended: false}))
+
+app.use(bodyParser.json())
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, "client/index.html"));
 });
+
+app.get('/api/colors', function(req, res) {
+  ColorFamily.find(function(err, colorFamilies) {
+    console.log(colorFamilies);
+    res.send(colorFamilies);
+  })
+})
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
