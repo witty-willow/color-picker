@@ -6,11 +6,11 @@ import React from 'react';
 
 var ColorFamily = (props) => (
   <Row>
-    <Col xs={2} xsOffset={1} {props.colorFamily[0]} />
-    <Col xs={2} {props.colorFamily[1]} />
-    <Col xs={2} {props.colorFamily[2]} />
-    <Col xs={2} {props.colorFamily[3]} />
-    <Col xs={2} xsOffset={1} {props.colorFamily[4]} />
+    <Col xs={2} xsOffset={1}>{props.colorFamily.color1}</Col>
+    <Col xs={2}>{props.colorFamily.color2}</Col>
+    <Col xs={2}>{props.colorFamily.color3}</Col>
+    <Col xs={2}>{props.colorFamily.color4}</Col>
+    <Col xs={2}>{props.colorFamily.color5}</Col>
   </Row>
 );
 
