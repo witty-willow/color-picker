@@ -1,6 +1,6 @@
 import React from 'react';
 import {Row, Col, Grid} from 'react-bootstrap';
-import ColorFamily from './server/db.js';
+
 
 class ColorInfoView extends React.Component {
   constructor(props) {
@@ -17,5 +17,19 @@ class ColorInfoView extends React.Component {
     } : null;
   }
 
-  
+  render() {
+    return (
+      <Row>
+        <Col xs={4}><div style={{backgroundColor: this.props.color.hex, height: '30px', width: '30px'}}></div></Col>
+        
+        <Col xs={4}>{this.props.color.hex}</Col>
+        
+        <Col xs={4}>{this.props.color.rgb}</Col>
+      </Row>
+    )
+  }
+
+
 }
+
+module.exports = ColorInfoView;
