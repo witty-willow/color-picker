@@ -1,17 +1,27 @@
 import React from 'react';
 import {Row, Col, Grid} from 'react-bootstrap';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 
 class ColorFamily extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hover: false
+    };
+    this.toggleHover = this.toggleHover.bind(this);
+  }
+
+  toggleHover() {
+    this.setState({hover: !this.state.hover})
   }
 
   render() {
+
     var styles = {
       rowStyle: {
         padding: "10px",
-        height: '80px'
+        height: 'px'
       },
       bc1: {
         backgroundColor: this.props.colorFamily.color1,
@@ -38,10 +48,21 @@ class ColorFamily extends React.Component {
       }
     }
 
+    if (this.state.hover) {
+      // styles.rowStyle.backgroundColor = 'blue';
+      styles.bc1.boxShadow = '0px 0px 10px';
+      styles.bc2.boxShadow = '0px 0px 10px';
+      styles.bc3.boxShadow = '0px 0px 10px';
+      styles.bc4.boxShadow = '0px 0px 10px';
+      styles.bc5.boxShadow = '0px 0px 10px';
+    } else {
+      styles.rowStyle.backgroundColor = null;
+    }
+
     return (  
     <Grid>
-      <Row style={styles.rowStyle}>
-        <Col style={styles.bc1} xs={2} xsOffset={1}> {this.props.colorFamily.color1} </Col>
+      <Row style={styles.rowStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} >
+        <Col style={styles.bc1} xs={2} xsOffset={1} > {this.props.colorFamily.color1} </Col>
         <Col style={styles.bc2} xs={2}> {this.props.colorFamily.color2} </Col>
         <Col style={styles.bc3} xs={2}> {this.props.colorFamily.color3} </Col>
         <Col style={styles.bc4} xs={2}> {this.props.colorFamily.color4} </Col>
@@ -52,7 +73,6 @@ class ColorFamily extends React.Component {
   }
 
 }
-
 
 
 module.exports = ColorFamily;
