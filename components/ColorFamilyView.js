@@ -1,33 +1,15 @@
 import React from 'react';
-import $ from 'jquery';
+import ColorFamily from './ColorFamily.js';
 
 class ColorFamilyView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentFilter: 'mostClicked',
-      colorFamilies: []
-    };
   }
-
-  componentWillMount() {
-    $.ajax({
-      url: '/api/colors',
-      success: function(data) {
-        this.setState({ colorFamilies: data });
-
-        console.log(this.state.colorFamilies);
-      }.bind(this),
-      dataType: 'JSON'
-    });
-  }
-
   render() {
     return (
-      // todo: render ethan's component array.length times
       <div>
-        {this.state.colorFamilies.map(function(obj) {
-          
+        {this.props.colorFamilies.map(function(obj, index) {
+          return <ColorFamily colorFamily={obj} key={index} />
         })}
       </div>
     );
