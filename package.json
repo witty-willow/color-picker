@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js | webpack --config webpack.config.js --progress --colors --watch"
+    "start": "nodemon server/app.js | webpack --config webpack.config.js --progress --colors --watch"
   },
   "repository": {
     "type": "git",
