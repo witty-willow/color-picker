@@ -20,26 +20,28 @@ class ColorFamilyInfoView extends React.Component {
 
   convertHexToRGB() {
     var objArr = [];
-    for(key in this.props.currentFamily) {
+    for(var key in this.props.currentFamily) {
       if(key.match(/^color./)) {
         var newObj = {};
         var rgbObj = hexToRGB(this.props.currentFamily[key]);
         var rgb = 'rgb(' + rgbObj.r + ', ' + rgbObj.g + ', ' + rgbObj.b + ')';
-        newObj[key: {hex: this.props.currentFamily[key], rgb: rgb}];
+        var newObj = {hex: this.props.currentFamily[key], rgb: rgb};
         objArr.push(newObj);
       }
 
     }
-    console.log(objArr);
     return objArr;
   }
 
 
 
   render() {
+    this.convertHexToRGB()
     return (
       <Grid>
-
+        {this.convertHexToRGB().map(function(color, index) {
+          return <ColorInfoView color={color} key={index} index={index}/>
+        })}
       </Grid>
     ) 
   }
