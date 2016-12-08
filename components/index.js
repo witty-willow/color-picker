@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ColorFamilyView from './ColorFamilyView.js';
 
 ReactDOM.render(
-  <h1>Hello, world!</h1>,
+  <ColorFamilyView />,
   document.getElementById('root')
 );
