@@ -70,10 +70,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <Grid>
+      <div>
         <FilterBar handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} />
         <ColorFamilyView colorFamilies={this.state.colorFamilies}/>
-      </Grid>
+      </div>
     );
   }
 }
