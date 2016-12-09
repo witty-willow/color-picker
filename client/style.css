@@ -4,5 +4,5 @@
 
 .fade-appear.fade-appear-active {
   opacity: 1;
-  transition: opacity 1.5s ease-in;
+  transition: opacity .6s ease-in;
 }
