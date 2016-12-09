@@ -48,7 +48,7 @@ class App extends React.Component {
     console.log('all families', this.state.allFamilies);
     console.log('colorFamilies', this.state.colorFamilies);
 
-    this.state.colorFamilies.forEach(function (obj) {
+    this.state.allFamilies.forEach(function (obj) {
       var include = false;
       for (var key in obj) {
         if (key.slice(0,5) === 'color') {
