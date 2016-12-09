@@ -20,6 +20,13 @@ class App extends React.Component {
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
+
+    var codes = {
+      Blue: {},
+      Green: {},
+      Yellow: {},
+      Red: {}
+    }
   }
 
 
@@ -30,12 +37,9 @@ class App extends React.Component {
 
     this.setState({
       currentFilter: color
-      // Need to determine how to access codes
-      // filterRangeMin: codes.color.min,
-      // filterRangeMax: codes.color.max, 
+      filterRangeMin: codes.color.min,
+      filterRangeMax: codes.color.max, 
     });
-
-    console.log('OUTER CONTEXT', this)
   
 
     this.state.colorFamilies.forEach(function (obj) {
