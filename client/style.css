@@ -1,8 +1,8 @@
-.example-appear {
+.fade-appear {
   opacity: 0.01;
 }
 
-.example-appear.example-enter-appear {
+.fade-appear.fade-appear-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
+  transition: opacity 1.5s ease-in;
 }

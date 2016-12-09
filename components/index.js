@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import ColorFamilyView from './ColorFamilyView.js';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -25,7 +26,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <ColorFamilyView colorFamilies={this.state.colorFamilies}/>
+      <div>
+        <ColorFamilyView colorFamilies={this.state.colorFamilies}/>
+      </div>
     );
   }
 }
