@@ -8,17 +8,16 @@ class ColorFamilyView extends React.Component {
   }
   render() {
     return (
-      <ReactCSSTransitionGroup 
+      <ReactCSSTransitionGroup
       transitionName='example'
       transitionAppear={true}
       transitionAppearTimeout={3000}
       transitionEnter={false}
       transitionLeave={false}>
-        
           {this.props.colorFamilies.map(function(obj, index) {
-            return <ColorFamily colorFamily={obj} key={index} />
-          })}
-        
+            return <ColorFamily setCurrentFamily={this.props.setCurrentFamily} colorFamily={obj} key={index} />
+          }.bind(this))}
+
       </ReactCSSTransitionGroup>
     );
   }
