@@ -1,6 +1,9 @@
 import React from 'react';
 import ColorFamily from './ColorFamily.js';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import FilterBar from './FilterBar.js';
+import {Jumbotron, Button} from 'react-bootstrap';
+
 
 class ColorFamilyView extends React.Component {
   constructor(props) {
@@ -9,7 +12,7 @@ class ColorFamilyView extends React.Component {
   render() {
     return (
       <ReactCSSTransitionGroup
-      transitionName='example'
+      transitionName='fade'
       transitionAppear={true}
       transitionAppearTimeout={3000}
       transitionEnter={false}
