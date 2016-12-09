@@ -38,17 +38,14 @@ class App extends React.Component {
 
     var filteredColorFamilies = [];
 
-    var copy = this.state.allFamilies.slice();
-
     this.setState({
       currentFilter: color,
-      colorFamilies: copy
     });
   
     console.log('all families', this.state.allFamilies);
     console.log('colorFamilies', this.state.colorFamilies);
 
-    this.state.colorFamilies.forEach(function (obj) {
+    this.state.allFamilies.forEach(function (obj) {
       var include = false;
       for (var key in obj) {
         if (key.slice(0,5) === 'color') {
@@ -75,11 +72,15 @@ class App extends React.Component {
       colorFamilies: filteredColorFamilies
     });
   }
+
+
   setCurrentFamily(familyData) {
     this.setState({
       currentFamily: familyData
     });
   }
+
+
   componentWillMount() {
     $.ajax({
       url: '/api/colors',
@@ -95,8 +96,8 @@ class App extends React.Component {
     return (
       <div>
         <FilterBar handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} />
-        <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies}/>
         <ColorFamilyInfoView currentFamily={this.state.currentFamily}/>
+        <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies}/>
       </div>
     );
   }
