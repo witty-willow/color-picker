@@ -23,10 +23,10 @@ var FilterBar = (props) => {
           <MenuItem eventKey='thisMonth' title='menuItem'>This Month</MenuItem>
           <MenuItem eventKey='allTime' title='menuItem'>All-Time</MenuItem>
         </NavDropdown>
-        <NavItem title='blue' eventKey='2'>Blue</NavItem>
-        <NavItem title='red' eventKey='3'>Red</NavItem>
-        <NavItem title='yellow' eventKey='4'>Yellow</NavItem>
-        <NavItem title='green' eventKey='5'>Green</NavItem>
+        <NavItem title='blue' eventKey='blue'>Blue</NavItem>
+        <NavItem title='red' eventKey='red'>Red</NavItem>
+        <NavItem title='yellow' eventKey='yellow'>Yellow</NavItem>
+        <NavItem title='green' eventKey='green'>Green</NavItem>
       </Nav>
     </Navbar> 
   )

@@ -17,18 +17,19 @@ class App extends React.Component {
       currentFilter: 'mostClicked',
       currentFamily: {},
       colorFamilies: [],
-      filterRangeMin: 0,
-      filterRangeMax: 0
+      allFamilies: []
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
+  }
 
-    var codes = {
-      Blue: {},
-      Green: {},
-      Yellow: {},
-      Red: {}
-    }
+  hexToRGB(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      red: parseInt(result[1], 16),
+      green: parseInt(result[2], 16),
+      blue: parseInt(result[3], 16)
+    } : null;
   }
 
 
@@ -37,20 +38,32 @@ class App extends React.Component {
 
     var filteredColorFamilies = [];
 
+    var copy = this.state.allFamilies.slice();
+
     this.setState({
       currentFilter: color,
-      filterRangeMin: codes.color.min,
-      filterRangeMax: codes.color.max
+      colorFamilies: copy
     });
   
+    console.log('all families', this.state.allFamilies);
+    console.log('colorFamilies', this.state.colorFamilies);
 
     this.state.colorFamilies.forEach(function (obj) {
       var include = false;
       for (var key in obj) {
         if (key.slice(0,5) === 'color') {
-          var colorInt = parseInt(obj[key], 16);
-          if (colorInt > this.state.filterRangeMin && colorInt < this.state.filterRangeMax) {
-            include = true;
+          var colorRgb = this.hexToRGB(obj[key], 16);
+          if (color === 'red') {
+            if (colorRgb.red > (1.5 * colorRgb.blue) && colorRgb.red > (1.5 * colorRgb.green))
+              include = true;
+          }
+          if (color === 'blue') {
+            if (colorRgb.blue > (1.5 * colorRgb.red) && colorRgb.blue > (1.5 * colorRgb.green))
+              include = true;
+          }
+          if (color === 'green') {
+            if (colorRgb.green > (1.5 * colorRgb.blue) && colorRgb.green > (1.5 * colorRgb.red))
+              include = true;
           }
         }
       }
@@ -72,7 +85,7 @@ class App extends React.Component {
       url: '/api/colors',
       success: function(data) {
         this.setState({ colorFamilies: data });
-        console.log(this.state.colorFamilies);
+        this.setState({ allFamilies: data });
       }.bind(this),
       dataType: 'JSON'
     });
