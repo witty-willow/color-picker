@@ -9,6 +9,7 @@ import {Grid} from 'react-bootstrap';
 //make object {blue: {min=x, max=y}}
 
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -37,9 +38,9 @@ class App extends React.Component {
     var filteredColorFamilies = [];
 
     this.setState({
-      currentFilter: color
+      currentFilter: color,
       filterRangeMin: codes.color.min,
-      filterRangeMax: codes.color.max, 
+      filterRangeMax: codes.color.max
     });
   
 
@@ -80,12 +81,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-
         <FilterBar handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} />
         <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies}/>
         <ColorFamilyInfoView currentFamily={this.state.currentFamily}/>
-
-
       </div>
     );
   }
