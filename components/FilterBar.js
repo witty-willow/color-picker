@@ -7,12 +7,12 @@ var FilterBar = (props) => {
   var onFilterClick = (e) => {
     props.handleStateChange(e)
   }
-  
+
     //change to reflect function and state labels in main App
     // props.handleStateChange(props.selectedFilter)
 
   return (
-    <Navbar>
+    <Navbar fixedTop>
       <Navbar.Brand>
         <a href="#">Colorz.io</a>
       </Navbar.Brand>
@@ -29,7 +29,7 @@ var FilterBar = (props) => {
         <NavItem title='red' eventKey='red'>Red</NavItem>
         <NavItem title='green' eventKey='green'>Green</NavItem>
       </Nav>
-    </Navbar> 
+    </Navbar>
   )
 }
 
