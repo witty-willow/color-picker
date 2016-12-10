@@ -6,10 +6,6 @@ import ColorFamilyInfoView from './ColorFamilyInfoView.js';
 import FilterBar from './FilterBar.js';
 import {Grid} from 'react-bootstrap';
 
-//make object {blue: {min=x, max=y}}
-
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +13,8 @@ class App extends React.Component {
       currentFilter: 'mostClicked',
       currentFamily: {},
       colorFamilies: [],
-      allFamilies: []
+      allFamilies: [],
+      toggleSidebar: false
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
@@ -32,19 +29,11 @@ class App extends React.Component {
     } : null;
   }
 
-
-
   handleStateChange (color) {
-
     var filteredColorFamilies = [];
-
     this.setState({
       currentFilter: color,
     });
-  
-    console.log('all families', this.state.allFamilies);
-    console.log('colorFamilies', this.state.colorFamilies);
-
     this.state.allFamilies.forEach(function (obj) {
       var include = false;
       for (var key in obj) {
@@ -73,13 +62,11 @@ class App extends React.Component {
     });
   }
 
-
   setCurrentFamily(familyData) {
     this.setState({
       currentFamily: familyData
     });
   }
-
 
   componentWillMount() {
     $.ajax({
@@ -94,10 +81,16 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <FilterBar handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} />
-        <ColorFamilyInfoView currentFamily={this.state.currentFamily}/>
-        <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies}/>
+      <div className="app-body">
+        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} />
+        <div>
+          <div className="app-main">
+            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies}/>
+          </div>
+          <div className="app-sidebar">
+            <ColorFamilyInfoView currentFamily={this.state.currentFamily}/>
+          </div>
+        </div>
       </div>
     );
   }

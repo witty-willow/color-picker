@@ -20,11 +20,11 @@ class ColorInfoView extends React.Component {
   render() {
     return (
       <Row>
-        <Col xsOffset={1} xs={3}><div style={{backgroundColor: this.props.color.hex, height: '30px', width: '30px'}}></div></Col>
-        
+        <Col xs={3}><div style={{backgroundColor: this.props.color.hex, height: '30px', width: '30px'}}></div></Col>
+
         <Col xs={3}>{this.props.color.hex}</Col>
-        
-        <Col xs={3}>{this.props.color.rgb}</Col>
+
+        <Col xs={6}>{this.props.color.rgb}</Col>
       </Row>
     )
   }
