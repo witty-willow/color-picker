@@ -25,31 +25,45 @@ class ColorFamily extends React.Component {
       },
       bc1: {
         backgroundColor: this.props.colorFamily.color1,
-        height: "100px"
+        height: "100px",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       },
 
       bc2: {
         backgroundColor: this.props.colorFamily.color2,
-        height: "100px"
+        height: "100px",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       },
 
       bc3: {
         backgroundColor: this.props.colorFamily.color3,
-        height: "100px"
+        height: "100px",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       },
       bc4: {
         backgroundColor: this.props.colorFamily.color4,
-        height: "100px"
+        height: "100px",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       },
 
       bc5: {
         backgroundColor: this.props.colorFamily.color5,
-        height: "100px"
+        height: "100px",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }
     }
 
     if (this.state.hover) {
-      // styles.rowStyle.backgroundColor = 'blue';
       styles.bc1.boxShadow = '0px 0px 10px';
       styles.bc2.boxShadow = '0px 0px 10px';
       styles.bc3.boxShadow = '0px 0px 10px';
@@ -60,11 +74,21 @@ class ColorFamily extends React.Component {
     }
     return (
       <Row style={styles.rowStyle} onClick={() => (this.props.setCurrentFamily(this.props.colorFamily))} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} >
-        <Col style={styles.bc1} xs={2} xsOffset={1} > {this.props.colorFamily.color1} </Col>
-        <Col style={styles.bc2} xs={2}> {this.props.colorFamily.color2} </Col>
-        <Col style={styles.bc3} xs={2}> {this.props.colorFamily.color3} </Col>
-        <Col style={styles.bc4} xs={2}> {this.props.colorFamily.color4} </Col>
-        <Col style={styles.bc5} xs={2}> {this.props.colorFamily.color5} </Col>
+        <Col style={styles.bc1} xs={2} xsOffset={1} >
+          <h4>{this.props.colorFamily.color1}</h4>
+        </Col>
+        <Col style={styles.bc2} xs={2}>
+          <h4>{this.props.colorFamily.color2}</h4>
+        </Col>
+        <Col style={styles.bc3} xs={2}>
+          <h4>{this.props.colorFamily.color3}</h4>
+        </Col>
+        <Col style={styles.bc4} xs={2}>
+          <h4>{this.props.colorFamily.color4}</h4>
+        </Col>
+        <Col style={styles.bc5} xs={2}>
+          <h4>{this.props.colorFamily.color5}</h4>
+        </Col>
       </Row>
     )
   }
