@@ -45,6 +45,11 @@ body {
   opacity: 1;
 }
 */
+
+.tooltip-inner {
+  padding: 3px 4px;
+}
+
 .fade-appear {
   opacity: 0.01;
 }
