@@ -36,6 +36,15 @@ body {
   border-left: 1px solid #e7e7e7;
 }
 
+.color-single h4 {
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+}
+
+.color-single:hover h4 {
+  opacity: 1;
+}
+
 .fade-appear {
   opacity: 0.01;
 }
