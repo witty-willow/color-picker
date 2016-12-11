@@ -24,6 +24,15 @@ body {
   position: absolute;
   left: 0;
   padding: 80px 0 20px 0;
+  transition: width .3s ease-in-out;
+}
+
+.app-main-full {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  padding: 80px 0 20px 0;
+  transition: width .3s ease-in-out;
 }
 
 .app-sidebar {
@@ -34,6 +43,17 @@ body {
   padding: 80px 30px 30px 30px;
   background-color: #f8f8f8;
   border-left: 1px solid #e7e7e7;
+  transition: width .3s ease-in-out;
+}
+.app-sidebar-hidden {
+  position: fixed;
+  right: 0;
+  width: 0%;
+  height: 100%;
+/*  padding: 80px 30px 30px 30px;*/
+  background-color: #f8f8f8;
+  border-left: 1px solid #e7e7e7;
+  transition: width .3s ease-in-out;
 }
 
 .color-single h4 {

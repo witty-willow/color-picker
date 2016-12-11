@@ -14,10 +14,12 @@ class App extends React.Component {
       currentFamily: {},
       colorFamilies: [],
       allFamilies: [],
-      toggleSidebar: false
+      appClass: 'app-main',
+      sidebarClass: 'app-sidebar'
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
+    this.toggleSidebar = this.toggleSidebar.bind(this);
   }
 
   hexToRGB(hex) {
@@ -31,9 +33,11 @@ class App extends React.Component {
 
   handleStateChange (color) {
     var filteredColorFamilies = [];
+
     this.setState({
       currentFilter: color,
     });
+
     this.state.allFamilies.forEach(function (obj) {
       var include = false;
       for (var key in obj) {
@@ -68,6 +72,20 @@ class App extends React.Component {
     });
   }
 
+  toggleSidebar() {
+    if (this.state.sidebarClass === 'app-sidebar') {
+      this.setState({
+        sidebarClass: 'app-sidebar-hidden',
+        appClass: 'app-main-full'
+      });
+    } else {
+      this.setState({
+        sidebarClass: 'app-sidebar',
+        appClass: 'app-main'
+      });
+    }
+  }
+
   componentWillMount() {
     $.ajax({
       url: '/api/colors',
@@ -80,14 +98,17 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.sidebarClass);
+    console.log(this.state.appClass);
+
     return (
       <div className="app-body">
         <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} />
         <div>
-          <div className="app-main">
-            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies}/>
+          <div className={this.state.appClass}>
+            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebar={this.toggleSidebar}/>
           </div>
-          <div className="app-sidebar">
+          <div className={this.state.sidebarClass}>
             <ColorFamilyInfoView currentFamily={this.state.currentFamily}/>
           </div>
         </div>

@@ -9,9 +9,16 @@ class ColorFamilyView extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <div className="content-wrap">
+        <center>
+        <Button onClick={this.props.toggleSidebar}>
+          Toggle Sidebar
+        </Button>
+        </center>
+
         {this.props.colorFamilies.map(function(obj, index) {
         return(
           <ReactCSSTransitionGroup

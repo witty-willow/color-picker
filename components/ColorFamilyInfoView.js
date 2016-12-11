@@ -35,6 +35,8 @@ class ColorFamilyInfoView extends React.Component {
   render() {
     return (
       <div className="content-wrap">
+        <h5>Click a Code to Copy!</h5>
+        <br/>
         {this.convertHexToRGB().map(function(color, index) {
           return <ColorInfoView color={color} key={index} index={index}/>
         })}
