@@ -28,7 +28,7 @@ class ColorFamilyView extends React.Component {
             transitionEnter={false}
             transitionLeave={false}
             key={index}>
-            <ColorFamily setCurrentFamily={this.props.setCurrentFamily} colorFamily={obj} />
+            <ColorFamily setCurrentFamily={this.props.setCurrentFamily} onClick={this.props.toggleSidebar} colorFamily={obj} />
           </ReactCSSTransitionGroup>
           )
         }.bind(this))}
