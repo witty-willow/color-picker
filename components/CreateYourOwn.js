@@ -38,7 +38,10 @@ class CreateYourOwn extends React.Component {
       data: this.state,
       dataType: 'JSON',
       success: function (resp) {
-        console.log(resp);
+        alert('New Color Submitted')
+      },
+      error: function (error) {
+        alert("Not a valid hex value")
       }
     })
   }
@@ -79,7 +82,6 @@ class CreateYourOwn extends React.Component {
             <button className="btn btn-default" type="submit">Submit</button>
           </span>
         </div>
-
 
       </form>
     )
