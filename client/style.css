@@ -70,6 +70,10 @@ body {
 }
 */
 
+.color-family-info {
+  margin-top: 20px;
+}
+
 .tooltip-inner {
   padding: 3px 4px;
 }

@@ -88,15 +88,15 @@ class ColorFamilyInfoView extends React.Component {
     }
 
     return (
-      <div className="content-wrap">  
-
-          <h5>Click a Code to Copy!</h5>
-          <br/>
+      <div className="sidebar-content">
+        <h5>Click a Code to Copy!</h5>
+        <Button onClick={this.props.toggleSidebarOff}>Hide Sidebar</Button>
+        <div className="color-family-info">
           {this.convertHexToRGB().map(function(color, index) {
             return <ColorInfoView color={color} key={index} index={index}/>
           })}
-          <br/><br/>
-          <h5> Example UI Elements</h5>
+          
+           <h5> Example UI Elements</h5>
 
           <Panel style={styles.bgColor5}>
           Panel
@@ -116,6 +116,7 @@ class ColorFamilyInfoView extends React.Component {
             <Button style={styles.borderColor4}> Color 4 </Button>   
             <Button style={styles.borderColor5}> Color 5 </Button>
 
+        </div>
 
       </div>
     )

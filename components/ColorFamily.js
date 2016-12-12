@@ -11,6 +11,7 @@ class ColorFamily extends React.Component {
       hover: false
     };
     this.toggleHover = this.toggleHover.bind(this);
+    this.onClickHandler = this.onClickHandler.bind(this);
   }
 
   toggleHover() {
@@ -27,6 +28,11 @@ class ColorFamily extends React.Component {
     return result;
   }
 
+  onClickHandler() {
+    this.props.setCurrentFamily(this.props.colorFamily);
+    this.props.toggleSidebarOn();
+  }
+
   render() {
     var styles = {
       rowStyle: {
@@ -35,7 +41,7 @@ class ColorFamily extends React.Component {
       }
     }
     return (
-      <Row style={styles.rowStyle} onClick={() => (this.props.setCurrentFamily(this.props.colorFamily))} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} >
+      <Row style={styles.rowStyle} onClick={this.onClickHandler} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} >
         {this.getFamilyColors().map(function(color, index) {
           return <ColorFamilySingle hover={this.state.hover} color={color} key={index} index={index}/>
         }.bind(this))}
