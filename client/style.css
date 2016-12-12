@@ -4,6 +4,10 @@ body {
   height: 100%;
 }
 
+.test {
+  background-color: blue;
+}
+
 .app-body {
   position: relative;
   width: 100%;
