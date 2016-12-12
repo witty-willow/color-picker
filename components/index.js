@@ -22,7 +22,8 @@ class App extends React.Component {
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
-    this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.toggleSidebarOn = this.toggleSidebarOn.bind(this);
+    this.toggleSidebarOff = this.toggleSidebarOff.bind(this);
   }
 
   //Convert hex values to rgb object
@@ -81,19 +82,22 @@ class App extends React.Component {
   }
 
   //Change state of components to display side via css
-  toggleSidebar() {
-    if (this.state.sidebarClass === 'app-sidebar') {
-      this.setState({
-        sidebarClass: 'app-sidebar-hidden',
-        appClass: 'app-main-full'
-      });
-    } else {
-      this.setState({
-        sidebarClass: 'app-sidebar',
-        appClass: 'app-main'
-      });
-    }
-    console.log('toggle');
+
+  toggleSidebarOn() {
+    this.setState({
+      sidebarClass: 'app-sidebar',
+      appClass: 'app-main'
+    });
+    console.log('toggle on')
+  }
+
+  toggleSidebarOff() {
+    this.setState({
+      sidebarClass: 'app-sidebar-hidden',
+      appClass: 'app-main-full'
+    });
+    console.log('toggle off')
+
   }
 
   //load data before render
@@ -109,16 +113,15 @@ class App extends React.Component {
   }
 
   render() {
-
     return (
       <div className="app-body">
         <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} />
         <div>
           <div className={this.state.appClass}>
-            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebar={this.toggleSidebar}/>
+            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
           </div>
           <div className={this.state.sidebarClass}>
-            <ColorFamilyInfoView currentFamily={this.state.currentFamily}/>
+            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff}/>
           </div>
         </div>
       </div>

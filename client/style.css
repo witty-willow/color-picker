@@ -4,6 +4,10 @@ body {
   height: 100%;
 }
 
+.test {
+  background-color: blue;
+}
+
 .app-body {
   position: relative;
   width: 100%;
@@ -65,6 +69,10 @@ body {
   opacity: 1;
 }*/
 
+
+.color-family-info {
+  margin-top: 20px;
+}
 
 .tooltip-inner {
   padding: 3px 4px;
