@@ -14,8 +14,8 @@ class App extends React.Component {
       currentFamily: {},
       colorFamilies: [],
       allFamilies: [],
-      appClass: 'app-main',
-      sidebarClass: 'app-sidebar'
+      appClass: 'app-main-full',
+      sidebarClass: 'app-sidebar-hidden'
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
