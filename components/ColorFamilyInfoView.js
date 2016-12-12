@@ -1,6 +1,6 @@
 import React from 'react';
 import ColorInfoView from './ColorInfoView';
-import {Row, Col, Grid} from 'react-bootstrap';
+import {Row, Col, Grid, Button} from 'react-bootstrap';
 
 
 var hexToRGB = function(hex) {
@@ -34,12 +34,14 @@ class ColorFamilyInfoView extends React.Component {
 
   render() {
     return (
-      <div className="content-wrap">
+      <div className="sidebar-content">
         <h5>Click a Code to Copy!</h5>
-        <br/>
-        {this.convertHexToRGB().map(function(color, index) {
-          return <ColorInfoView color={color} key={index} index={index}/>
-        })}
+        <Button onClick={this.props.toggleSidebarOff}>Hide Sidebar</Button>
+        <div className="color-family-info">
+          {this.convertHexToRGB().map(function(color, index) {
+            return <ColorInfoView color={color} key={index} index={index}/>
+          })}
+        </div>
       </div>
     )
   }
