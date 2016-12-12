@@ -20,6 +20,18 @@ app.get('/api/colors', function(req, res) {
   })
 })
 
+app.post('/api/colors', function(req, res) {
+  console.log(req.body);
+  new ColorFamily ({
+    color1: req.body.color1,
+    color2: req.body.color2,
+    color3: req.body.color3,
+    color4: req.body.color4,
+    color5: req.body.color5,
+  }).save()
+  .then(res.sendStatus(200))
+})
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
