@@ -6,10 +6,6 @@ import ColorFamilyInfoView from './ColorFamilyInfoView.js';
 import FilterBar from './FilterBar.js';
 import {Grid} from 'react-bootstrap';
 
-//make object {blue: {min=x, max=y}}
-
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -17,10 +13,13 @@ class App extends React.Component {
       currentFilter: 'mostClicked',
       currentFamily: {},
       colorFamilies: [],
-      allFamilies: []
+      allFamilies: [],
+      appClass: 'app-main',
+      sidebarClass: 'app-sidebar'
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
+    this.toggleSidebar = this.toggleSidebar.bind(this);
   }
 
   hexToRGB(hex) {
@@ -32,18 +31,12 @@ class App extends React.Component {
     } : null;
   }
 
-
-
   handleStateChange (color) {
-
     var filteredColorFamilies = [];
 
     this.setState({
       currentFilter: color,
     });
-  
-    console.log('all families', this.state.allFamilies);
-    console.log('colorFamilies', this.state.colorFamilies);
 
     this.state.allFamilies.forEach(function (obj) {
       var include = false;
@@ -73,13 +66,25 @@ class App extends React.Component {
     });
   }
 
-
   setCurrentFamily(familyData) {
     this.setState({
       currentFamily: familyData
     });
   }
 
+  toggleSidebar() {
+    if (this.state.sidebarClass === 'app-sidebar') {
+      this.setState({
+        sidebarClass: 'app-sidebar-hidden',
+        appClass: 'app-main-full'
+      });
+    } else {
+      this.setState({
+        sidebarClass: 'app-sidebar',
+        appClass: 'app-main'
+      });
+    }
+  }
 
   componentWillMount() {
     $.ajax({
@@ -93,11 +98,20 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.sidebarClass);
+    console.log(this.state.appClass);
+
     return (
-      <div>
-        <FilterBar handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} />
-        <ColorFamilyInfoView currentFamily={this.state.currentFamily}/>
-        <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies}/>
+      <div className="app-body">
+        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} />
+        <div>
+          <div className={this.state.appClass}>
+            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebar={this.toggleSidebar}/>
+          </div>
+          <div className={this.state.sidebarClass}>
+            <ColorFamilyInfoView currentFamily={this.state.currentFamily}/>
+          </div>
+        </div>
       </div>
     );
   }

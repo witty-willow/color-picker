@@ -9,24 +9,29 @@ class ColorFamilyView extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
-      <div>
-          {this.props.colorFamilies.map(function(obj, index) {
-          return(
-            <ReactCSSTransitionGroup
-              transitionName='fade'
-              transitionAppear={true}
-              transitionAppearTimeout={3000}
-              transitionEnter={false}
-              transitionLeave={false}>
-              <ColorFamily setCurrentFamily={this.props.setCurrentFamily} colorFamily={obj} key={index} />
-            </ReactCSSTransitionGroup>
-            )
-          }.bind(this))}
-          
+      <div className="content-wrap">
+        <center>
+        <Button onClick={this.props.toggleSidebar}>
+          Toggle Sidebar
+        </Button>
+        </center>
 
-
+        {this.props.colorFamilies.map(function(obj, index) {
+        return(
+          <ReactCSSTransitionGroup
+            transitionName='fade'
+            transitionAppear={true}
+            transitionAppearTimeout={3000}
+            transitionEnter={false}
+            transitionLeave={false}
+            key={index}>
+            <ColorFamily setCurrentFamily={this.props.setCurrentFamily} colorFamily={obj} />
+          </ReactCSSTransitionGroup>
+          )
+        }.bind(this))}
      </div>
     );
   }

@@ -1,3 +1,75 @@
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.app-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.app-nav {
+  position: relative;
+  width: 100%;
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.app-main {
+  width: 70%;
+  position: absolute;
+  left: 0;
+  padding: 80px 0 20px 0;
+  transition: width .3s ease-in-out;
+}
+
+.app-main-full {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  padding: 80px 0 20px 0;
+  transition: width .3s ease-in-out;
+}
+
+.app-sidebar {
+  position: fixed;
+  right: 0;
+  width: 30%;
+  height: 100%;
+  padding: 80px 30px 30px 30px;
+  background-color: #f8f8f8;
+  border-left: 1px solid #e7e7e7;
+  transition: width .3s ease-in-out;
+}
+.app-sidebar-hidden {
+  position: fixed;
+  right: 0;
+  width: 0%;
+  height: 100%;
+/*  padding: 80px 30px 30px 30px;*/
+  background-color: #f8f8f8;
+  border-left: 1px solid #e7e7e7;
+  transition: width .3s ease-in-out;
+}
+
+.color-single h4 {
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+}
+
+/*.color-single:hover h4 {
+  opacity: 1;
+}
+*/
+
+.tooltip-inner {
+  padding: 3px 4px;
+}
+
 .fade-appear {
   opacity: 0.01;
 }
@@ -6,3 +78,4 @@
   opacity: 1;
   transition: opacity .6s ease-in;
 }
+

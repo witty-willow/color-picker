@@ -16,7 +16,6 @@ app.get('/', function (req, res) {
 
 app.get('/api/colors', function(req, res) {
   ColorFamily.find(function(err, colorFamilies) {
-    console.log(colorFamilies);
     res.send(colorFamilies);
   })
 })

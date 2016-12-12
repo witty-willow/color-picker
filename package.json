@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server/app.js | webpack --config webpack.config.js --progress --colors --watch"
+    "start": "nodemon server/app.js",
+    "start-webpack": "webpack --config webpack.config.js --progress --colors --watch"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
     "react": "^15.4.1",
     "react-addons-css-transition-group": "^15.4.1",
     "react-bootstrap": "^0.30.7",
+    "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "^15.4.1"
   }
 }

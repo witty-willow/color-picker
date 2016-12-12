@@ -15,7 +15,6 @@ var hexToRGB = function(hex) {
 class ColorFamilyInfoView extends React.Component {
   constructor(props) {
     super(props);
-
   }
 
   convertHexToRGB() {
@@ -33,37 +32,17 @@ class ColorFamilyInfoView extends React.Component {
     return objArr;
   }
 
-
-
   render() {
-    this.convertHexToRGB()
     return (
-      <Grid>
+      <div className="content-wrap">
+        <h5>Click a Code to Copy!</h5>
+        <br/>
         {this.convertHexToRGB().map(function(color, index) {
           return <ColorInfoView color={color} key={index} index={index}/>
         })}
-      </Grid>
-    ) 
+      </div>
+    )
   }
 }
-
-
-
-
-
-// var ColorFamilyInfoView = (props) => (
-//   <div className='container'>  
-//     <div><h2>Color Family Info</h2></div>
-//     <div className="infoView" >
-//       color 1 = {props.currentColorFamily.color1} = hexToRGB({props.currentColorFamily.color1})
-//       color 2 = {props.currentColorFamily.color2} = hexToRGB({props.currentColorFamily.color2})
-//       color 3 = {props.currentColorFamily.color3} = hexToRGB({props.currentColorFamily.color3})
-//       color 4 = {props.currentColorFamily.color4} = hexToRGB({props.currentColorFamily.color4})
-//       color 5 = {props.currentColorFamily.color5} = hexToRGB({props.currentColorFamily.color5})
-//     </div>
-//   </div>
-// );
-
-
 
 module.exports = ColorFamilyInfoView;
