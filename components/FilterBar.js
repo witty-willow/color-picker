@@ -8,9 +8,6 @@ var FilterBar = (props) => {
     props.handleStateChange(e)
   }
 
-    //change to reflect function and state labels in main App
-    // props.handleStateChange(props.selectedFilter)
-
   return (
     <Navbar fixedTop inverse>
       <Navbar.Brand>

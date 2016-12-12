@@ -6,6 +6,9 @@ import ColorFamilyInfoView from './ColorFamilyInfoView.js';
 import FilterBar from './FilterBar.js';
 import {Grid} from 'react-bootstrap';
 
+//this app relies heavily on React Bootstrap
+//https://react-bootstrap.github.io/ for the documentation
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +26,7 @@ class App extends React.Component {
     this.toggleSidebarOff = this.toggleSidebarOff.bind(this);
   }
 
+  //Convert hex values to rgb object
   hexToRGB(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
@@ -32,6 +36,7 @@ class App extends React.Component {
     } : null;
   }
 
+  //Filter display based on navbar choices
   handleStateChange (color) {
     var filteredColorFamilies = [];
 
@@ -76,6 +81,8 @@ class App extends React.Component {
     });
   }
 
+  //Change state of components to display side via css
+
   toggleSidebarOn() {
     this.setState({
       sidebarClass: 'app-sidebar',
@@ -90,8 +97,10 @@ class App extends React.Component {
       appClass: 'app-main-full'
     });
     console.log('toggle off')
+
   }
 
+  //load data before render
   componentWillMount() {
     $.ajax({
       url: '/api/colors',

@@ -27,7 +27,6 @@ class ColorFamilyInfoView extends React.Component {
         var newObj = {hex: this.props.currentFamily[key], rgb: rgb};
         objArr.push(newObj);
       }
-
     }
     return objArr;
   }
