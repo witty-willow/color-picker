@@ -11,7 +11,7 @@ var FilterBar = (props) => {
   return (
     <Navbar fixedTop inverse>
       <Navbar.Brand>
-        <a href="#">Colorz.io</a>
+        <a href="/">Colorz.io</a>
       </Navbar.Brand>
       <Nav activeKey='allTime' bsStyle='pills' onSelect={onFilterClick}>
       {/*
