@@ -38,10 +38,10 @@ class CreateYourOwn extends React.Component {
       data: this.state,
       dataType: 'JSON',
       success: function (resp) {
-        alert('New Color Submitted')
+        console.log('success', resp);
       },
       error: function (error) {
-        alert("Not a valid hex value")
+        console.log('error', error);
       }
     })
   }
