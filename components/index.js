@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import ColorFamilyView from './ColorFamilyView.js';
 import ColorFamilyInfoView from './ColorFamilyInfoView.js';
+import CreateYourOwn from './CreateYourOwn.js';
 import FilterBar from './FilterBar.js';
-import {Grid} from 'react-bootstrap';
+import {Button, Grid} from 'react-bootstrap';
+
 
 //this app relies heavily on React Bootstrap
 //https://react-bootstrap.github.io/ for the documentation
@@ -18,12 +20,14 @@ class App extends React.Component {
       colorFamilies: [],
       allFamilies: [],
       appClass: 'app-main-full',
-      sidebarClass: 'app-sidebar-hidden'
+      sidebarClass: 'app-sidebar-hidden',
+      createClass: 'create-family-hidden'
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
     this.toggleSidebarOn = this.toggleSidebarOn.bind(this);
     this.toggleSidebarOff = this.toggleSidebarOff.bind(this);
+    this.toggleSubmitForm = this.toggleSubmitForm.bind(this);
   }
 
   //Convert hex values to rgb object
@@ -81,6 +85,14 @@ class App extends React.Component {
     });
   }
 
+  toggleSubmitForm() {
+    if (this.state.createClass === 'create-family-hidden') {
+      this.setState({createClass: 'create-family-show'});
+    } else {
+      this.setState({createClass: 'create-family-hidden'});
+    }
+  }
+
   //Change state of components to display side via css
 
   toggleSidebarOn() {
@@ -115,9 +127,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-body">
-        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} />
+        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} />
         <div>
           <div className={this.state.appClass}>
+            <div className={this.state.createClass}>
+            <CreateYourOwn/>
+            </div>
+
             <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
           </div>
           <div className={this.state.sidebarClass}>

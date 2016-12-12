@@ -1,4 +1,4 @@
-import {Nav, Navbar, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
+import {Nav, Navbar, NavItem, NavDropdown, MenuItem, Button} from 'react-bootstrap'
 
 import React from 'react';
 
@@ -27,6 +27,10 @@ var FilterBar = (props) => {
         <NavItem title='red' eventKey='red'>Red</NavItem>
         <NavItem title='green' eventKey='green'>Green</NavItem>
       </Nav>
+      
+      <Button bsSize="small" bsStyle="primary" pullRight onClick={props.toggleSubmit}>Create New
+      </Button>
+
     </Navbar>
   )
 }

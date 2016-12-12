@@ -4,10 +4,6 @@ body {
   height: 100%;
 }
 
-.test {
-  background-color: blue;
-}
-
 .app-body {
   position: relative;
   width: 100%;
@@ -21,6 +17,23 @@ body {
 
 .navbar {
   margin-bottom: 0;
+}
+
+.create-family-show {
+  top: 0;
+  display: block;
+  margin-left: 50px;
+  margin-right: 50px;
+  transition: all .3s ease-in-out;
+}
+
+.create-family-hidden {
+  top: -50%;
+  display: none;
+  opacity: 0;
+  margin-left: 50px;
+  margin-right: 50px;
+  transition: all .3s ease-in-out;
 }
 
 .app-main {
@@ -51,7 +64,7 @@ body {
 }
 .app-sidebar-hidden {
   position: fixed;
-  right: -800px;
+  right: -30%;
   width: 30%;
   height: 100%;
   padding: 80px 30px 30px 30px;
