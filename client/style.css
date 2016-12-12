@@ -47,17 +47,17 @@ body {
   padding: 80px 30px 30px 30px;
   background-color: #f8f8f8;
   border-left: 1px solid #e7e7e7;
-  transition: width .3s ease-in-out;
+  transition: right .3s ease-in-out;
 }
 .app-sidebar-hidden {
   position: fixed;
-  right: 0;
-  width: 0%;
+  right: -800px;
+  width: 30%;
   height: 100%;
-/*  padding: 80px 30px 30px 30px;*/
+  padding: 80px 30px 30px 30px;
   background-color: #f8f8f8;
   border-left: 1px solid #e7e7e7;
-  transition: width .3s ease-in-out;
+  transition: right .3s ease-in-out;
 }
 
 .color-single h4 {
