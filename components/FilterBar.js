@@ -12,7 +12,7 @@ var FilterBar = (props) => {
     // props.handleStateChange(props.selectedFilter)
 
   return (
-    <Navbar fixedTop>
+    <Navbar fixedTop inverse>
       <Navbar.Brand>
         <a href="#">Colorz.io</a>
       </Navbar.Brand>
@@ -25,6 +25,7 @@ var FilterBar = (props) => {
           <MenuItem eventKey='allTime' title='menuItem'>All-Time</MenuItem>
         </NavDropdown>
         */}
+        <NavItem title='all' eventKey='all'>All</NavItem>
         <NavItem title='blue' eventKey='blue'>Blue</NavItem>
         <NavItem title='red' eventKey='red'>Red</NavItem>
         <NavItem title='green' eventKey='green'>Green</NavItem>

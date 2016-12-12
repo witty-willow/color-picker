@@ -55,6 +55,9 @@ class App extends React.Component {
             if (colorRgb.green > (1.5 * colorRgb.blue) && colorRgb.green > (1.5 * colorRgb.red))
               include = true;
           }
+          if (color === 'all') {
+            include = true;
+          }
         }
       }
       if (include === true) {
@@ -84,6 +87,7 @@ class App extends React.Component {
         appClass: 'app-main'
       });
     }
+    console.log('toggle');
   }
 
   componentWillMount() {
