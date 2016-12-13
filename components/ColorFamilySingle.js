@@ -6,7 +6,13 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 class ColorFamilySingle extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hover: false
+    };
+    this.toggleHover = this.toggleHover.bind(this);
+    // this.onClickHandler = this.onClickHandler.bind(this);
   }
+
   hexToRGB(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
@@ -15,6 +21,16 @@ class ColorFamilySingle extends React.Component {
       blue: parseInt(result[3], 16)
     } : null;
   }
+
+  toggleHover() {
+    this.setState({hover: !this.state.hover})
+  }
+
+  onClickHandler() {
+    // this.props.setCurrentFamily(this.props.colorFamily);
+    // this.props.toggleSidebarOn();
+  }
+
   render() {
     var rgb = this.hexToRGB(this.props.color);
     let fontColor = null;
@@ -38,11 +54,11 @@ class ColorFamilySingle extends React.Component {
         color: fontColor,
       }
     };
-    if (this.props.hover) {
+    if (this.state.hover) {
       styles.background.boxShadow = '-3px 0 10px'
     }
     return (
-      <div>
+      <div onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
       {this.props.index === 0 ? (
         <Col className="color-single" style={styles.background} xs={2} xsOffset={1}>
           <h4 style={styles.text}>{this.props.color}</h4>
