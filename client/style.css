@@ -78,10 +78,6 @@ body {
   transition: opacity .2s ease-in-out;
 }
 
-/*.color-single:hover h4 {
-  opacity: 1;
-}*/
-
 .color-family-info {
   margin-top: 20px;
 }
@@ -101,4 +97,94 @@ body {
 
 .previewLink {
   text-align:center;
+}
+
+/*TEMPORARY PREVIEW CSS*/
+
+#container {
+  text-align: center;
+	padding-left: 10%;
+	padding-right: 10%;
+  overflow: hidden;
+}
+
+#center {
+	padding: 10px 20px;
+	width: 100%;
+  background: #fff;
+}
+
+#footer {
+	clear: both;
+}
+
+/* Make the columns the same height as each other */
+#container {
+	overflow: hidden;
+}
+
+#footer-wrapper {
+  clear: both;
+	float: left;
+	position: relative;
+	width: 100%;
+	/*padding-bottom: 10010px;
+	margin-bottom: -10000px;*/
+	background: #fff;
+}
+
+/* Aesthetics */
+body {
+	margin: 0;
+	padding: 0;
+	font-family:Sans-serif;
+	line-height: 1.5em;
+}
+
+p {
+	color: #555;
+}
+
+nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav ul a {
+	color: darkgreen;
+	text-decoration: none;
+}
+
+#header, #footer {
+  clear: both;
+	font-size: large;
+	padding: 0.3em;
+	background: #BCCE98;
+}
+
+#left {
+  width: 20%;
+  float: left;
+	background: #DAE9BC;
+  height: 475px;
+}
+
+#innermid {
+  float: left;
+  width: 52.5%;
+}
+
+#right {
+  top: 0;
+  width:27.5%;
+  right:0;
+  bottom: 0;
+  float: right;
+	background: #F7FDEB;
+  height: 100%;
+}
+
+#center {
+	background: #BCCE98;
 }
