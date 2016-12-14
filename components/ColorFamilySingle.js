@@ -28,7 +28,7 @@ class ColorFamilySingle extends React.Component {
     var styles = {
       background: {
         backgroundColor: this.props.color,
-        height: "100px",
+        height: '100px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -39,7 +39,7 @@ class ColorFamilySingle extends React.Component {
       }
     };
     if (this.props.hover) {
-      styles.background.boxShadow = '-3px 0 10px'
+      styles.background.boxShadow = '-3px 0 10px';
     }
     return (
       <div>
@@ -53,7 +53,7 @@ class ColorFamilySingle extends React.Component {
         </Col>
       )}
       </div>
-    )
+    );
   }
 }
 
