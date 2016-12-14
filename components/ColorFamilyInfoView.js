@@ -98,7 +98,7 @@ class ColorFamilyInfoView extends React.Component {
            <h5> Example UI Elements</h5>
 
           <Panel style={styles.bgColor5} className='previewLink'>
-            <Link to={'/preview'}>PREVIEW 1</Link>
+            <Link to={{pathname: '/preview', query: this.props.currentFamily}}>PREVIEW 1</Link>
           </Panel>
             <Button style={styles.bgColor1}> Color 1 </Button>
             <Button style={styles.bgColor2}> Color 2 </Button>

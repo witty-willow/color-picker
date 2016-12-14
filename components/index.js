@@ -24,7 +24,6 @@ class App extends React.Component {
       sidebarClass: 'app-sidebar-hidden',
       createClass: 'create-family-hidden'
     };
-
     this.handleStateChange = this.handleStateChange.bind(this);
     this.toggleSidebarOn = this.toggleSidebarOn.bind(this);
     this.toggleSidebarOff = this.toggleSidebarOff.bind(this);
@@ -84,6 +83,7 @@ class App extends React.Component {
     this.setState({
       currentFamily: familyData
     });
+    console.log('these are app state', this.state);
   }
 
   toggleSubmitForm() {
@@ -110,7 +110,6 @@ class App extends React.Component {
       appClass: 'app-main-full'
     });
     console.log('toggle off');
-
   }
 
   //load data before render
