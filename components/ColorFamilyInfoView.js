@@ -1,6 +1,6 @@
 import React from 'react';
 import ColorInfoView from './ColorInfoView';
-import {Panel, Button, Row, Col, Grid} from 'react-bootstrap';
+import {Panel, Button, Row, Col, Grid, Modal} from 'react-bootstrap';
 
 
 var hexToRGB = function(hex) {
@@ -15,7 +15,24 @@ var hexToRGB = function(hex) {
 class ColorFamilyInfoView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { 
+      show: false
+    }
+      this.showModal = this.showModal.bind(this);
+      this.hideModal = this.hideModal.bind(this);
+    
   }
+
+  
+  showModal() {
+    this.setState({show: true});
+  }
+
+  
+  hideModal() {
+    this.setState({show: false});
+  }
+
 
   convertHexToRGB() {
     var objArr = [];
@@ -117,9 +134,41 @@ class ColorFamilyInfoView extends React.Component {
 
         </div>
 
+        
+        <Button bsStyle="primary" onClick={this.showModal}>
+          Preview Color Scheme
+        </Button>
+        <Modal
+          {...this.props}
+          show={this.state.show}
+          onHide={this.hideModal}
+          dialogClassName="custom-modal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-lg">Modal Heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h4>Wrapped Text</h4>
+            <p>Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde commodi aspernatur enim, consectetur. Cumque deleniti temporibus ipsam atque a dolores quisquam quisquam adipisci possimus laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod accusamus eos quod. Ab quos consequuntur eaque quo rem!
+             Mollitia reiciendis porro quo magni incidunt dolore amet atque facilis ipsum deleniti rem! Dolores debitis voluptatibus ipsum dicta. Dolor quod amet ab sint esse distinctio tenetur. Veritatis laudantium quibusdam quidem corporis architecto veritatis. Ex facilis minima beatae sunt perspiciatis placeat. Quasi corporis
+             odio eaque voluptatibus ratione magnam nulla? Amet cum maiores consequuntur totam dicta! Inventore adipisicing vel vero odio modi doloremque? Vitae porro impedit ea minima laboriosam quisquam neque. Perspiciatis omnis obcaecati consequatur sunt deleniti similique facilis sequi. Ipsum harum vitae modi reiciendis officiis.
+             ex ea temporibus in tempore voluptates cumque. Quidem nam dolor reiciendis qui dolor assumenda ipsam veritatis quasi. Esse! Sit consectetur hic et sunt iste! Accusantium atque elit voluptate asperiores corrupti temporibus mollitia! Placeat soluta odio ad blanditiis nisi. Eius reiciendis id quos dolorum eaque suscipit
+             magni delectus maxime. Sit odit provident vel magnam quod. Possimus eligendi non corrupti tenetur culpa accusantium quod quis. Voluptatum quaerat animi dolore maiores molestias voluptate? Necessitatibus illo omnis laborum hic enim minima! Similique. Dolor voluptatum reprehenderit nihil adipisci aperiam voluptatem soluta
+             magnam accusamus iste incidunt tempore consequatur illo illo odit. Asperiores nesciunt iusto nemo animi ratione. Sunt odit similique doloribus temporibus reiciendis! Ullam. Dolor dolores veniam animi sequi dolores molestias voluptatem iure velit. Elit dolore quaerat incidunt enim aut distinctio. Ratione molestiae laboriosam
+             similique laboriosam eum et nemo expedita. Consequuntur perspiciatis cumque dolorem.</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.hideModal}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+
       </div>
     )
   }
 }
+
+
+
+
 
 module.exports = ColorFamilyInfoView;
