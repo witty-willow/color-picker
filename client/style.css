@@ -103,8 +103,8 @@ body {
 
 #container {
   text-align: center;
-	padding-left: 10%;
-	padding-right: 10%;
+	/*padding-left: 7%;
+	padding-right: 7%;*/
   overflow: hidden;
 }
 
@@ -118,11 +118,6 @@ body {
 	clear: both;
 }
 
-/* Make the columns the same height as each other */
-#container {
-	overflow: hidden;
-}
-
 #footer-wrapper {
   clear: both;
 	float: left;
@@ -131,14 +126,6 @@ body {
 	/*padding-bottom: 10010px;
 	margin-bottom: -10000px;*/
 	background: #fff;
-}
-
-/* Aesthetics */
-body {
-	margin: 0;
-	padding: 0;
-	font-family:Sans-serif;
-	line-height: 1.5em;
 }
 
 p {
@@ -163,26 +150,37 @@ nav ul a {
 	background: #BCCE98;
 }
 
+#columnholder {
+  display: flex;
+  align-items: stretch;
+  /*overflow: hidden;*/
+}
+
 #left {
   width: 20%;
-  float: left;
+  /*float: left;
 	background: #DAE9BC;
   height: 475px;
+  height: 100%;
+  flex-grow: 1;
+  height: calc(100%);
+  align-items: stretch;*/
 }
 
 #innermid {
-  float: left;
-  width: 52.5%;
+  /*float: left;*/
+  width: 65%;
 }
 
 #right {
-  top: 0;
+  width: 35%
+  /*top: 0;
   width:27.5%;
   right:0;
   bottom: 0;
   float: right;
 	background: #F7FDEB;
-  height: 100%;
+  height: 100%;*/
 }
 
 #center {
