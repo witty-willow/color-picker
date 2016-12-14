@@ -3,61 +3,40 @@ import ReactDOM from 'react-dom';
 import Iframe from 'react-iframe'
 import $ from 'jquery';
 
-var colors = {
-  c1: '#87CA80',
-  c2: '#95D68E',
-  c3: '#E6ACB6',
-  c4: '#E7BEAF',
-  c5: '#E9D9B2'
-}
-
-var obj1 = {
-  backgroundColor: colors.c1
-}
-
-var obj2 = {
-  height: '100%',
-  'backgroundColor': colors.c2
-}
-
-var obj3 = {
-  'color': colors.c3
-}
-
-var obj4 = {
-  'color': colors.c4
-}
-
-var obj5 = {
-  backgroundColor: colors.c5
-}
-
-var white = {
-  'background-color': '#FFFFFF'
-}
-
 class Templates extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props', props.colors)
+
+    this.state = {
+      obj1: { backgroundColor: props.colors.color1 },
+      obj2: { 'padding-top': '50px', 'padding-bottom': '50px', backgroundColor: props.colors.color2 },
+      obj3: { color: props.colors.color3 },
+      obj4: { color: props.colors.color4 },
+      obj5: { backgroundColor: props.colors.color5, padding: '10px'}
+    }
   }
 
   render() {
     return (
-      <div className='container' borderColor={colors.c1}>
-        <div className='panel'>
+      <div className='container modal-content'>
+        <div className='panel example-template'>
           <div className='panel-body'>
-            <div className='row' style={obj1}>
-              <div className='col-md-6 col-sm-6' style={obj2}>
-                <h1 style={obj3}>Sample Resume Template</h1>
+            <div className='row' style={this.state.obj1}>
+            <div className='row-height'>
+              <div className='col-md-6 col-sm-6' style={this.state.obj2}>
+                <h3 style={this.state.obj3}>Sample Resume Template</h3>
                 <button className='label label-info'>Button1</button>   
                 <button className='label label-info'>Button2</button>
-                <br></br>
-                <h3 style={obj4}><b>Demo:</b> Loruem asdfjh tasmen add. React tempasd with caosr.</h3>
-                <h3 style={obj4}><b>Information:</b> Loruem asdfjh tasmen add. React tempasd with caosr.</h3>
+                <br></br><br></br>
+                <div style={this.state.obj5}>
+                <h5 style={this.state.obj4}><b>Demo:</b> Loruem asdfjh tasmen add. React tempasd with caosr.</h5>
+                <h5 style={this.state.obj4}><b>Information:</b> Loruem asdfjh tasmen add. React tempasd with caosr.</h5>
+                </div>
               </div>
               <div className='col-md-6 col-sm-6 col-height'>
                 <div>
-                  <h4 style={obj5}>Lorem Ipsum</h4>
+                  <h4 style={this.state.obj5}>Lorem Ipsum</h4>
                   <div className='thumbnail'>
                     <img src='http://netdna.webdesignerdepot.com/uploads/2012/03/lipsum1.jpg'></img>
                   </div>
@@ -66,6 +45,7 @@ class Templates extends React.Component {
                   <br></br>
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>

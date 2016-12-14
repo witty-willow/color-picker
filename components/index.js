@@ -136,14 +136,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-body">
-        <div>Hello</div>
-        <Templates colors={colors}/>
         <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} />
         <div>
           <div className={this.state.appClass}>
-            <div>
-              <Templates colors={colors}/>
-            </div>
             <div className={this.state.createClass}>
             <CreateYourOwn/>
             </div>
