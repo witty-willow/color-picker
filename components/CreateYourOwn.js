@@ -1,6 +1,7 @@
 import React from 'react';
-import ColorInfoView from './ColorInfoView';
 import {Row, Col, Grid} from 'react-bootstrap';
+import ColorFamily from './ColorFamily.js';
+import { ChromePicker } from 'react-color';
 import $ from 'jquery';
 
 class CreateYourOwn extends React.Component {
@@ -8,30 +9,32 @@ class CreateYourOwn extends React.Component {
     super(props);
 
     this.state = {
-      color1: '',
+      color1: '#A74696',
       color2: '',
       color3: '',
       color4: '',
       color5: '',
+      colorData: 'Sample Stuff',
+      currentColor: '#A74696'
     };
 
-    this.handleChange=this.handleChange.bind(this);
-    this.handleSubmit=this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleColorAPI = this.handleColorAPI.bind(this);
   }
-
   
-  handleChange(key) {
-    return function (e) {
-      var state = {};
-      state[key] = e.target.value;
-      this.setState(state);
-    }.bind(this)
+  handleChange(color) {
+    // return function (e) {
+    //   var state = {};
+    //   state[key] = e.target.value;
+    //   this.setState(state);
+    // }.bind(this)
+    
+    this.setState({currentColor: color.hex});
+  
   }
 
   handleSubmit(event) {
-
-    console.log(event)
-
     $.ajax({
       method: 'POST',
       url: 'api/colors',
@@ -46,50 +49,35 @@ class CreateYourOwn extends React.Component {
     })
   }
 
+  handleColorAPI(event) {
+    event.preventDefault();
+    $.ajax({
+      method: 'GET',
+      url: 'http://thecolorapi.com/id?hex=' + this.state.color1, //hex value without #
+      dataType: 'jsonp',
+      headers: {'Access-Control-Allow-Headers': '*', 'Content-Type':'application/json'},
+      success: function(res) {
+        console.log('Color API GET successful!');
+        console.log('API res:', res);
+        this.setState({colorData: res.name.value});
+      }.bind(this)
+    });
+  }
+
   render() {
     return (
-      <form className="content-wrap" onSubmit={this.handleSubmit}>
-        <h5>Create your own!</h5>
-        <br/>
-
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon1">Color 1 </span>
-          <input type="text" className="form-control" placeholder="Hex code" aria-describedby="basic-addon1" value={this.state.color1} onChange={this.handleChange('color1')}></input>
-        </div>
-
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon2">Color 2 </span>
-          <input type="text" className="form-control" placeholder="Hex code" aria-describedby="basic-addon2" value={this.state.color2} onChange={this.handleChange('color2')}></input>
-        </div>
-
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon3">Color 3 </span>
-          <input type="text" className="form-control" placeholder="Hex code" aria-describedby="basic-addon3" value={this.state.color3} onChange={this.handleChange('color3')}></input>
-        </div>
-
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon4">Color 4 </span>
-          <input type="text" className="form-control" placeholder="Hex code" aria-describedby="basic-addon4" value={this.state.color4} onChange={this.handleChange('color4')}></input>
-        </div>
-
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon5">Color 5 </span>
-          <input type="text" className="form-control" placeholder="Hex code" aria-describedby="basic-addon5" value={this.state.color5} onChange={this.handleChange('color5')}></input>
-        </div>
-
-        <div className="input-group">
-          <span className="input-group-btn">
-            <button className="btn btn-default" type="submit">Submit</button>
-          </span>
-        </div>
-
-      </form>
+      <Grid>
+        <Row>
+          <Col xs={6} md={3}> 
+            <ChromePicker color={this.state.currentColor} onChangeComplete={this.handleChange.bind(this)}/>
+          </Col>
+          <Col xs={12} md={9}>
+            <ColorFamily colorFamily={{color1: this.state.currentColor, color2: '#CF5C36', color3: '#EFC88B', color4: '#F4E3B2', color5: '#D3D5D7'}} />
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 }
 
 module.exports = CreateYourOwn;
-
-        {/*{this.convertHexToRGB().map(function(color, index) {
-          return <ColorInfoView color={color} key={index} index={index}/>
-        })}*/}
