@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node server/app.js",
+    "start": "nodemon server/app.js",
     "start-webpack": "webpack --config webpack.config.js --progress --colors --watch"
   },
   "repository": {
@@ -36,6 +36,7 @@
     "jquery": "^3.1.1",
     "mongodb": "^2.2.12",
     "mongoose": "^4.7.1",
+    "nodemon": "^1.11.0",
     "react": "^15.4.1",
     "react-addons-css-transition-group": "^15.4.1",
     "react-bootstrap": "^0.30.7",

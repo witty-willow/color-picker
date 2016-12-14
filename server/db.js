@@ -9,11 +9,16 @@ colorFamilySchema = mongoose.Schema({
   color4: String,
   color5: String,
   //Establish a baseline for copys/popularity
-  copyCount: {type: Number, default: 0},
   //Set date for future filtering
   createdAt: {type: Date, default: Date.now}
 });
 
-var ColorFamily = mongoose.model('ColorFamily', colorFamilySchema);
+copyCountSchema = mongoose.Schema({
+  data: {}
+});
 
-module.exports = ColorFamily;
+var ColorFamily = mongoose.model('ColorFamily', colorFamilySchema);
+var CopyCount = mongoose.model('CopyCount', copyCountSchema);
+
+module.exports.ColorFamily = ColorFamily;
+module.exports.CopyCount = CopyCount;
