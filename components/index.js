@@ -6,7 +6,16 @@ import ColorFamilyInfoView from './ColorFamilyInfoView.js';
 import CreateYourOwn from './CreateYourOwn.js';
 import FilterBar from './FilterBar.js';
 import {Button, Grid} from 'react-bootstrap';
+import Templates from './Templates.js'
 
+// emm's testing data for templates
+var colors = {
+  c1: '#87CA80',
+  c2: '#95D68E',
+  c3: '#E6ACB6',
+  c4: '#E7BEAF',
+  c5: '#E9D9B2',
+}
 
 //this app relies heavily on React Bootstrap
 //https://react-bootstrap.github.io/ for the documentation
@@ -127,9 +136,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-body">
+        <div>Hello</div>
+        <Templates colors={colors}/>
         <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} />
         <div>
           <div className={this.state.appClass}>
+            <div>
+              <Templates colors={colors}/>
+            </div>
             <div className={this.state.createClass}>
             <CreateYourOwn/>
             </div>
