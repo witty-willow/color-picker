@@ -2,7 +2,9 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var ColorFamily = require('./db.js');
+var db = require('./db.js')
+var ColorFamily = db.ColorFamily;
+var CopyCount = db.CopyCount;
 
 app.use(express.static("client"));
 
@@ -38,6 +40,16 @@ app.post('/api/colors', function(req, res) {
     }
   }
 
+  //loop through each key in req.body
+    //if req.body[key] = (form validation)
+  // for (var key in req.body) {
+  //   if (!req.body[key].match(isOk)) {
+  //     error = true;
+  //   }
+  //   if (error) {
+  //     res.send('error -- invalid hex code');
+  //   }
+
 
 
   if (!error) {
@@ -52,8 +64,30 @@ app.post('/api/colors', function(req, res) {
   }
 })
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+app.post('/api/copycount', function(req, res) {
+  var hex = req.body.hex
+  CopyCount.findOne({}, function(err, result) {
+    if(err){
+      throw err;
+    } else {
+      var data = result.data;
+      console.log(data)
+      if(data.hasOwnProperty(hex)) {
+        data[hex]++;
+      } else {
+        data[hex] = 0;
+        CopyCount.update()
+      }
+      CopyCount.update({_id: result._id}, {$set: {data: data}}, function (err, something) {
+        if(err) {throw err}
+      })
+    }
+  });
+  res.end();
+})
+
+app.listen(8000, function () {
+  console.log('Example app listening on port 8888!')
 });
 
 // Seed data for new database if you just cloned the repo.
