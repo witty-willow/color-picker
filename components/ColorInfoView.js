@@ -108,6 +108,8 @@ class ColorInfoView extends React.Component {
     } else {
       styles.toolTip.opacity = 0;
     }
+
+    // added modal + template
     return (
       <Row style={styles.row}>
         <Col xs={3}>
