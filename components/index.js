@@ -193,10 +193,10 @@ class App extends React.Component {
       <div className="app-body">
         <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)}/>
         <div>
+          <div className={this.state.createClass}>
+          <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
+          </div>
           <div className={this.state.appClass}>
-            <div className={this.state.createClass}>
-            <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
-            </div>
 
             <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
           </div>
