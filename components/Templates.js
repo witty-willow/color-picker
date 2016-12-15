@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Iframe from 'react-iframe'
 import $ from 'jquery';
 
 class Templates extends React.Component {

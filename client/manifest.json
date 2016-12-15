@@ -21,9 +21,12 @@
   "permissions": [
     "activeTab"
   ]
+<<<<<<< HEAD
   // "background": {
   //   "scripts": ["background.js", "inject.js"],
   //   "persistent": false
   // },
   // "permissions": ["<all_urls>"]
+=======
+>>>>>>> 88efd6f0389fad5a578dfe24e94a334a70f8a3ae
 }
