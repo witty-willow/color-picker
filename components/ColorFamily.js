@@ -24,7 +24,7 @@ class ColorFamily extends React.Component {
       var color = this.props.colorFamily[key];
       if (color.hex) {
         if (color.hex.match(/^#....../)) {
-          result.push({name: color.name, hex: color.hex});
+          result.push({name: color.name, hex: color.hex, rgb: color.rgb});
         }
       }
     }
