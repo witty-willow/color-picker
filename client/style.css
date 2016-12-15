@@ -103,6 +103,7 @@ body {
 
 #container {
   text-align: center;
+  padding-top: 40px;
 	/*padding-left: 7%;
 	padding-right: 7%;*/
   overflow: hidden;
@@ -158,29 +159,19 @@ nav ul a {
 
 #left {
   width: 20%;
-  /*float: left;
-	background: #DAE9BC;
-  height: 475px;
-  height: 100%;
-  flex-grow: 1;
-  height: calc(100%);
-  align-items: stretch;*/
+  padding: 0px 20px;
 }
 
 #innermid {
-  /*float: left;*/
+  text-align: left;
+  padding: 0px 20px;
   width: 65%;
 }
 
 #right {
-  width: 35%
-  /*top: 0;
-  width:27.5%;
-  right:0;
-  bottom: 0;
-  float: right;
-	background: #F7FDEB;
-  height: 100%;*/
+  text-align: left;
+  width: 35%;
+  padding: 0px 20px;
 }
 
 #center {
