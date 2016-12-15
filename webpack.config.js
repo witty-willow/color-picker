@@ -1,10 +1,13 @@
 var path = require('path');
 
 module.exports = {
-  entry: './components/index.js',
+  entry: {
+    main: './components/index.js',
+    ext: './components/extensionColorFamily.js'
+  },
   output: {
     path: path.resolve(__dirname, 'client/dist'),
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     loaders: [
