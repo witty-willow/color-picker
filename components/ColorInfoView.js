@@ -1,7 +1,6 @@
 import React from 'react';
 import {Row, Col, Grid, Tooltip} from 'react-bootstrap';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import $ from 'jquery';
 
 class ColorInfoView extends React.Component {
   constructor(props) {
@@ -28,23 +27,21 @@ class ColorInfoView extends React.Component {
     return hex.length == 1 ? "0" + hex : hex;
   }
 
-  rgbToHex(rgb) {
-    var arr = rgb.split(',');
-    var r = arr[0].trim();
-    var g = arr[1].trim();
-    var b = arr[2].trim();
-    var rgb = b | (g << 8) | (r << 16);
-    return '#' + (0x1000000 + rgb).toString(16).slice(1)
-  }
+  // rgbToHex(rgb) {
+  //   var arr = rgb.split(',');
+  //   var r = arr[0].trim();
+  //   var g = arr[1].trim();
+  //   var b = arr[2].trim();
+  //   var rgb = b | (g << 8) | (r << 16);
+  //   return '#' + (0x1000000 + rgb).toString(16).slice(1)
+  // }
 
   onCopyHandler(copyVal) {
-    var val = copyVal;
     var type = '';
     if (copyVal[0] === '#') {
       type = 'hex';
     } else {
       type = 'rgb';
-      val = this.rgbToHex(copyVal.slice(4, copyVal.length - 1));
     }
     this.setState({
       copied: true,
@@ -52,18 +49,7 @@ class ColorInfoView extends React.Component {
       type: type
     });
 
-    $.ajax({
-      method: 'POST',
-      url: '/api/copycount',
-      data: {hex: val},
-      dataType: 'JSON',
-      success: function (resp) {
-        console.log('success', resp);
-      },
-      error: function (error) {
-        console.log('error', error);
-      }
-    })
+    this.props.copyCount()
 
     setTimeout(function() {
       this.setState({

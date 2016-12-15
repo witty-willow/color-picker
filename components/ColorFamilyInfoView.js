@@ -1,7 +1,8 @@
 import React from 'react';
 import ColorInfoView from './ColorInfoView';
 import {Panel, Button, Row, Col, Grid, Modal} from 'react-bootstrap';
-import Templates from './Templates'
+import Templates from './Templates';
+import $ from 'jquery';
 
 
 var hexToRGB = function(hex) {
@@ -37,19 +38,36 @@ class ColorFamilyInfoView extends React.Component {
 
   convertHexToRGB() {
     var objArr = [];
-    for (var key in this.props.currentFamily) {
+    var family = this.props.currentFamily
+    for (var key in family) {
       if(key.match(/^color./)) {
         var newObj = {};
-        var rgbObj = hexToRGB(this.props.currentFamily[key]);
+        var rgbObj = hexToRGB(family[key].hex);
         var rgb = 'rgb(' + rgbObj.r + ', ' + rgbObj.g + ', ' + rgbObj.b + ')';
-        var newObj = {hex: this.props.currentFamily[key], rgb: rgb};
+        var newObj = {hex: family[key].hex, rgb: rgb};
         objArr.push(newObj);
       }
     }
     return objArr;
   }
 
+  copyCount() {
+    $.ajax({
+      method: 'POST',
+      url: '/api/copycount',
+      data: {familyId: this.props.currentFamily._id},
+      dataType: 'JSON',
+      success: function (resp) {
+        console.log('success', resp);
+      },
+      error: function (error) {
+        console.log('error', error);
+      }
+    })
+  }
+
   render() {
+    var that = this;
     var styles = {
       borderColor1: {
         margin: '1px',
@@ -108,7 +126,7 @@ class ColorFamilyInfoView extends React.Component {
         <Button onClick={this.props.toggleSidebarOff}>Hide Sidebar</Button>
         <div className="color-family-info">
           {this.convertHexToRGB().map(function(color, index) {
-            return <ColorInfoView color={color} key={index} index={index}/>
+            return <ColorInfoView color={color} key={index} index={index} copyCount={that.copyCount.bind(that)}/>
           })}
           
            <h5> Example UI Elements</h5>

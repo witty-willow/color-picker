@@ -1,6 +1,5 @@
 import React from 'react';
 import {Col} from 'react-bootstrap';
-import ColorFamily from './ColorFamily.js';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 class ColorFamilySingle extends React.Component {

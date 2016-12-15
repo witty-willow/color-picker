@@ -50,7 +50,7 @@ class App extends React.Component {
     } : null;
   }
 
-  //Filter display based on navbar choices
+  //Filter display based on navbar color choices
   handleStateChange (color) {
     var filteredColorFamilies = [];
 
@@ -89,7 +89,7 @@ class App extends React.Component {
     });
   }
 
-  filterByCopyCount(filter) {
+  filterByCopyCount(filter){
     var filteredColorFamilies = [];
 
     this.setState({
@@ -156,6 +156,19 @@ class App extends React.Component {
   //load data before render
   componentWillMount() {
     this.fetchColors()
+  }
+
+  sortByToday() {
+    $.ajax({
+      method: 'GET',
+      url: '/api/daily',
+      success: function (resp) {
+        console.log('success', resp);
+      },
+      error: function (error) {
+        console.log('error', error);
+      }
+    })
   }
 
   render() {
