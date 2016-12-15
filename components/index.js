@@ -11,7 +11,7 @@ import { Router, Route, Link, browserHistory } from 'react-router';
 import Chat from './Chat.js';
 import ElementDisplay from './BootStrap.js';
 import ColorBox from './ColorBox.js';
-
+import colorList from '../client/assets/colors.js';
 
 //this app relies heavily on React Bootstrap
 //https://react-bootstrap.github.io/ for the documentation
@@ -132,33 +132,38 @@ class App extends React.Component {
     var colorArray = [['#F9EBEA', '#FDEDEC'], ['#F2D7D5', '#FADBD8']];
 
 
+    var styles = {
+      background: {
+        backgroundColor: '#e8f8f5'
+      }
+    }; 
 
 
     return (
+
+
       <div className="app-body">
         <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} />
-<<<<<<< 3a3c4364aa3df5414945ebba670b5cef02dd325d
-        <div>
-          <div className={this.state.appClass}>
-            <div className={this.state.createClass}>
-            <CreateYourOwn/>
-            </div>
-            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
-          </div>
-          <div className={this.state.sidebarClass}>
-            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff}/>
-          </div>
-=======
+
         <div className="app-main">
-          <ColorBox style='#F9EBEA' />
->>>>>>> working on initial interactions
+          {colorList.map((colorRow) => {
+           
+            return colorRow.map((color) => {
+
+             <ColorBox style={styles.background.backgroundColor} />
+              
+            })
+          
+          })
+          }
+
         </div>
 
         <div className="app-sidebar"> {/*  changing this to "app-sidebar-hidden" will hide this */}
           <Chat />
         </div>
-
-      </div>
+    </div>
+ 
     );
   }
 }

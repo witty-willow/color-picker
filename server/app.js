@@ -69,12 +69,7 @@ app.post('/api/colors', function(req, res) {
   }
 });
 
-<<<<<<< 28638786ac9a566aa78428c3d5356774ece94085
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
-});
 
-=======
 // dont know if we need them both listening on port 3000?????
 http.listen(3000, function(){
   console.log('listening on *:3000');
@@ -101,4 +96,4 @@ http.listen(3000, function(){
 //     color5: currentFamily[4]
 //   }).save();
 // }
->>>>>>> socket communications workiing
+

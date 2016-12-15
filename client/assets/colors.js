@@ -298,7 +298,7 @@ var colors = [
     '#424949']
 ];
 // console.log(colors);
-module.exports.colors = colors;
+module.exports = colors;
 
 /*  Want more? Check our our other color palettes at
  *  http://htmlcolorcodes.com/color-charts/
