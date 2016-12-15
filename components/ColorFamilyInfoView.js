@@ -21,13 +21,8 @@ class ColorFamilyInfoView extends React.Component {
       show: false
     }
       this.showModal = this.showModal.bind(this);
-<<<<<<< df902254c5906c8f913429440d5fa052d3fdd4bf
-      this.hideModal = this.hideModal.bind(this);  
-=======
       this.hideModal = this.hideModal.bind(this);
       this.sendToExt = this.sendToExt.bind(this);
-    
->>>>>>> update ext to sync with app sidebar panel
   }
 
   
