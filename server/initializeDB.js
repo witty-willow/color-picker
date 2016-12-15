@@ -24,18 +24,26 @@ var init = function() {
     }).save();
   }
 
-  var data = {'RANDOMSTRING': 0};
-  var date = {1: {'RANDOMSTRING': 0}};
-  new CopyCount({
-    monthlyUpdated: 0,
-    monthly: data,
-    weeklyUpdated: 0,
-    weekly: data,
-    dailyUpdated: 0,
-    date: date,
-    data: data
+  CopyCount.remove({}, function(){});
+
+  ColorFamily.findOne({}, function(err, result) {
+    if(err){
+      throw err;
+    } else {
+      var data = {[result._id]: 0};
+      var date = {0: {'RANDOMSTRING': 0}};
+      new CopyCount({
+        monthlyUpdated: 0,
+        monthly: data,
+        weeklyUpdated: 0,
+        weekly: data,
+        dailyUpdated: 0,
+        date: date,
+        data: data
+      })
+      .save();
+    }
   })
-  .save();
 }
 
 init();

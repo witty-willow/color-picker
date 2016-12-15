@@ -184,14 +184,86 @@ class App extends React.Component {
     })
   }
 
-  // sortByWeek(){
-    
-  // }
+  sortByWeek(){
+    var that = this
+    $.ajax({
+      method: 'GET',
+      url: '/api/weekly',
+      success: function (resp) {
+
+        var sortedFamilyId = sortObj(resp);
+
+        that.setState({
+          currentFilter: 'Weekly',
+        });
+
+        var all = that.state.allFamilies;
+
+        var week = sortedFamilyId.map(function(id){
+          for(var i=0; i<all.length; i++){
+            if(all[i]._id === id) {
+              return all[i];
+            }
+          }
+        })
+
+        console.log(sortedFamilyId, week)
+
+        that.setState({
+          colorFamilies: week,
+          popularWeek: week
+        });
+      },
+      error: function (error) {
+        console.log('error', error);
+      }
+    })
+  }
+
+  sortByMonth(){
+    var that = this
+    $.ajax({
+      method: 'GET',
+      url: '/api/monthly',
+      success: function (resp) {
+
+        var sortedFamilyId = sortObj(resp);
+
+        that.setState({
+          currentFilter: 'Monthly',
+        });
+
+        var all = that.state.allFamilies;
+
+        var month = sortedFamilyId.map(function(id){
+          for(var i=0; i<all.length; i++){
+            if(all[i]._id === id) {
+              return all[i];
+            }
+          }
+        })
+
+        console.log(sortedFamilyId, month)
+
+        that.setState({
+          colorFamilies: month,
+          popularWeek: month
+        });
+      },
+      error: function (error) {
+        console.log('error', error);
+      }
+    })
+  }
+
+  sortByCopyCount(){
+
+  }
 
   render() {
     return (
       <div className="app-body">
-        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)}/>
+        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
         <div>
           <div className={this.state.createClass}>
           <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
