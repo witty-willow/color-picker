@@ -54,9 +54,9 @@ module.exports = {
       if(result.dailyUpdated !== today) {
         date[today] = {};
         result.dailyUpdated = today;
-        // CopyCount.update({_id: result._id}, {$set: {dailyUpdated: dailyUpdated}}, function (err, something) {
-        //   if(err) {throw err}
-        // })
+        CopyCount.update({_id: result._id}, {$set: {dailyUpdated: dailyUpdated}},{multi: true}, function (err, something) {
+          if(err) {throw err}
+        })
       }
         console.log('date', date)
         if(date.hasOwnProperty(today) && date[today].hasOwnProperty(familyId)) {
