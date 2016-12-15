@@ -13,25 +13,6 @@ var palette = {
   color5: {name: 'Blue Dianne', hex: '#214F4B'},
 }
 
-var hexToRGB = function(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
-}
-
-var colorFamily2 = {
-    color1: '#2DE1FC',
-    color2: '#2AFC98',
-    color3: '#09E85E',
-    color4: '#16C172',
-    color5: '#214F4B'
-  }
-
-console.log(colorFamily2);
-
 class ExtensionColorFamily extends React.Component {
 
   constructor(props){
@@ -41,15 +22,17 @@ class ExtensionColorFamily extends React.Component {
       greeting: 'hello'
     }
     this.getBrowserColors = this.getBrowserColors.bind(this)
+    this.setBrowserColors = this.setBrowserColors.bind(this)
   }
 
   componentWillMount(){
     this.setState({
-      colorFamily: this.props.colorFamily
+      colorFamily: this.props.colorFamily,
+      sitePalette: this.props.colorFamily
     })
   }
 
-  getBrowserColors() {
+  setBrowserColors() {
     console.log('clicked')
     var msg = this.state.colorFamily;
     var params = {
@@ -62,7 +45,35 @@ class ExtensionColorFamily extends React.Component {
     // Now we've got the tabs
     function gotTabs(tabs) {
       // The first tab is the one you are on
-      chrome.tabs.sendMessage(tabs[0].id, {currentColors: msg});//, messageBack);
+      chrome.tabs.sendMessage(tabs[0].id, {task: 'setBgColors', currentColors: msg});//, messageBack);
+    }
+  }
+
+  getBrowserColors() {
+    var params = {
+      active: true,
+      currentWindow: true    
+    }
+    var that = this;
+    // This searches for the active tabs in the current window
+    chrome.tabs.query(params, gotTabs);
+
+    // Now we've got the tabs
+    function gotTabs(tabs) {
+      // The first tab is the one you are on
+      chrome.tabs.sendMessage(tabs[0].id, {task: 'getBgColors'}, function(res){
+        console.log('received response', res)
+        that.setState({
+          sitePalette: {
+            color1: {name: 'c1', hex: res[0]},
+            color2: {name: 'c2', hex: res[1]},
+            color3: {name: 'c3', hex: res[2]},
+            color4: {name: 'c4', hex: res[3]},
+            color5: {name: 'c5', hex: res[4]}         
+          }
+        })
+        console.log('new state', that.state.sitePalette)
+      });//, messageBack);
     }
   }
 
@@ -70,7 +81,10 @@ class ExtensionColorFamily extends React.Component {
     return (
       <div>
         <ColorFamily colorFamily={this.state.colorFamily}/>
-        <button onClick={this.getBrowserColors}>Apply Colors</button>
+        <button onClick={this.setBrowserColors}>Apply Colors</button>
+        <button onClick={this.getBrowserColors}>Get Site Colors</button>
+        <br></br>Site Palette:
+        <ColorFamily colorFamily={this.state.sitePalette}/>
       </div>
     )
   }
