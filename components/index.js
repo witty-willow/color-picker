@@ -6,7 +6,16 @@ import ColorFamilyInfoView from './ColorFamilyInfoView.js';
 import CreateYourOwn from './CreateYourOwn.js';
 import FilterBar from './FilterBar.js';
 import {Button, Grid} from 'react-bootstrap';
+import Templates from './Templates.js'
 
+// emm's testing data for templates
+var colors = {
+  c1: '#87CA80',
+  c2: '#95D68E',
+  c3: '#E6ACB6',
+  c4: '#E7BEAF',
+  c5: '#E9D9B2',
+}
 
 //this app relies heavily on React Bootstrap
 //https://react-bootstrap.github.io/ for the documentation

@@ -4,6 +4,16 @@ body {
   height: 100%;
 }
 
+.example-template {
+  height: 600px;
+  width: 600px;
+  overflow-x: scroll;
+}
+
+.modal-content {
+  width: 650px;
+}
+
 .app-body {
   position: relative;
   width: 100%;
