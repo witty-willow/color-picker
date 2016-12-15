@@ -273,7 +273,7 @@ class App extends React.Component {
             <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
           </div>
           <div className={this.state.sidebarClass}>
-            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff}/>
+            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff} fetchColors={this.fetchColors.bind(this)}/>
           </div>
         </div>
       </div>

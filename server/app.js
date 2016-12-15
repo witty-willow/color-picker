@@ -43,6 +43,18 @@ app.post('/api/colors', function(req, res) {
   .catch(res.json({'message': 'Error saving palette.'}));
 });
 
+app.delete('/api/colors', function(req, res) {
+  ColorFamily.findOneAndRemove({name: req.body.name}, function(error, palette) {
+    if (error) {
+      throw error;
+    } else if (palette) {
+      res.json({message: 'Deleted palette.', palette: palette});
+    } else {
+      res.sendStatus(404);
+    }
+  });
+}); 
+
 // chrome ext routes
 app.get('/api/ext', function(req, res){
   console.log('got req from ext', extColorFamily)
