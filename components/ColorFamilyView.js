@@ -15,7 +15,7 @@ class ColorFamilyView extends React.Component {
       <div className="content-wrap">
         {this.props.colorFamilies.map(function(obj, index) {
         return (
-          <Grid>
+          <Grid key={index}>
             <Row>
               <ReactCSSTransitionGroup
                 transitionName='fade'
@@ -24,7 +24,7 @@ class ColorFamilyView extends React.Component {
                 transitionEnter={false}
                 transitionLeave={false}
                 key={index}>
-                <Col xs={12} md-={12}>
+                <Col xs={12} md={12}>
                   <h5>{obj.name}</h5>
                 </Col>
                 <Col xs={12} md={12}>
