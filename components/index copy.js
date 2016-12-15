@@ -5,14 +5,10 @@ import ColorFamilyView from './ColorFamilyView.js';
 import ColorFamilyInfoView from './ColorFamilyInfoView.js';
 import CreateYourOwn from './CreateYourOwn.js';
 import FilterBar from './FilterBar.js';
-import Preview from './Preview.js';
 import {Button, Grid} from 'react-bootstrap';
-import { Router, Route, Link, browserHistory } from 'react-router';
 import Chat from './Chat.js';
 import ElementDisplay from './BootStrap.js';
-import ColorBox from './ColorBox.js';
-import colorList from '../client/assets/colors.js';
-import ColorRow from './ColorRow.js';
+
 
 //this app relies heavily on React Bootstrap
 //https://react-bootstrap.github.io/ for the documentation
@@ -29,6 +25,7 @@ class App extends React.Component {
       sidebarClass: 'app-sidebar-hidden',
       createClass: 'create-family-hidden'
     };
+
     this.handleStateChange = this.handleStateChange.bind(this);
     this.toggleSidebarOn = this.toggleSidebarOn.bind(this);
     this.toggleSidebarOff = this.toggleSidebarOff.bind(this);
@@ -56,7 +53,7 @@ class App extends React.Component {
     this.state.allFamilies.forEach(function (obj) {
       var include = false;
       for (var key in obj) {
-        if (key.slice(0, 5) === 'color') {
+        if (key.slice(0,5) === 'color') {
           var colorRgb = this.hexToRGB(obj[key], 16);
           if (color === 'red') {
             if (colorRgb.red > (1.5 * colorRgb.blue) && colorRgb.red > (1.5 * colorRgb.green))
@@ -76,9 +73,9 @@ class App extends React.Component {
         }
       }
       if (include === true) {
-        filteredColorFamilies.push(obj);
+        filteredColorFamilies.push(obj)
       }
-    }.bind(this));
+    }.bind(this))
     this.setState({
       colorFamilies: filteredColorFamilies
     });
@@ -88,7 +85,6 @@ class App extends React.Component {
     this.setState({
       currentFamily: familyData
     });
-    console.log('these are app state', this.state);
   }
 
   toggleSubmitForm() {
@@ -106,7 +102,7 @@ class App extends React.Component {
       sidebarClass: 'app-sidebar',
       appClass: 'app-main'
     });
-    console.log('toggle on');
+    console.log('toggle on')
   }
 
   toggleSidebarOff() {
@@ -114,7 +110,8 @@ class App extends React.Component {
       sidebarClass: 'app-sidebar-hidden',
       appClass: 'app-main-full'
     });
-    console.log('toggle off');
+    console.log('toggle off')
+
   }
 
   //load data before render
@@ -130,41 +127,30 @@ class App extends React.Component {
   }
 
   render() {
-    var colorArray = [['#F9EBEA', '#FDEDEC'], ['#F2D7D5', '#FADBD8']];
-
-
-    var styles = {
-      background: {
-        backgroundColor: '#e8f8f5'
-      }
-    }; 
-
-
     return (
-
-
       <div className="app-body">
         <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} />
-
-        <div className="app-main">
-          {colorList.map((colorRow, index) =>
-             <ColorRow colors={colorRow} key={index}/>
-          )}
+        <div className="page-header">
         </div>
+        <div>
+          <div className={this.state.appClass}>
 
-        <div className="app-sidebar"> {/*  changing this to "app-sidebar-hidden" will hide this */}
-          <Chat />
+          
+            <div className={this.state.createClass}>
+              <CreateYourOwn/>
+            </div>
+            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
+          </div>
+          <div className={this.state.sidebarClass}>
+            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff}/>
+          </div>
         </div>
-    </div>
- 
+      </div>
     );
   }
 }
 
 ReactDOM.render(
-  <Router history={browserHistory}>
-    <Route path="/" component={App}/>
-    <Route path="/preview" component={Preview}/>
-  </Router>,
+  <App />,
   document.getElementById('root')
 );

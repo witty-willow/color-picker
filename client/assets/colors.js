@@ -81,8 +81,7 @@ var colors = [
     '#186a3b'],
 
 /* Nephritis */
-    ['#27ae60',
-    '#e9f7ef',
+   ['#e9f7ef',
     '#d4efdf',
     '#a9dfbf',
     '#7dcea0',
@@ -298,7 +297,7 @@ var colors = [
     '#424949']
 ];
 // console.log(colors);
-module.exports.colors = colors;
+module.exports = colors;
 
 /*  Want more? Check our our other color palettes at
  *  http://htmlcolorcodes.com/color-charts/
