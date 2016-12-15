@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/colorPicker');
 
 colorFamilySchema = mongoose.Schema({
-  //Hex color codes only!!
-  color1: String,
-  color2: String,
-  color3: String,
-  color4: String,
-  color5: String,
+  name: String,
+  color1: Object,
+  color2: Object,
+  color3: Object,
+  color4: Object,
+  color5: Object,
   //Establish a baseline for copys/popularity
   //Set date for future filtering
   createdAt: {type: Date, default: Date.now}

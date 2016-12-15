@@ -37,6 +37,7 @@ class App extends React.Component {
     this.toggleSidebarOn = this.toggleSidebarOn.bind(this);
     this.toggleSidebarOff = this.toggleSidebarOff.bind(this);
     this.toggleSubmitForm = this.toggleSubmitForm.bind(this);
+    this.fetchColors = this.fetchColors.bind(this);
   }
 
   //Convert hex values to rgb object
@@ -118,11 +119,9 @@ class App extends React.Component {
       appClass: 'app-main-full'
     });
     console.log('toggle off')
-
   }
 
-  //load data before render
-  componentWillMount() {
+  fetchColors() {
     $.ajax({
       url: '/api/colors',
       success: function(data) {
@@ -133,6 +132,11 @@ class App extends React.Component {
     });
   }
 
+  //load data before render
+  componentWillMount() {
+    this.fetchColors()
+  }
+
   render() {
     return (
       <div className="app-body">
@@ -140,7 +144,7 @@ class App extends React.Component {
         <div>
           <div className={this.state.appClass}>
             <div className={this.state.createClass}>
-            <CreateYourOwn/>
+            <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
             </div>
 
             <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>

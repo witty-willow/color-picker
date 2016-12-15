@@ -14,7 +14,7 @@ class ColorFamilyView extends React.Component {
     return (
       <div className="content-wrap">
         {this.props.colorFamilies.map(function(obj, index) {
-        return(
+        return (
           <ReactCSSTransitionGroup
             transitionName='fade'
             transitionAppear={true}
