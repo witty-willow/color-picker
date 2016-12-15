@@ -16,4 +16,4 @@ colorFamilySchema = mongoose.Schema({
 
 var ColorFamily = mongoose.model('ColorFamily', colorFamilySchema);
 
-module.exports = ColorFamily;
+module.exports = ColorFamily; 

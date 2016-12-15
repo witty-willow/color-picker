@@ -4,27 +4,44 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var ColorFamily = require('./db.js');
 
+//used for sockets
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+
+// initializes the data base with colors
+var initalize = require('./initializeDB');
+
 app.use(express.static("client"));
 
-app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.urlencoded({ extended: false}));
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, "client/index.html"));
+  res.sendFile(path.join(__dirname, 'client/index.html'));
 });
 
 app.get('/api/colors', function(req, res) {
   ColorFamily.find(function(err, colorFamilies) {
     res.send(colorFamilies);
-  })
-})
+  });
+});
+
+io.on('connection', function(socket){
+    socket.on('chat message', function(msg){
+      console.log('message: ' + msg);
+      // add chat to DB
+      io.emit('chat message', msg);
+  });
+});
+
 
 app.post('/api/colors', function(req, res) {
 
   var error = false;
 
-  var isOk  = /(^#[0-9A-F]{6}$)/i;
+  var isOk = /(^#[0-9A-F]{6}$)/i;
   //validate that form dawwwwg
 
   //loop through each key in req.body
@@ -48,13 +65,19 @@ app.post('/api/colors', function(req, res) {
       color4: req.body.color4,
       color5: req.body.color5,
     }).save()
-    .then(res.sendStatus(201))
+    .then(res.sendStatus(201));
   }
-})
-
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
 });
+
+
+// dont know if we need them both listening on port 3000?????
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
+
+// app.listen(3000, function () {
+//   console.log('Example app listening on port 3000!')
+// });
 
 // Seed data for new database if you just cloned the repo.
 
@@ -73,3 +96,4 @@ app.listen(3000, function () {
 //     color5: currentFamily[4]
 //   }).save();
 // }
+

@@ -1,14 +1,14 @@
-import {Nav, Navbar, NavItem, NavDropdown, MenuItem, Button} from 'react-bootstrap'
-
+import {Nav, Navbar, NavItem, NavDropdown, MenuItem, Button} from 'react-bootstrap';
 import React from 'react';
 
 var FilterBar = (props) => {
 
   var onFilterClick = (e) => {
-    props.handleStateChange(e)
-  }
+    props.handleStateChange(e);
+  };
 
   return (
+    <div className="container">
     <Navbar fixedTop inverse>
       <Navbar.Brand>
         <a href="/">Colorz.io</a>
@@ -32,8 +32,10 @@ var FilterBar = (props) => {
       </Nav>
 
     </Navbar>
-  )
+    </div>
+  );
 }
+
 
 
 module.exports = FilterBar;
