@@ -2,6 +2,7 @@ console.log('chrome extension is running')
 // This helps avoid conflicts in case we inject 
 // this script on the same page multiple times
 // without reloading.
+<<<<<<< HEAD
 var hexToRGB = function(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
@@ -39,6 +40,13 @@ var colorFamily = {
   // background colors from the current page.
 var getBgColors = function(){
     var colors = {};
+=======
+
+var getBgColors = function(req, sender, res){
+    console.log('req', req.currentColors)
+    var colors = req.currentColors;
+    console.log('colors', colors)
+>>>>>>> 88efd6f0389fad5a578dfe24e94a334a70f8a3ae
     var nodes = document.querySelectorAll('*');
     var node, nodeArea, bgColor, i;
 
@@ -46,12 +54,18 @@ var getBgColors = function(){
 
     for (var i = 0; i < divs.length; i++) {
       var currentKey = 'color' + (i % 5 + 1);
+<<<<<<< HEAD
       divs[i].style['background-color'] = colorFamily[currentKey];
+=======
+      console.log('current color', colors[currentKey]);
+      divs[i].style['background-color'] = colors[currentKey];
+>>>>>>> 88efd6f0389fad5a578dfe24e94a334a70f8a3ae
     }
 
     return 'Hello' + divs.length;
   };
 
+<<<<<<< HEAD
 chrome.runtime.onMessage.addListener(getBgColors);
   // This tells the script to listen for
   // messages from our extension.
@@ -69,3 +83,6 @@ chrome.runtime.onMessage.addListener(getBgColors);
 
 //   return true;
 // })();
+=======
+chrome.runtime.onMessage.addListener(getBgColors);
+>>>>>>> 88efd6f0389fad5a578dfe24e94a334a70f8a3ae
