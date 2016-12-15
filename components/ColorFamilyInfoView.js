@@ -49,8 +49,6 @@ class ColorFamilyInfoView extends React.Component {
   }
 
   render() {
-    console.log(this.props.currentFamily);
-
     var styles = {
       borderColor1: {
         margin: '1px',
