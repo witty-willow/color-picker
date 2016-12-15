@@ -14,14 +14,12 @@ var FilterBar = (props) => {
         <a href="/">Colorz.io</a>
       </Navbar.Brand>
       <Nav activeKey='allTime' bsStyle='pills' onSelect={onFilterClick}>
-      {
         <NavDropdown eventKey='mostClicked' title='Popular' id='nav-dropdown'>
-          <MenuItem eventKey='today' title='menuItem'>Today</MenuItem>
+          <MenuItem eventKey='today' title='menuItem' onClick={props.sortByToday}>Today</MenuItem>
           <MenuItem eventKey='thisWeek' title='menuItem'>This Week</MenuItem>
           <MenuItem eventKey='thisMonth' title='menuItem'>This Month</MenuItem>
           <MenuItem eventKey='allTime' title='menuItem'>All-Time</MenuItem>
         </NavDropdown>
-        }
         <NavItem title='all' eventKey='all'>All</NavItem>
         <NavItem title='blue' eventKey='blue'>Blue</NavItem>
         <NavItem title='red' eventKey='red'>Red</NavItem>

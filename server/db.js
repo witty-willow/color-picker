@@ -14,7 +14,13 @@ colorFamilySchema = mongoose.Schema({
 });
 
 copyCountSchema = mongoose.Schema({
-  data: {}
+    monthlyUpdated: 0,
+    monthly: {},
+    weeklyUpdated: 0,
+    weekly: {},
+    dailyUpdated: 0,
+    date: {},
+    data: {}
 });
 
 var ColorFamily = mongoose.model('ColorFamily', colorFamilySchema);

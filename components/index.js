@@ -89,9 +89,30 @@ class App extends React.Component {
     });
   }
 
+  filterByCopyCount(filter) {
+    var filteredColorFamilies = [];
+
+    this.setState({
+      currentFilter: filter,
+    });
+  }
+
   setCurrentFamily(familyData) {
     this.setState({
       currentFamily: familyData
+    });
+  }
+
+  sortByToday() {
+    $.ajax({
+      method: 'GET',
+      url: '/api/daily',
+      success: function(resp) {
+        console.log('success', resp);
+      },
+      error: function(error) {
+        console.log('error', error);
+      }
     });
   }
 
@@ -140,7 +161,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-body">
-        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} />
+        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)}/>
         <div>
           <div className={this.state.appClass}>
             <div className={this.state.createClass}>
