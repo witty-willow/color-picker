@@ -1,5 +1,4 @@
 import {Nav, Navbar, NavItem, NavDropdown, MenuItem, Button} from 'react-bootstrap';
-
 import React from 'react';
 
 var FilterBar = (props) => {

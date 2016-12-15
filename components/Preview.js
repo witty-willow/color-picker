@@ -1,12 +1,14 @@
 import {Nav, Navbar, NavItem, NavDropdown, MenuItem, Button} from 'react-bootstrap';
-import FilterBar from './FilterBar.js';
 import React from 'react';
+import FilterBar from './FilterBar.js';
+import {HEXtoRGB, RGBtoHSL} from './colorCalcHelpers.js';
 
 var Preview = ({location: {query}}) => {
 
   var styles = {
     headerfooter: {
-      backgroundColor: query.color1
+      backgroundColor: query.color1,
+      borderBottom: 'solid ' + query.color5 + ' 2px'
     },
     leftBackground: {
       backgroundColor: query.color2
@@ -22,50 +24,18 @@ var Preview = ({location: {query}}) => {
     }
   };
 
-  var HEXtoRGB = function(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : null;
-  };
-
-  var RGBtoHSL = function(rgb) {
-    /*rgb taken as array
-    [r,g,b]  */
-    var S, L, H;
-    var max = Math.max(...rgb);
-    var min = Math.min(...rgb);
-    var maxI = rgb.indexOf(max);
-
-    L = (max - min) / 255;
-
-    if (L <= 0.5) {
-      S = (max - min) / (max + min);
-    } else {
-      S = (max - min) / (2 - max - min);
-    }
-    if (maxI === 0) {
-      H = (rgb[1] - rgb[2]) / (max - min);
-    } else if (maxI === 1) {
-      H = 2 + (rgb[2] - rgb[0]) / (max - min);
-    } else if (maxI === 2) {
-      H = 4 + (rgb[0] - rgb[1]) / (max - min);
-    }
-    H *= 60;
-    return [H, S, L];
-  };
-
   // This returns black or white depending on
   var setHeaderTextColor = function(hexColor) {
-    console.log('CALLING setHeaderTextColor with: ', hexColor);
-    console.log(HEXtoRGB(hexColor));
-    // var backgroundLightness = RGBtoHSL(HEXtoRGB(hexColor))[2];
-    // if (backgroundLightness > 40) {
-    //   styles.headerfooter.color = white;
-    // }
-    // styles.headerfooter.color = black;
+    // console.log('Calling setHeaderTextColor with: ', hexColor);
+    // console.log(HEXtoRGB);
+    // console.log(HEXtoRGB(hexColor));
+    var backgroundLightness = RGBtoHSL(HEXtoRGB(hexColor))[2];
+    // console.log(backgroundLightness);
+    if (backgroundLightness > 60) {
+      styles.headerfooter.color = 'black';
+    } else {
+      styles.headerfooter.color = 'white';
+    }
   }(query.color1);
 
   return (
