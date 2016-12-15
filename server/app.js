@@ -6,6 +6,9 @@ var db = require('./db.js')
 var ColorFamily = db.ColorFamily;
 var controller = require('./controller.js');
 
+// current color family for chrome ext
+var extColorFamily = null;
+
 app.use(express.static("client"));
 
 app.use(bodyParser.urlencoded({ extended: true}))
@@ -21,6 +24,7 @@ app.get('/api/colors', function(req, res) {
     res.send(colorFamilies);
   });
 })
+
 
 app.post('/api/colors', function(req, res) {
   var palette = req.body.palette;
@@ -38,6 +42,20 @@ app.post('/api/colors', function(req, res) {
   .then(res.json({'message': 'New palette saved.'}))
   .catch(res.json({'message': 'Error saving palette.'}));
 });
+
+// chrome ext routes
+app.get('/api/ext', function(req, res){
+  console.log('got req from ext', extColorFamily)
+  if (extColorFamily){
+    res.send(extColorFamily);
+  } else {
+    res.send('No family selected')
+  }
+})
+app.post('/api/ext', function(req, res) {
+  extColorFamily = req.body.currentFamily
+  res.send('done');
+})
 
 app.post('/api/copycount', controller.increaseCount);
 app.get('/api/daily', controller.getDaily);

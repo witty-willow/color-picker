@@ -13,11 +13,11 @@ class CreateYourOwn extends React.Component {
       activeElement: 1,
       familyName: '',
       palette: {
-        color1: {name: 'Cyan', hex: '#2DE1FC'},
-        color2: {name: 'Spring Green', hex: '#2AFC98'},
-        color3: {name: 'Malachite', hex: '#09E85E'},
-        color4: {name: 'Mountain Meadow', hex: '#16C172'},
-        color5: {name: 'Blue Dianne', hex: '#214F4B'},
+        color1: {name: 'Cyan', hex: '#2DE1FC', rgb: {a: 1, b: 252, g: 225, r: 45}},
+        color2: {name: 'Spring Green', hex: '#2AFC98', rgb: {a: 1, b: 152, g: 252, r: 42}},
+        color3: {name: 'Malachite', hex: '#09E85E', rgb: {a: 1, b: 94, g: 232, r: 9}},
+        color4: {name: 'Mountain Meadow', hex: '#16C172', rgb: {a: 1, b: 114, g: 193, r: 22}},
+        color5: {name: 'Blue Dianne', hex: '#214F4B', rgb: {a: 1, b: 75, g: 79, r: 33}},
       },
       analogic: {
         color1: {name: 'White', hex: '#FFFFFF'},
@@ -53,11 +53,14 @@ class CreateYourOwn extends React.Component {
   handlePickerChange(color) {
     var palette = this.state.palette;
     palette['color' + this.state.activeElement].hex = color.hex;
+    palette['color' + this.state.activeElement].rgb = color.rgb;
 
     this.setState({
       palette: palette,
       activeColor: color.hex
     });
+
+    console.log('state', this.state);
   }
 
   handleActiveColor(number) {
@@ -69,12 +72,13 @@ class CreateYourOwn extends React.Component {
 
   handleActiveColorChange(color) {
     var palette = this.state.palette;
-    palette['color' + this.state.activeElement].hex = color.hex;
     palette['color' + this.state.activeElement].name = color.name;
+    palette['color' + this.state.activeElement].hex = color.hex;
+    palette['color' + this.state.activeElement].rgb = color.rgb;
     
     this.setState({
       palette: palette,
-      activeColor: color
+      activeColor: color.hex
     });
   }
 
@@ -150,11 +154,11 @@ class CreateYourOwn extends React.Component {
             <Button onClick={this.handleSubmit.bind(this)} bsSize="large" bsStyle="success" block>Save Palette</Button> 
           </Col>
           <Col xs={12} md={9}>
-            <ColorFamily isActiveView={true} handleActiveColor={this.handleActiveColor} colorFamily={this.state.palette}/> <br/>
+            <ColorFamily inCreate={true} isActiveView={true} handleActiveColor={this.handleActiveColor} colorFamily={this.state.palette}/> <br/>
             <Row>
-              <Col xs={12} md={12}><ColorFamily isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state.monochrome}/></Col>
-              <Col xs={12} md={12}><ColorFamily isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state.analogic}/></Col>
-              <Col xs={12} md={12}><ColorFamily isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state['analogic-complement']}/></Col>
+              <Col xs={12} md={12}><ColorFamily inCreate={true} isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state.monochrome}/></Col>
+              <Col xs={12} md={12}><ColorFamily inCreate={true} isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state.analogic}/></Col>
+              <Col xs={12} md={12}><ColorFamily inCreate={true} isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state['analogic-complement']}/></Col>
             </Row>
           </Col> 
         </Row> <br/> 
