@@ -21,7 +21,13 @@ class ColorFamilyInfoView extends React.Component {
       show: false
     }
       this.showModal = this.showModal.bind(this);
+<<<<<<< df902254c5906c8f913429440d5fa052d3fdd4bf
       this.hideModal = this.hideModal.bind(this);  
+=======
+      this.hideModal = this.hideModal.bind(this);
+      this.sendToExt = this.sendToExt.bind(this);
+    
+>>>>>>> update ext to sync with app sidebar panel
   }
 
   
@@ -63,6 +69,23 @@ class ColorFamilyInfoView extends React.Component {
     })
   }
 
+  sendToExt() {
+    var that = this;
+    // sent this.props.currentFamily
+    $.ajax({
+      method: 'POST',
+      url: 'api/ext',
+      data: {currentFamily: that.props.currentFamily},
+      dataType: 'JSON',
+      success: function (resp) {
+        console.log('success', resp);
+      }.bind(this),
+      error: function (error) {
+        console.log('error', error);
+      }
+    })
+  }
+
   render() {
     var that = this;
     return (
@@ -81,7 +104,12 @@ class ColorFamilyInfoView extends React.Component {
           Preview Palette
         </Button> <br></br>
         <Button block bsStyle="default" onClick={this.props.toggleSidebarOff}>Hide Sidebar</Button> <br></br>
-        
+        <Button bsStyle="primary" onClick={this.showModal}>
+          Preview Color Scheme
+        </Button>
+        <Button bsStyle="primary" onClick={this.sendToExt}>
+          Test Color Scheme
+        </Button>
         <Modal
           {...this.props}
           show={this.state.show}
