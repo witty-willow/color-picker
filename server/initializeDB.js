@@ -1,4 +1,5 @@
 var ColorFamily = require('./db.js').ColorFamily;
+var CopyCount = require('./db.js').CopyCount;
 
 var init = function() {
 
@@ -22,6 +23,19 @@ var init = function() {
       color5: {name: colorFamily[4].name, hex: colorFamily[4].hex}
     }).save();
   }
+
+  var data = {'RANDOMSTRING': 0};
+  var date = {1: {'RANDOMSTRING': 0}};
+  new CopyCount({
+    monthlyUpdated: 0,
+    monthly: data,
+    weeklyUpdated: 0,
+    weekly: data,
+    dailyUpdated: 0,
+    date: date,
+    data: data
+  })
+  .save();
 }
 
 init();

@@ -4,7 +4,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var db = require('./db.js')
 var ColorFamily = db.ColorFamily;
-var CopyCount = db.CopyCount;
+var controller = require('./controller.js');
 
 app.use(express.static("client"));
 
@@ -37,70 +37,10 @@ app.post('/api/colors', function(req, res) {
   .save()
   .then(res.json({'message': 'New palette saved.'}))
   .catch(res.json({'message': 'Error saving palette.'}));
-  // console.log('req.body.palette.color1.hex', req.body.palette.color1.hex);
-  // console.log('req.body.palette.color1.name', req.body.palette.color1.name);
+});
 
-  // var error = false;
-
-  // var isOk  = /(^#[0-9A-F]{6}$)/i;
-  // //validate that form dawwwwg
-
-  // //loop through each key in req.body
-  //   //if req.body[key] = (form validation)
-  // for (var key in req.body) {
-  //   if (!req.body[key].match(isOk)) {
-  //     error = true;
-  //   }
-  //   if (error) {
-  //     res.send('error -- invalid hex code');
-  //   }
-  // }
-
-  // //loop through each key in req.body
-  //   //if req.body[key] = (form validation)
-  // // for (var key in req.body) {
-  // //   if (!req.body[key].match(isOk)) {
-  // //     error = true;
-  // //   }
-  // //   if (error) {
-  // //     res.send('error -- invalid hex code');
-  // //   }
-
-
-
-  // if (!error) {
-  //   new ColorFamily ({
-  //     color1: req.body.color1,
-  //     color2: req.body.color2,
-  //     color3: req.body.color3,
-  //     color4: req.body.color4,
-  //     color5: req.body.color5,
-  //   }).save()
-  //   .then(res.sendStatus(201))
-  // }
-})
-
-app.post('/api/copycount', function(req, res) {
-  var hex = req.body.hex
-  CopyCount.findOne({}, function(err, result) {
-    if(err){
-      throw err;
-    } else {
-      var data = result.data;
-      console.log(data)
-      if(data.hasOwnProperty(hex)) {
-        data[hex]++;
-      } else {
-        data[hex] = 0;
-        CopyCount.update()
-      }
-      CopyCount.update({_id: result._id}, {$set: {data: data}}, function (err, something) {
-        if(err) {throw err}
-      })
-    }
-  });
-  res.end();
-})
+app.get('/api/daily', controller.getDaily);
+app.post('/api/copycount', controller.increaseCount);
 
 app.listen(8000, function () {
   console.log('Example app listening on port 8000!')
