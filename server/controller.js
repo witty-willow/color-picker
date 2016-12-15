@@ -9,22 +9,25 @@ var summery = function(dates, start, end) {
   start = start || 1;
   end = end || 31;
   if(start < 1) {
-    var newStart = 31 + start;
+    var newStart = 32 + start;
     sum = summery(dates, newStart, 31);
     start = 1;
   }
+  // console.log('date', dates, 'start', start, 'end', end)
   for(var i=start; i<=end; i++) {
     var oneDay = dates[i];
     if(oneDay !== undefined && oneDay.length !== 0){
       for(var familyId in oneDay){
-        if(sum.hasOwnProperty[familyId]){
-          sum[familyId] += oneDay[familyId];
+        if(sum.hasOwnProperty(familyId)){
+          sum[familyId] = sum[familyId] + oneDay[familyId];
         } else {
           sum[familyId] = oneDay[familyId];
         }
       }
     }
   }
+  // console.log('3', dates[3]);
+  // console.log('30', dates[30]);
   return sum;
 }
 
@@ -42,7 +45,6 @@ module.exports = {
 
         // Update data
         var data = result.data;
-        console.log(data)
         if(data.hasOwnProperty(familyId)) {
           data[familyId]++;
         } else {
@@ -51,7 +53,6 @@ module.exports = {
 
         //Update date
       var date = result.date;
-      console.log(result)
       if(result.dailyUpdated !== today) {
         date[today] = {};
         result.dailyUpdated = today;
@@ -59,13 +60,10 @@ module.exports = {
           if(err) {throw err}
         })
       }
-        console.log('date', date)
         if(date.hasOwnProperty(today) && date[today].hasOwnProperty(familyId)) {
           date[today][familyId]++;
-          console.log('pass')
         } else {
           date[today][familyId] = 0;
-          console.log(date[today][familyId])
         }
 
         CopyCount.update({_id: result._id}, {$set: {data: data, date: date}}, {multi: true}, function (err, something) {
@@ -91,10 +89,13 @@ module.exports = {
     CopyCount.findOne({}, function(err, result) {
       if(err){
         throw err;
-      } else if (result.weeklyUpdated === today){
-        res.send(result.weekly);
-      } else {
+      } 
+      // else if (result.weeklyUpdated === today){
+      //   res.send(result.weekly);
+      // } 
+      else {
         var weekly = summery(result.date, today - 8, today - 1)
+        console.log('weekly', weekly)
         CopyCount.update({_id: result._id}, {$set: {weeklyUpdated: today, weekly:weekly}}, function (err, something) {
           if(err) {throw err}
         })
@@ -107,9 +108,11 @@ module.exports = {
     CopyCount.findOne({}, function(err, result) {
       if(err){
         throw err;
-      } else if (result.monthlyUpdated === today){
-        res.send(result.monthly);
-      } else {
+      } 
+      // else if (result.monthlyUpdated === today){
+      //   res.send(result.monthly);
+      // } 
+      else {
         var monthly = summery(result.date)
         CopyCount.update({_id: result._id}, {$set: {monthlyUpdated: today, monthly:monthly}}, function (err, something) {
           if(err) {throw err}
