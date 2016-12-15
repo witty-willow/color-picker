@@ -6,7 +6,16 @@ import ColorFamilyInfoView from './ColorFamilyInfoView.js';
 import CreateYourOwn from './CreateYourOwn.js';
 import FilterBar from './FilterBar.js';
 import {Button, Grid} from 'react-bootstrap';
+import Templates from './Templates.js'
 
+// emm's testing data for templates
+var colors = {
+  c1: '#87CA80',
+  c2: '#95D68E',
+  c3: '#E6ACB6',
+  c4: '#E7BEAF',
+  c5: '#E9D9B2',
+}
 
 //this app relies heavily on React Bootstrap
 //https://react-bootstrap.github.io/ for the documentation
@@ -28,6 +37,7 @@ class App extends React.Component {
     this.toggleSidebarOn = this.toggleSidebarOn.bind(this);
     this.toggleSidebarOff = this.toggleSidebarOff.bind(this);
     this.toggleSubmitForm = this.toggleSubmitForm.bind(this);
+    this.fetchColors = this.fetchColors.bind(this);
   }
 
   //Convert hex values to rgb object
@@ -40,7 +50,7 @@ class App extends React.Component {
     } : null;
   }
 
-  //Filter display based on navbar choices
+  //Filter display based on navbar color choices
   handleStateChange (color) {
     var filteredColorFamilies = [];
 
@@ -79,9 +89,30 @@ class App extends React.Component {
     });
   }
 
+  filterByCopyCount(filter){
+    var filteredColorFamilies = [];
+
+    this.setState({
+      currentFilter: filter,
+    });
+  }
+
   setCurrentFamily(familyData) {
     this.setState({
       currentFamily: familyData
+    });
+  }
+
+  sortByToday() {
+    $.ajax({
+      method: 'GET',
+      url: '/api/daily',
+      success: function(resp) {
+        console.log('success', resp);
+      },
+      error: function(error) {
+        console.log('error', error);
+      }
     });
   }
 
@@ -109,11 +140,9 @@ class App extends React.Component {
       appClass: 'app-main-full'
     });
     console.log('toggle off')
-
   }
 
-  //load data before render
-  componentWillMount() {
+  fetchColors() {
     $.ajax({
       url: '/api/colors',
       success: function(data) {
@@ -124,14 +153,32 @@ class App extends React.Component {
     });
   }
 
+  //load data before render
+  componentWillMount() {
+    this.fetchColors()
+  }
+
+  sortByToday() {
+    $.ajax({
+      method: 'GET',
+      url: '/api/daily',
+      success: function (resp) {
+        console.log('success', resp);
+      },
+      error: function (error) {
+        console.log('error', error);
+      }
+    })
+  }
+
   render() {
     return (
       <div className="app-body">
-        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} />
+        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)}/>
         <div>
           <div className={this.state.appClass}>
             <div className={this.state.createClass}>
-            <CreateYourOwn/>
+            <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
             </div>
 
             <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
