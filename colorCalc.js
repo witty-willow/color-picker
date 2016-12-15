@@ -59,10 +59,13 @@ var HSLtoRGB = function(hsl) {
 
     var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
     var p = 2 * l - q;
+
     r = hue2rgb(p, q, h + 1 / 3);
+
     g = hue2rgb(p, q, h);
     b = hue2rgb(p, q, h - 1 / 3);
   }
+
   return [r * 255, g * 255, b * 255];
 };
 // console.log(HSLtoRGB(193, 67, 28));
@@ -78,12 +81,15 @@ var RGBtoHex = function(r, g, b) {
 
 var HEXtoRGB = function(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
+
+  var r = parseInt(result[1], 16);
+  var g = parseInt(result[2], 16);
+  var b = parseInt(result[3], 16);
+
+  console.log([r, g, b]);
 };
+
+console.log(HEXtoRGB('#FFFFF1'));
 
 var complimentary = function(hsl) {
   var results = [];
@@ -199,7 +205,8 @@ var warm = function(hsl) {
   var s = hsl[1];
   var l = hsl[2];
 };
-console.log(rectangularTetrad([350, 0, 0]));
+// console.log(RGBtoHSL([1,1,0]));
+// console.log(rectangularTetrad([350, 0, 0]));
 // console.log(analagous([350, 0, 0]));
 // console.log(complimentary([193, 67, 28]));
 // console.log(triad([193, 67, 28]));
@@ -217,5 +224,3 @@ module.exports.RGBtoHSL = RGBtoHSL;
 module.exports.RGBtoHex = RGBtoHex;
 module.exports.HEXtoRGB = HEXtoRGB;
 module.exports.HSLtoRGB = HSLtoRGB;
-
-
