@@ -17,9 +17,9 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/colors', function(req, res) {
-  ColorFamily.find({}, function(err, colorFamilies) {
+  ColorFamily.find({}).sort('-createdAt').exec(function(err, colorFamilies) {
     res.send(colorFamilies);
-  })
+  });
 })
 
 app.post('/api/colors', function(req, res) {
