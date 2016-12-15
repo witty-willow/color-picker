@@ -8,6 +8,10 @@ import FilterBar from './FilterBar.js';
 import Preview from './Preview.js';
 import {Button, Grid} from 'react-bootstrap';
 import { Router, Route, Link, browserHistory } from 'react-router';
+import Chat from './Chat.js';
+import ElementDisplay from './BootStrap.js';
+import ColorBox from './ColorBox.js';
+
 
 //this app relies heavily on React Bootstrap
 //https://react-bootstrap.github.io/ for the documentation
@@ -125,9 +129,15 @@ class App extends React.Component {
   }
 
   render() {
+    var colorArray = [['#F9EBEA', '#FDEDEC'], ['#F2D7D5', '#FADBD8']];
+
+
+
+
     return (
       <div className="app-body">
         <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} />
+<<<<<<< 3a3c4364aa3df5414945ebba670b5cef02dd325d
         <div>
           <div className={this.state.appClass}>
             <div className={this.state.createClass}>
@@ -138,7 +148,16 @@ class App extends React.Component {
           <div className={this.state.sidebarClass}>
             <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff}/>
           </div>
+=======
+        <div className="app-main">
+          <ColorBox style='#F9EBEA' />
+>>>>>>> working on initial interactions
         </div>
+
+        <div className="app-sidebar"> {/*  changing this to "app-sidebar-hidden" will hide this */}
+          <Chat />
+        </div>
+
       </div>
     );
   }

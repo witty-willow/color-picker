@@ -8,6 +8,10 @@ var ColorFamily = require('./db.js');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+
+// initializes the data base with colors
+var initalize = require('./initializeDB');
+
 app.use(express.static("client"));
 
 app.use(bodyParser.urlencoded({ extended: false}));
@@ -27,6 +31,7 @@ app.get('/api/colors', function(req, res) {
 io.on('connection', function(socket){
     socket.on('chat message', function(msg){
       console.log('message: ' + msg);
+      // add chat to DB
       io.emit('chat message', msg);
   });
 });

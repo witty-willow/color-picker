@@ -9,6 +9,7 @@ var FilterBar = (props) => {
   };
 
   return (
+    <div className="container">
     <Navbar fixedTop inverse>
       <Navbar.Brand>
         <a href="/">Colorz.io</a>
@@ -32,8 +33,10 @@ var FilterBar = (props) => {
       </Nav>
 
     </Navbar>
+    </div>
   );
-};
+}
+
 
 
 module.exports = FilterBar;
