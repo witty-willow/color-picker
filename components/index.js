@@ -17,6 +17,10 @@ var colors = {
   c5: '#E9D9B2',
 }
 
+var sortObj = function (obj) {
+  return Object.keys(obj).sort(function(a,b){return obj[b]-obj[a]})
+}
+
 //this app relies heavily on React Bootstrap
 //https://react-bootstrap.github.io/ for the documentation
 
@@ -103,18 +107,6 @@ class App extends React.Component {
     });
   }
 
-  sortByToday() {
-    $.ajax({
-      method: 'GET',
-      url: '/api/daily',
-      success: function(resp) {
-        console.log('success', resp);
-      },
-      error: function(error) {
-        console.log('error', error);
-      }
-    });
-  }
 
   toggleSubmitForm() {
     if (this.state.createClass === 'create-family-hidden') {
@@ -158,18 +150,43 @@ class App extends React.Component {
     this.fetchColors()
   }
 
+  //Filters
   sortByToday() {
+    var that = this
     $.ajax({
       method: 'GET',
       url: '/api/daily',
       success: function (resp) {
-        console.log('success', resp);
+        var sortedFamilyId = sortObj(resp);
+
+        that.setState({
+          currentFilter: 'Today',
+        });
+
+        var all = that.state.allFamilies;
+
+        var today = sortedFamilyId.map(function(id){
+          for(var i=0; i<all.length; i++){
+            if(all[i]._id === id) {
+              return all[i];
+            }
+          }
+        })
+
+        that.setState({
+          colorFamilies: today,
+          popularToday: today
+        });
       },
       error: function (error) {
         console.log('error', error);
       }
     })
   }
+
+  // sortByWeek(){
+    
+  // }
 
   render() {
     return (
