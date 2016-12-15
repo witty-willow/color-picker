@@ -10,34 +10,41 @@ var withinCircle = function(num) {
 };
 
 var RGBtoHSL = function(rgb) {
-  /*rgb taken as array
-  [r,g,b]  */
-  var S;
-  var L;
-  var H;
-  var max = Math.max(...rgb);
-  var min = Math.min(...rgb);
-  var maxI = rgb.indexOf(max);
 
-  L = (max - min) / 255;
+  var r = rgb[0] / 255;
+  var g = rgb[1] / 255;
+  var b = rgb[2] / 255;
 
-  if (L <= 0.5) {
-    S = (max - min) / (max + min);
+  var max = Math.max(r, g, b);
+  var min = Math.min(r, g, b);
+  var h, s, l = (max + min) / 2;
+
+  if (max == min) {
+    h = s = 0;
   } else {
-    S = (max - min) / (2 - max - min)
+    var d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b -
+          r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
+    }
+    h /= 6;
   }
-  if (maxI === 0) {
-    H = (rgb[1] - rgb[2]) / (max - min);
-  } else if (maxI === 1) {
-    H = 2 + (rgb[2] - rgb[0]) / (max - min);
-  } else if (maxI === 2) {
-    H = 4 + (rgb[0] - rgb[1]) / (max - min);
-  }
-  H *= 60;
-  return [H, S, L];
-};
+  h *= 360;
+  s *= 100;
+  l *= 100;
+  return [h, s, l];
+}
 
-// console.log(RGBtoHSL([24, 98, 118]));
+console.log(RGBtoHSL([219, 39, 99]));
 
 var HSLtoRGB = function(hsl) {
   h = h[0] / 100;
@@ -86,10 +93,10 @@ var HEXtoRGB = function(hex) {
   var g = parseInt(result[2], 16);
   var b = parseInt(result[3], 16);
 
-  console.log([r, g, b]);
+  // console.log([r, g, b]);
 };
 
-console.log(HEXtoRGB('#FFFFF1'));
+// console.log(HEXtoRGB('#FFFFF1'));
 
 var complimentary = function(hsl) {
   var results = [];
