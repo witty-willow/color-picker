@@ -39,8 +39,10 @@ app.post('/api/colors', function(req, res) {
   .catch(res.json({'message': 'Error saving palette.'}));
 });
 
-app.get('/api/daily', controller.getDaily);
 app.post('/api/copycount', controller.increaseCount);
+app.get('/api/daily', controller.getDaily);
+app.get('/api/weekly', controller.getWeekly);
+app.get('/api/monthly', controller.getMonthly);
 
 app.listen(8000, function () {
   console.log('Example app listening on port 8000!')
