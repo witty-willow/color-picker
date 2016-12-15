@@ -74,7 +74,7 @@ class CreateYourOwn extends React.Component {
     
     this.setState({
       palette: palette,
-      activeColor: color
+      activeColor: color.hex
     });
   }
 
@@ -150,11 +150,11 @@ class CreateYourOwn extends React.Component {
             <Button onClick={this.handleSubmit.bind(this)} bsSize="large" bsStyle="success" block>Save Palette</Button> 
           </Col>
           <Col xs={12} md={9}>
-            <ColorFamily isActiveView={true} handleActiveColor={this.handleActiveColor} colorFamily={this.state.palette}/> <br/>
+            <ColorFamily inCreate={true} isActiveView={true} handleActiveColor={this.handleActiveColor} colorFamily={this.state.palette}/> <br/>
             <Row>
-              <Col xs={12} md={12}><ColorFamily isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state.monochrome}/></Col>
-              <Col xs={12} md={12}><ColorFamily isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state.analogic}/></Col>
-              <Col xs={12} md={12}><ColorFamily isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state['analogic-complement']}/></Col>
+              <Col xs={12} md={12}><ColorFamily inCreate={true} isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state.monochrome}/></Col>
+              <Col xs={12} md={12}><ColorFamily inCreate={true} isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state.analogic}/></Col>
+              <Col xs={12} md={12}><ColorFamily inCreate={true} isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state['analogic-complement']}/></Col>
             </Row>
           </Col> 
         </Row> <br/> 

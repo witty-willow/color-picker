@@ -41,16 +41,25 @@ class ColorFamily extends React.Component {
       rowStyle: {
       }
     }
-    return (
-      <Row style={styles.rowStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} onClick={this.onClickHandler}>
-        {this.getFamilyColors().map(function(color, index) {
-          return this.props.isActiveView ? <span onClick={() => this.props.handleActiveColor(index + 1)} key={index}><ColorFamilySingle hover={this.state.hover} color={color.hex} key={index} index={index}/></span>
-            : <span onClick={() => this.props.handleActiveColorChange(color)} key={index}><ColorFamilySingle hover={this.state.hover} color={color.hex} key={index} index={index}/></span>
-        }.bind(this))}
-      </Row>
-    )
+    if (this.props.inCreate) {
+      return (
+        <Row style={styles.rowStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
+          {this.getFamilyColors().map(function(color, index) {
+            return this.props.isActiveView ? <span onClick={() => this.props.handleActiveColor(index + 1)} key={index}><ColorFamilySingle hover={this.state.hover} color={color.hex} key={index} index={index}/></span>
+              : <span onClick={() => this.props.handleActiveColorChange(color)} key={index}><ColorFamilySingle hover={this.state.hover} color={color.hex} key={index} index={index}/></span>
+          }.bind(this))}
+        </Row>
+      )
+    } else {
+      return (
+        <Row style={styles.rowStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} onClick={this.onClickHandler}>
+          {this.getFamilyColors().map(function(color, index) {
+            return <ColorFamilySingle hover={this.state.hover} color={color.hex} key={index} index={index}/>
+          }.bind(this))}
+        </Row>
+      )
+    }
   }
-
 }
 
 module.exports = ColorFamily;
