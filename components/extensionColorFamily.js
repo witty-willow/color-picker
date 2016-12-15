@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Row, Col, Grid} from 'react-bootstrap';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import ColorFamily from './ColorFamily';
-  
+import $ from 'jquery';
 
 var palette = {
   color1: {name: 'Cyan', hex: '#2DE1FC'},
@@ -11,6 +11,14 @@ var palette = {
   color3: {name: 'Malachite', hex: '#09E85E'},
   color4: {name: 'Mountain Meadow', hex: '#16C172'},
   color5: {name: 'Blue Dianne', hex: '#214F4B'},
+}
+
+var defaultColor = {
+  color1: {name: 'White', hex: '#FFFFFF'},
+  color2: {name: 'White', hex: '#FFFFFF'},
+  color3: {name: 'White', hex: '#FFFFFF'},
+  color4: {name: 'White', hex: '#FFFFFF'},
+  color5: {name: 'White', hex: '#FFFFFF'},
 }
 
 class ExtensionColorFamily extends React.Component {
@@ -23,13 +31,40 @@ class ExtensionColorFamily extends React.Component {
     }
     this.getBrowserColors = this.getBrowserColors.bind(this)
     this.setBrowserColors = this.setBrowserColors.bind(this)
+    this.getCurrentPalette = this.getCurrentPalette.bind(this)
   }
 
   componentWillMount(){
+    this.getCurrentPalette();
+
     this.setState({
       colorFamily: this.props.colorFamily,
       sitePalette: this.props.colorFamily
     })
+  }
+
+  getCurrentPalette(){
+    var that = this;
+    $.ajax({
+      method: 'GET',
+      url: 'http://localhost:8000/api/ext',
+      success: function(resp) {
+        if (resp !== 'No family selected'){
+          that.setState({
+            colorFamily: {
+              color1: resp.color1,
+              color2: resp.color2,
+              color3: resp.color3,
+              color4: resp.color4,
+              color5: resp.color5,
+            }
+          })
+        }
+      },
+      error: function(error) {
+        console.log('error', error);
+      }
+    });
   }
 
   setBrowserColors() {
@@ -80,6 +115,7 @@ class ExtensionColorFamily extends React.Component {
   render() {
     return (
       <div>
+        <button onClick={this.getCurrentPalette}>test</button>
         <ColorFamily colorFamily={this.state.colorFamily}/>
         <button onClick={this.setBrowserColors}>Apply Colors</button>
         <button onClick={this.getBrowserColors}>Get Site Colors</button>
@@ -91,6 +127,6 @@ class ExtensionColorFamily extends React.Component {
 }
 
 ReactDOM.render(
-  <ExtensionColorFamily colorFamily={palette}/>,
+  <ExtensionColorFamily colorFamily={defaultColor}/>,
   document.getElementById('extensionBody')
 );
