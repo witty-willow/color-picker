@@ -81,8 +81,7 @@ var colors = [
     '#186a3b'],
 
 /* Nephritis */
-    ['#27ae60',
-    '#e9f7ef',
+   ['#e9f7ef',
     '#d4efdf',
     '#a9dfbf',
     '#7dcea0',

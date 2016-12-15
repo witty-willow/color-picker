@@ -8,16 +8,25 @@ body {
   top: 1000px;
   height: 20px;
   width: 20px;
-  display: inline-block;
+  display: inline-flex;
+  float: left;
 }
 
 .box-hover {
-  background-color: black;
   height: 30px;
   width: 30px;
   border-radius: 2px;
-  display: inline-block;
+  float:left;
+  display: inline-flex;
 }
+
+.color-row {
+  transition-duration: .375;
+  display: block;
+  box-sizing: border-box;
+  height: 20px; /* Need to set at same size as the box  */
+}
+
 
 .app-body {
   position: relative;

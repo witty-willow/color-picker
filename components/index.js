@@ -12,6 +12,7 @@ import Chat from './Chat.js';
 import ElementDisplay from './BootStrap.js';
 import ColorBox from './ColorBox.js';
 import colorList from '../client/assets/colors.js';
+import ColorRow from './ColorRow.js';
 
 //this app relies heavily on React Bootstrap
 //https://react-bootstrap.github.io/ for the documentation
@@ -146,17 +147,9 @@ class App extends React.Component {
         <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} />
 
         <div className="app-main">
-          {colorList.map((colorRow) => {
-           
-            return colorRow.map((color) => {
-
-             <ColorBox style={styles.background.backgroundColor} />
-              
-            })
-          
-          })
-          }
-
+          {colorList.map((colorRow, index) =>
+             <ColorRow colors={colorRow} key={index}/>
+          )}
         </div>
 
         <div className="app-sidebar"> {/*  changing this to "app-sidebar-hidden" will hide this */}
