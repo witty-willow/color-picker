@@ -8,9 +8,10 @@ var summery = function(dates, start, end) {
   var sum = {};
   start = start || 1;
   end = end || 31;
-  if(end > 31) {
-    var newEnd = end - 31;
-    sum = summery(dates, 1, newEnd);
+  if(start < 1) {
+    var newStart = 31 + start;
+    sum = summery(dates, newStart, 31);
+    start = 1;
   }
   for(var i=start; i<=end; i++) {
     var oneDay = dates[i];
@@ -54,7 +55,7 @@ module.exports = {
       if(result.dailyUpdated !== today) {
         date[today] = {};
         result.dailyUpdated = today;
-        CopyCount.update({_id: result._id}, {$set: {dailyUpdated: dailyUpdated}},{multi: true}, function (err, something) {
+        CopyCount.update({_id: result._id}, {$set: {dailyUpdated: result.dailyUpdated}},{multi: true}, function (err, something) {
           if(err) {throw err}
         })
       }
@@ -93,7 +94,7 @@ module.exports = {
       } else if (result.weeklyUpdated === today){
         res.send(result.weekly);
       } else {
-        var weekly = summery(result.date, today, today + 7)
+        var weekly = summery(result.date, today - 8, today - 1)
         CopyCount.update({_id: result._id}, {$set: {weeklyUpdated: today, weekly:weekly}}, function (err, something) {
           if(err) {throw err}
         })
