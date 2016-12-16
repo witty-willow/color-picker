@@ -26,8 +26,6 @@ var summery = function(dates, start, end) {
       }
     }
   }
-  // console.log('3', dates[3]);
-  // console.log('30', dates[30]);
   return sum;
 }
 
