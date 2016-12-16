@@ -77,7 +77,7 @@ class App extends React.Component {
               include = true;
           }
           if (color === 'green') {
-            if (colorRgb.green > 1.7 * colorRgb.blue) && colorRgb.green > (1.7 * colorRgb.red))
+            if (colorRgb.green > (1.7 * colorRgb.blue) && colorRgb.green > (1.7 * colorRgb.red))
               include = true;
           }
           if (color === 'all') {
@@ -264,29 +264,27 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-body">
-       <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
-        <div>
-          <div className={this.state.createClass}>
-          <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
-          </div>
-          <div className={this.state.appClass}>
-
-            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
-          </div>
-          <div className={this.state.sidebarClass}>
-            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff} fetchColors={this.fetchColors.bind(this)}/>
-          </div>
-        </div>
+      <br/>
+      <MiniGame/>
       </div>
     );
   }
 }
 
-// <miniGame/>
-
 /*
- 
-*/
+<FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
+        <div>
+          <div className={this.state.createClass}>
+          <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
+          </div>
+          <div className={this.state.appClass}>
+            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
+          </div>
+          <div className={this.state.sidebarClass}>
+            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff} fetchColors={this.fetchColors.bind(this)}/>
+          </div>
+        </div> */
+
 
 ReactDOM.render(
   <App />,

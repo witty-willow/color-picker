@@ -50,6 +50,7 @@ class ColorFamilyInfoView extends React.Component {
   }
 
   copyCount() {
+    console.log(JSON.stringify(this.props.currentFamily))
     $.ajax({
       method: 'POST',
       url: '/api/copycount',

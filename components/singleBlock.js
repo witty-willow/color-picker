@@ -2,7 +2,7 @@ import React from 'react';
 import {Col} from 'react-bootstrap';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-class ColorFamilySingle extends React.Component {
+class SingleBlock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,15 +22,6 @@ class ColorFamilySingle extends React.Component {
   }
 
   render() {
-    var rgb = this.hexToRGB(this.props.color);
-    let fontColor = null;
-    //Functionality for hover on single color to show hex value, either light or dark
-    //Not currently implemented but available in css file under .color-single
-    if (rgb.red > 127 || rgb.green > 127 || rgb.blue > 127) {
-      fontColor = '#000000';
-    } else {
-      fontColor = '#ffffff';
-    }
     var styles = {
       background: {
         backgroundColor: this.props.color,
@@ -39,9 +30,6 @@ class ColorFamilySingle extends React.Component {
         alignItems: 'center',
         justifyContent: 'center',
         transition: 'all 0.2s ease-in-out',
-      },
-      text: {
-        color: fontColor,
       }
     };
     if (this.state.hover) {
@@ -63,4 +51,4 @@ class ColorFamilySingle extends React.Component {
   }
 }
 
-module.exports = ColorFamilySingle;
+module.exports = SingleBlock;
