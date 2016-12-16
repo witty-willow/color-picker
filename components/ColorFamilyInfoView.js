@@ -1,6 +1,6 @@
 import React from 'react';
 import ColorInfoView from './ColorInfoView';
-import {Panel, Button, Row, Col, Grid, Modal} from 'react-bootstrap';
+import {Panel, Button, Row, Col, Grid, Modal, Tooltip} from 'react-bootstrap';
 import Templates from './Templates';
 import $ from 'jquery';
 
@@ -23,6 +23,7 @@ class ColorFamilyInfoView extends React.Component {
       this.showModal = this.showModal.bind(this);
       this.hideModal = this.hideModal.bind(this);
       this.sendToExt = this.sendToExt.bind(this);
+
       this.deletePalette = this.deletePalette.bind(this);
       this.editPalette = this.editPalette.bind(this);
   }
@@ -83,8 +84,6 @@ class ColorFamilyInfoView extends React.Component {
     })
   }
 
-<<<<<<< HEAD
-=======
   deletePalette() {
     $.ajax({
       method: 'DELETE',
@@ -107,8 +106,18 @@ class ColorFamilyInfoView extends React.Component {
     this.props.toggleSubmitForm();
   }
 
->>>>>>> upstream/master
   render() {
+    var styles = {
+      toolTip: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        position: 'absolute',
+        opacity: 0,
+        top: '-1px',
+        transition: 'opacity 0.2s ease-in-out',
+        zIndex: '1000',
+      },
+    }
     var that = this;
     return (
       <div className="sidebar-content">
@@ -125,15 +134,6 @@ class ColorFamilyInfoView extends React.Component {
         <Button block bsStyle="primary" onClick={this.showModal}>
           Preview Palette
         </Button> <br></br>
-<<<<<<< HEAD
-        <Button block bsStyle="default" onClick={this.props.toggleSidebarOff}>Hide Sidebar</Button> <br></br>
-        <Button bsStyle="primary" onClick={this.showModal}>
-          Preview Color Scheme
-        </Button>
-        <Button bsStyle="primary" onClick={this.sendToExt}>
-          Test Color Scheme
-        </Button>
-=======
         <Button block bsStyle="danger" onClick={this.deletePalette}>
           Delete Palette
         </Button> <br></br>
@@ -147,7 +147,6 @@ class ColorFamilyInfoView extends React.Component {
         <Button block bsStyle="default" onClick={this.props.toggleSidebarOff}>
           Hide Sidebar
         </Button> <br></br>
->>>>>>> upstream/master
         <Modal
           {...this.props}
           show={this.state.show}
