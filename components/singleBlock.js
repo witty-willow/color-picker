@@ -36,12 +36,8 @@ class SingleBlock extends React.Component {
     }
     return (
       <div onClick={this.props.click} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
-      {this.props.index === 0 ? (
-        <Col className="color-single" style={styles.background} xs={2} xsOffset={1}>
-          <h4 style={styles.text}>{this.props.color}</h4>
-        </Col>
-      ) : (
-        <Col className="color-single" style={styles.background} xs={2}>
+      { (
+        <Col className="color-single" style={styles.background} xs={1}>
           <h4 style={styles.text}>{this.props.color}</h4>
         </Col>
       )}

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Row, Col, Grid} from 'react-bootstrap';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import SingleBlock from './singleBlock.js';
+import Colume from './colume.js';
 import tinycolor from 'tinycolor2';
 
 
@@ -9,32 +9,30 @@ class MiniGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      normal: "#f48042",
-      lighter: "#f7a072",
-      index: 0,
+      normal: "#ef8275",
+      lighter: "#f4aba3",
+      index: 1,
       size: 2,
       hover: false,
-      colorFamily: {_id:"5853298cfd140508aaa054b9",name:"Blue",color1:{name:"Pine Tree",hex:"#1A2303"},color2:{name:"Green Leaf",hex:"#3C5307"},color3:{name:"Green Leaf",hex:"#5E830A"},color4:{name:"Pistachio",hex:"#81B30C"},color5:{name:"Inch Worm",hex:"#A4E40E"},__v:0,createdAt:"2016-12-15T23:38:52.022Z"}
+      gap: .10
     };
     this.toggleHover = this.toggleHover.bind(this);
     this.onClickHandler = this.onClickHandler.bind(this);
   }
 
-  getFamilyColor() {
+  getColor() {
     var hex = '#'+Math.random().toString(16).substr(-6);
     var hsl = tinycolor(hex).toHsl();
-    hsl.l += .10
+    hsl.l += this.state.gap
     var lighter = tinycolor(hsl).toHexString();
     this.setState({
       normal: hex,
       lighter: lighter
     })
-
-    console.log(this.state.normal, this.state.lighter)
   }
 
   getIndex(){
-    var newInd = Math.floor(Math.random()*Math.pow(this.state.size, 2));
+    var newInd = Math.ceil(Math.random()*Math.pow(this.state.size, 2));
     this.setState({
       index: newInd
     })
@@ -44,29 +42,51 @@ class MiniGame extends React.Component {
     this.setState({hover: !this.state.hover})
   }
 
+  correct() {
+    this.setState({
+      size: ++this.state.size,
+      gap: this.state.gap * 0.75
+    })
+    this.getIndex();
+    this.getColor();
+  }
+
+  incorrect() {
+    this.setState({
+      size: 2,
+      gap: .10
+    })
+    this.getIndex();
+    this.getColor();
+    console.log('Wrong tile! YOU LOSE!!');
+  }
+
   onClickHandler() {
 
   }
 
   render() {
+    //Make rows
+    var rows = []
+    for(var i=0; i<this.state.size; i++){
+      rows.push(<Row onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
+       <Colume correct={this.correct.bind(this)} incorrect={this.incorrect.bind(this)} index={this.state.index} rowInd={i} size={this.state.size} hover={this.state.hover} normal={this.state.normal} lighter={this.state.lighter} click={this.getColor.bind(this)}/>
+      </Row>)
+    }
+
     return (
-      <div>
-      <Row onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
-        <Col>
-          <SingleBlock hover={this.state.hover} color={this.state.normal} click={this.getNewIndex.bind(this)}/>
-          <SingleBlock hover={this.state.hover} color={this.state.normal}/>
-        </Col>
-      </Row>
-      <Row onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
-        <Col>
-          <SingleBlock hover={this.state.hover} color={this.state.normal}/>
-          <SingleBlock hover={this.state.hover} color={this.state.lighter}/>
-        </Col>
-      </Row>
-      </div>
+      <div class='game'>{rows}</div>
     )
   }
 }
+
+
+// <Row onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
+//         <Col>
+//           <SingleBlock hover={this.state.hover} color={this.state.normal}/>
+//           <SingleBlock hover={this.state.hover} color={this.state.lighter}/>
+//         </Col>
+//       </Row>
 
  // <div onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
  //      {this.props.index === 0 ? (

@@ -110,3 +110,7 @@ body {
   opacity: 1;
   transition: opacity .6s ease-in;
 }
+
+.game{
+  text-align: center
+}
