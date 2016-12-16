@@ -32,14 +32,17 @@ class ExtensionColorFamily extends React.Component {
     this.getBrowserColors = this.getBrowserColors.bind(this)
     this.setBrowserColors = this.setBrowserColors.bind(this)
     this.getCurrentPalette = this.getCurrentPalette.bind(this)
+    this.saveBrowserColors = this.saveBrowserColors.bind(this)
   }
 
   componentWillMount(){
     this.getCurrentPalette();
 
     this.setState({
+      familyName: 'Click the "Test Color Scheme" button to test!',
       colorFamily: this.props.colorFamily,
-      sitePalette: this.props.colorFamily
+      sitePalette: this.props.colorFamily,
+      siteName: 'Click "Get Site Colors" to find the palette of this site!'
     })
   }
 
@@ -50,7 +53,9 @@ class ExtensionColorFamily extends React.Component {
       url: 'http://localhost:8000/api/ext',
       success: function(resp) {
         if (resp !== 'No family selected'){
+          console.log('res', resp)
           that.setState({
+            familyName: resp.name,
             colorFamily: {
               color1: resp.color1,
               color2: resp.color2,
@@ -99,12 +104,13 @@ class ExtensionColorFamily extends React.Component {
       chrome.tabs.sendMessage(tabs[0].id, {task: 'getBgColors'}, function(res){
         console.log('received response', res)
         that.setState({
+          siteName: res.name,
           sitePalette: {
-            color1: {name: 'c1', hex: res[0]},
-            color2: {name: 'c2', hex: res[1]},
-            color3: {name: 'c3', hex: res[2]},
-            color4: {name: 'c4', hex: res[3]},
-            color5: {name: 'c5', hex: res[4]}         
+            color1: {name: 'c1', hex: res.palette[0]},
+            color2: {name: 'c2', hex: res.palette[1]},
+            color3: {name: 'c3', hex: res.palette[2]},
+            color4: {name: 'c4', hex: res.palette[3]},
+            color5: {name: 'c5', hex: res.palette[4]}         
           }
         })
         console.log('new state', that.state.sitePalette)
@@ -112,15 +118,31 @@ class ExtensionColorFamily extends React.Component {
     }
   }
 
+  saveBrowserColors() {
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:8000/api/colors',
+      data: {name: this.state.siteName, palette: this.state.sitePalette},
+      dataType: 'JSON',
+      success: function (resp) {
+        console.log('success', resp);
+      }.bind(this),
+      error: function (error) {
+        console.log('error', error);
+      }
+    })
+  }
+
   render() {
     return (
       <div>
-        <button onClick={this.getCurrentPalette}>test</button>
+        Active Family: <b>{this.state.familyName}</b>
         <ColorFamily colorFamily={this.state.colorFamily}/>
         <button onClick={this.setBrowserColors}>Apply Colors</button>
         <button onClick={this.getBrowserColors}>Get Site Colors</button>
-        <br></br>Site Palette:
+        <br></br>Site Palette: <b>{this.state.siteName}</b>
         <ColorFamily colorFamily={this.state.sitePalette}/>
+        <button onClick={this.saveBrowserColors}>Save this palette</button>
       </div>
     )
   }

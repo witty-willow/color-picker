@@ -7,7 +7,8 @@ var ColorFamily = db.ColorFamily;
 var controller = require('./controller.js');
 
 // current color family for chrome ext
-var extColorFamily = null;
+var extUserPalette = null;
+var extSitePalette = null;
 
 app.use(express.static("client"));
 
@@ -57,15 +58,15 @@ app.delete('/api/colors', function(req, res) {
 
 // chrome ext routes
 app.get('/api/ext', function(req, res){
-  console.log('got req from ext', extColorFamily)
-  if (extColorFamily){
-    res.send(extColorFamily);
+  console.log('got req from ext', extUserPalette)
+  if (extUserPalette){
+    res.send(extUserPalette);
   } else {
     res.send('No family selected')
   }
 })
 app.post('/api/ext', function(req, res) {
-  extColorFamily = req.body.currentFamily
+  extUserPalette = req.body.currentFamily
   res.send('done');
 })
 
