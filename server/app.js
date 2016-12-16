@@ -29,18 +29,28 @@ app.get('/api/colors', function(req, res) {
 app.post('/api/colors', function(req, res) {
   var palette = req.body.palette;
   var name = req.body.name;
-
-  new ColorFamily({
+  var data = {
     name: name,
     color1: {name: palette.color1.name, hex: palette.color1.hex},
     color2: {name: palette.color2.name, hex: palette.color2.hex},
     color3: {name: palette.color3.name, hex: palette.color3.hex},
     color4: {name: palette.color4.name, hex: palette.color4.hex},
     color5: {name: palette.color5.name, hex: palette.color5.hex}
-  })
-  .save()
-  .then(res.json({'message': 'New palette saved.'}))
-  .catch(res.json({'message': 'Error saving palette.'}));
+  };
+
+  ColorFamily.findOneAndUpdate({name: name}, data, function(error, colorFamily) {
+    if (error) {
+      console.log('throwing errr');
+      throw error;
+    } else if (colorFamily) {
+      res.json({message: 'Palette already exists. Updated.'});
+    } else {
+      new ColorFamily(data)
+      .save()
+      .then(res.json({'message': 'New palette saved.'}))
+      .catch(res.json({'message': 'Error saving palette.'}));
+    }
+  });  
 });
 
 app.delete('/api/colors', function(req, res) {

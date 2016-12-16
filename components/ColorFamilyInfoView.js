@@ -24,6 +24,7 @@ class ColorFamilyInfoView extends React.Component {
       this.hideModal = this.hideModal.bind(this);
       this.sendToExt = this.sendToExt.bind(this);
       this.deletePalette = this.deletePalette.bind(this);
+      this.editPalette = this.editPalette.bind(this);
   }
 
   
@@ -97,6 +98,12 @@ class ColorFamilyInfoView extends React.Component {
     })
   }
 
+  editPalette() {
+    this.props.handlePaletteEdit(this.props.currentFamily, this.props.currentFamily.name);
+    this.props.toggleSidebarOff();
+    this.props.toggleSubmitForm();
+  }
+
   render() {
     var that = this;
     var styles = {
@@ -125,8 +132,11 @@ class ColorFamilyInfoView extends React.Component {
         <Button block bsStyle="primary" onClick={this.showModal}>
           Preview Palette
         </Button> <br></br>
-         <Button block bsStyle="danger" onClick={this.deletePalette}>
+        <Button block bsStyle="danger" onClick={this.deletePalette}>
           Delete Palette
+        </Button> <br></br>
+        <Button block bsStyle="warning" onClick={this.editPalette}>
+          Edit Palette
         </Button> <br></br>
         <Button block bsStyle="success" onClick={this.sendToExt}>
           <Tooltip style={styles.toolTip} placement="top" className="in" id="tooltip">Copied!</Tooltip>
