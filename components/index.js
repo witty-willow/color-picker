@@ -123,7 +123,17 @@ class App extends React.Component {
     if (this.state.createClass === 'create-family-hidden') {
       this.setState({createClass: 'create-family-show'});
     } else {
-      this.setState({createClass: 'create-family-hidden'});
+      this.setState({
+        createClass: 'create-family-hidden',
+        familyName: '',
+        palette: {
+          color1: {name: 'Cyan', hex: '#2DE1FC', rgb: {a: 1, b: 252, g: 225, r: 45}},
+          color2: {name: 'Spring Green', hex: '#2AFC98', rgb: {a: 1, b: 152, g: 252, r: 42}},
+          color3: {name: 'Malachite', hex: '#09E85E', rgb: {a: 1, b: 94, g: 232, r: 9}},
+          color4: {name: 'Mountain Meadow', hex: '#16C172', rgb: {a: 1, b: 114, g: 193, r: 22}},
+          color5: {name: 'Blue Dianne', hex: '#214F4B', rgb: {a: 1, b: 75, g: 79, r: 33}},
+        }
+      });
     }
   }
 
