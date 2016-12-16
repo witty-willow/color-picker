@@ -41,15 +41,18 @@ app.post('/api/colors', function(req, res) {
 
   ColorFamily.findOneAndUpdate({name: name}, data, function(error, colorFamily) {
     if (error) {
-      console.log('throwing errr');
       throw error;
     } else if (colorFamily) {
       res.json({message: 'Palette already exists. Updated.'});
     } else {
       new ColorFamily(data)
-      .save()
-      .then(res.json({'message': 'New palette saved.'}))
-      .catch(res.json({'message': 'Error saving palette.'}));
+      .save(function(err) {
+        if (err) {
+          res.json({'message': 'Error saving palette.'})
+        } else {
+          res.json({'message': 'New palette saved.'})
+        }
+      });
     }
   });  
 });
