@@ -27,7 +27,10 @@ class ExtensionColorFamily extends React.Component {
     super(props);
 
     this.state = {
-      greeting: 'hello'
+      familyName: null,
+      colorFamily: null,
+      sitePalette: null,
+      siteName: 'Click "Get Site Colors" to find the palette of this site!'
     }
     this.getBrowserColors = this.getBrowserColors.bind(this)
     this.setBrowserColors = this.setBrowserColors.bind(this)
@@ -38,12 +41,12 @@ class ExtensionColorFamily extends React.Component {
   componentWillMount(){
     this.getCurrentPalette();
 
-    this.setState({
-      familyName: 'Click the "Test Color Scheme" button to test!',
-      colorFamily: this.props.colorFamily,
-      sitePalette: this.props.colorFamily,
-      siteName: 'Click "Get Site Colors" to find the palette of this site!'
-    })
+    // this.setState({
+    //   familyName: 'Click the "Test Color Scheme" button to test!',
+    //   colorFamily: this.props.colorFamily,
+    //   sitePalette: this.props.colorFamily,
+    //   siteName: 'Click "Get Site Colors" to find the palette of this site!'
+    // })
   }
 
   getCurrentPalette(){
@@ -136,19 +139,28 @@ class ExtensionColorFamily extends React.Component {
   render() {
     return (
       <div>
-        Active Family: <b>{this.state.familyName}</b>
-        <ColorFamily colorFamily={this.state.colorFamily}/>
-        <button onClick={this.setBrowserColors}>Apply Colors</button>
-        <button onClick={this.getBrowserColors}>Get Site Colors</button>
+        Active Family: <b>{this.state.familyName || 'none selected'}</b>
+        { this.state.colorFamily &&
+          <div>
+          <ColorFamily colorFamily={this.state.colorFamily}/>
+          <button onClick={this.setBrowserColors}>Apply Colors</button>
+          </div>
+        }
+        { !this.state.colorFamily && <p display='none'>Please send a palette from your app to apply colors to this page.</p>}
         <br></br>Site Palette: <b>{this.state.siteName}</b>
-        <ColorFamily colorFamily={this.state.sitePalette}/>
-        <button onClick={this.saveBrowserColors}>Save this palette</button>
+        <button onClick={this.getBrowserColors}>Get Site Colors</button>
+        { this.state.sitePalette &&
+          <div>
+            <ColorFamily colorFamily={this.state.sitePalette}/>
+            <button onClick={this.saveBrowserColors}>Save this palette</button>
+          </div>
+        }
       </div>
     )
   }
 }
 
 ReactDOM.render(
-  <ExtensionColorFamily colorFamily={defaultColor}/>,
+  <ExtensionColorFamily />,
   document.getElementById('extensionBody')
 );
