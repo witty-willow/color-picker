@@ -18,6 +18,8 @@ var rgbToHex = function(str){
 
 
 var colorHandler = function(req, sender, res){
+  var currentSite = window.location.host;
+  console.log('this site', currentSite);
   var nodes = document.querySelectorAll('*');
   var divs = nodes;
 
@@ -28,7 +30,6 @@ var colorHandler = function(req, sender, res){
 
     for (var i = 0; i < divs.length; i+=4) {
       var currentKey = 'color' + (i % 5 + 1);
-      console.log('current color', colors[currentKey]);
       divs[i].style['background-color'] = colors[currentKey].hex;
     }
 
@@ -55,7 +56,7 @@ var colorHandler = function(req, sender, res){
       return colors[b] - colors[a];
     }).slice(0,5);
 
-    res(top5);
+    res({name: currentSite, palette: top5});
   }
 };
 

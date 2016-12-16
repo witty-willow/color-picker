@@ -1,6 +1,6 @@
 import React from 'react';
 import ColorInfoView from './ColorInfoView';
-import {Panel, Button, Row, Col, Grid, Modal, Tooltip, OverlayTrigger, Popover} from 'react-bootstrap';
+import {Panel, Button, Row, Col, Grid, Modal, Tooltip} from 'react-bootstrap';
 import Templates from './Templates';
 import $ from 'jquery';
 
@@ -23,6 +23,7 @@ class ColorFamilyInfoView extends React.Component {
       this.showModal = this.showModal.bind(this);
       this.hideModal = this.hideModal.bind(this);
       this.sendToExt = this.sendToExt.bind(this);
+
       this.deletePalette = this.deletePalette.bind(this);
       this.editPalette = this.editPalette.bind(this);
   }
@@ -32,6 +33,7 @@ class ColorFamilyInfoView extends React.Component {
     this.setState({show: true});
   }
 
+  
   hideModal() {
     this.setState({show: false});
   }
@@ -105,7 +107,6 @@ class ColorFamilyInfoView extends React.Component {
   }
 
   render() {
-    var that = this;
     var styles = {
       toolTip: {
         marginLeft: 'auto',
@@ -115,8 +116,9 @@ class ColorFamilyInfoView extends React.Component {
         top: '-1px',
         transition: 'opacity 0.2s ease-in-out',
         zIndex: '1000',
-      }
-    };
+      },
+    }
+    var that = this;
     return (
       <div className="sidebar-content">
         <h3>{this.props.currentFamily.name}</h3>
