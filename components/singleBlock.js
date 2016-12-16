@@ -1,6 +1,5 @@
 import React from 'react';
 import {Col} from 'react-bootstrap';
-import CopyToClipboard from 'react-copy-to-clipboard';
 
 class SingleBlock extends React.Component {
   constructor(props) {
@@ -36,7 +35,7 @@ class SingleBlock extends React.Component {
       styles.background.boxShadow = '-3px 0 10px'
     }
     return (
-      <div onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
+      <div onClick={this.props.click} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
       {this.props.index === 0 ? (
         <Col className="color-single" style={styles.background} xs={2} xsOffset={1}>
           <h4 style={styles.text}>{this.props.color}</h4>

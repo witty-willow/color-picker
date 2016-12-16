@@ -2,12 +2,17 @@ import React from 'react';
 import {Row, Col, Grid} from 'react-bootstrap';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import SingleBlock from './singleBlock.js';
+import tinycolor from 'tinycolor2';
 
 
 class MiniGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      normal: "#f48042",
+      lighter: "#f7a072",
+      index: 0,
+      size: 2,
       hover: false,
       colorFamily: {_id:"5853298cfd140508aaa054b9",name:"Blue",color1:{name:"Pine Tree",hex:"#1A2303"},color2:{name:"Green Leaf",hex:"#3C5307"},color3:{name:"Green Leaf",hex:"#5E830A"},color4:{name:"Pistachio",hex:"#81B30C"},color5:{name:"Inch Worm",hex:"#A4E40E"},__v:0,createdAt:"2016-12-15T23:38:52.022Z"}
     };
@@ -15,11 +20,32 @@ class MiniGame extends React.Component {
     this.onClickHandler = this.onClickHandler.bind(this);
   }
 
+  getFamilyColor() {
+    var hex = '#'+Math.random().toString(16).substr(-6);
+    var hsl = tinycolor(hex).toHsl();
+    hsl.l += .10
+    var lighter = tinycolor(hsl).toHexString();
+    this.setState({
+      normal: hex,
+      lighter: lighter
+    })
+
+    console.log(this.state.normal, this.state.lighter)
+  }
+
+  getIndex(){
+    var newInd = Math.floor(Math.random()*Math.pow(this.state.size, 2));
+    this.setState({
+      index: newInd
+    })
+  }
+
   toggleHover() {
     this.setState({hover: !this.state.hover})
   }
 
   onClickHandler() {
+
   }
 
   render() {
@@ -27,14 +53,14 @@ class MiniGame extends React.Component {
       <div>
       <Row onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
         <Col>
-          <SingleBlock hover={this.state.hover} color={this.state.colorFamily.color1.hex}/>
-          <SingleBlock hover={this.state.hover} color={this.state.colorFamily.color2.hex}/>
+          <SingleBlock hover={this.state.hover} color={this.state.normal} click={this.getNewIndex.bind(this)}/>
+          <SingleBlock hover={this.state.hover} color={this.state.normal}/>
         </Col>
       </Row>
       <Row onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
         <Col>
-          <SingleBlock hover={this.state.hover} color={this.state.colorFamily.color3.hex}/>
-          <SingleBlock hover={this.state.hover} color={this.state.colorFamily.color4.hex}/>
+          <SingleBlock hover={this.state.hover} color={this.state.normal}/>
+          <SingleBlock hover={this.state.hover} color={this.state.lighter}/>
         </Col>
       </Row>
       </div>
