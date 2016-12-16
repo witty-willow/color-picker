@@ -23,6 +23,8 @@ class ColorFamilyInfoView extends React.Component {
       this.showModal = this.showModal.bind(this);
       this.hideModal = this.hideModal.bind(this);
       this.sendToExt = this.sendToExt.bind(this);
+      this.deletePalette = this.deletePalette.bind(this);
+      this.editPalette = this.editPalette.bind(this);
   }
 
   
@@ -81,6 +83,31 @@ class ColorFamilyInfoView extends React.Component {
     })
   }
 
+<<<<<<< HEAD
+=======
+  deletePalette() {
+    $.ajax({
+      method: 'DELETE',
+      url: 'api/colors',
+      data: {name: this.props.currentFamily.name},
+      success: function(resp) {
+        console.log('success', resp);
+        this.props.toggleSidebarOff();
+        this.props.fetchColors();
+      }.bind(this),
+      error: function(error) {
+        console.log('error', error);
+      }
+    })
+  }
+
+  editPalette() {
+    this.props.handlePaletteEdit(this.props.currentFamily, this.props.currentFamily.name);
+    this.props.toggleSidebarOff();
+    this.props.toggleSubmitForm();
+  }
+
+>>>>>>> upstream/master
   render() {
     var that = this;
     return (
@@ -98,6 +125,7 @@ class ColorFamilyInfoView extends React.Component {
         <Button block bsStyle="primary" onClick={this.showModal}>
           Preview Palette
         </Button> <br></br>
+<<<<<<< HEAD
         <Button block bsStyle="default" onClick={this.props.toggleSidebarOff}>Hide Sidebar</Button> <br></br>
         <Button bsStyle="primary" onClick={this.showModal}>
           Preview Color Scheme
@@ -105,6 +133,21 @@ class ColorFamilyInfoView extends React.Component {
         <Button bsStyle="primary" onClick={this.sendToExt}>
           Test Color Scheme
         </Button>
+=======
+        <Button block bsStyle="danger" onClick={this.deletePalette}>
+          Delete Palette
+        </Button> <br></br>
+        <Button block bsStyle="warning" onClick={this.editPalette}>
+          Edit Palette
+        </Button> <br></br>
+        <Button block bsStyle="success" onClick={this.sendToExt}>
+          <Tooltip style={styles.toolTip} placement="top" className="in" id="tooltip">Copied!</Tooltip>
+          Send to Extension
+        </Button> <br></br>
+        <Button block bsStyle="default" onClick={this.props.toggleSidebarOff}>
+          Hide Sidebar
+        </Button> <br></br>
+>>>>>>> upstream/master
         <Modal
           {...this.props}
           show={this.state.show}

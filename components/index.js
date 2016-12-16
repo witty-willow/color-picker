@@ -34,7 +34,15 @@ class App extends React.Component {
       allFamilies: [],
       appClass: 'app-main-full',
       sidebarClass: 'app-sidebar-hidden',
-      createClass: 'create-family-hidden'
+      createClass: 'create-family-hidden',
+      familyName: '',
+      palette: {
+        color1: {name: 'Cyan', hex: '#2DE1FC', rgb: {a: 1, b: 252, g: 225, r: 45}},
+        color2: {name: 'Spring Green', hex: '#2AFC98', rgb: {a: 1, b: 152, g: 252, r: 42}},
+        color3: {name: 'Malachite', hex: '#09E85E', rgb: {a: 1, b: 94, g: 232, r: 9}},
+        color4: {name: 'Mountain Meadow', hex: '#16C172', rgb: {a: 1, b: 114, g: 193, r: 22}},
+        color5: {name: 'Blue Dianne', hex: '#214F4B', rgb: {a: 1, b: 75, g: 79, r: 33}},
+      }
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
@@ -42,6 +50,9 @@ class App extends React.Component {
     this.toggleSidebarOff = this.toggleSidebarOff.bind(this);
     this.toggleSubmitForm = this.toggleSubmitForm.bind(this);
     this.fetchColors = this.fetchColors.bind(this);
+    this.handlePaletteChange = this.handlePaletteChange.bind(this);
+    this.handlePaletteEdit = this.handlePaletteEdit.bind(this);
+
   }
 
   //Convert hex values to rgb object
@@ -260,20 +271,40 @@ class App extends React.Component {
 
   }
 
+  handlePaletteChange(palette) {
+    this.setState({
+      palette: palette
+    });
+  }
+
+  handleFormChange(key) {
+    return function (e) {
+      var state = {};
+      state[key] = e.target.value;
+      this.setState(state);
+    }.bind(this);
+  }
+
+  handlePaletteEdit(palette, name) {
+    this.setState({
+      palette: palette,
+      familyName: name
+    });
+  }
+
   render() {
     return (
       <div className="app-body">
         <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
         <div>
-          <div className={this.state.createClass}>
-          <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
+          <div id="0" className={this.state.createClass}>
+          <CreateYourOwn fetchColors={this.fetchColors.bind(this)} palette={this.state.palette} familyName={this.state.familyName} handlePaletteChange={this.handlePaletteChange.bind(this)} handleFormChange={this.handleFormChange.bind(this)}/>
           </div>
           <div className={this.state.appClass}>
-
             <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
           </div>
           <div className={this.state.sidebarClass}>
-            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff} fetchColors={this.fetchColors.bind(this)}/>
+            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSubmitForm={this.toggleSubmitForm} toggleSidebarOff={this.toggleSidebarOff} fetchColors={this.fetchColors.bind(this)} handlePaletteEdit={this.handlePaletteEdit.bind(this)}/>
           </div>
         </div>
       </div>
