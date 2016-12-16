@@ -1,6 +1,6 @@
 import React from 'react';
 import ColorInfoView from './ColorInfoView';
-import {Panel, Button, Row, Col, Grid, Modal, Tooltip, OverlayTrigger, Popover} from 'react-bootstrap';
+import {Panel, Button, Row, Col, Grid, Modal} from 'react-bootstrap';
 import Templates from './Templates';
 import $ from 'jquery';
 
@@ -118,48 +118,45 @@ class ColorFamilyInfoView extends React.Component {
       }
     };
     return (
-      <div className="sidebar-content">
-        <h3>{this.props.currentFamily.name}</h3>
-        <h5>Click a Code to Copy!</h5>
-        <div className="color-family-info">
-          {Object.keys(this.props.currentFamily).map((color, index) => {
-            if (this.props.currentFamily[color].hex) {
-              return <ColorInfoView color={this.props.currentFamily[color]} key={index} index={index} copyCount={that.copyCount.bind(that)}/>
-            }
-          })}
-        </div>
+      <Row>
+        <Col md={12}>
+          <div className="sidebar-content">
+            <h3>{this.props.currentFamily.name}</h3>
+            <h5>Click a Code to Copy!</h5>
+            <div className="color-family-info">
+              {Object.keys(this.props.currentFamily).map((color, index) => {
+                if (this.props.currentFamily[color].hex) {
+                  return <ColorInfoView color={this.props.currentFamily[color]} key={index} index={index} copyCount={that.copyCount.bind(that)}/>
+                }
+              })}
+            </div>
 
-        <Button block bsStyle="primary" onClick={this.showModal}>
-          Preview Palette
-        </Button> <br></br>
-        <Button block bsStyle="danger" onClick={this.deletePalette}>
-          Delete Palette
-        </Button> <br></br>
-        <Button block bsStyle="warning" onClick={this.editPalette}>
-          Edit Palette
-        </Button> <br></br>
-        <Button block bsStyle="success" onClick={this.sendToExt}>
-          <Tooltip style={styles.toolTip} placement="top" className="in" id="tooltip">Copied!</Tooltip>
-          Send to Extension
-        </Button> <br></br>
-        <Button block bsStyle="default" onClick={this.props.toggleSidebarOff}>
-          Hide Sidebar
-        </Button> <br></br>
-        <Modal
-          {...this.props}
-          show={this.state.show}
-          onHide={this.hideModal}
-          dialogClassName="custom-modal"
-          class='modal'
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-lg">Modal Heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Templates colors={this.props.currentFamily}/>
-          </Modal.Body>
-        </Modal>
-      </div>
+            <div>
+              <Button block bsStyle="primary" onClick={this.showModal}> Preview Palette </Button> <br></br>
+              <Button block bsStyle="danger" onClick={this.deletePalette}> Delete Palette </Button> <br></br>
+              <Button block bsStyle="warning" onClick={this.editPalette}> Edit Palette </Button> <br></br>
+              <Button block bsStyle="success" onClick={this.sendToExt}>Send to Extension </Button> <br></br>              
+              <Button block bsStyle="default" onClick={this.props.toggleSidebarOff}> Hide Sidebar </Button> <br></br>
+            </div>
+            
+            <Modal
+              {...this.props}
+              show={this.state.show}
+              onHide={this.hideModal}
+              dialogClassName="custom-modal"
+              class='modal'
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-lg">Modal Heading</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Templates colors={this.props.currentFamily}/>
+              </Modal.Body>
+            </Modal>
+
+          </div>
+        </Col>
+      </Row>
     )
   }
 }
