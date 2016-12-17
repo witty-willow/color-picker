@@ -6,9 +6,7 @@ import $ from 'jquery';
 
 var Colume = (props) => {
   var gameDimensions = $('#minigame').width();
-  console.log('gameDims', gameDimensions);
   var width = props.size * 100 > gameDimensions? gameDimensions/props.size + 'px' : '100px';
-  console.log('width, ', width)
   var columes = [];
   for(var i=0; i<props.size; i++){
     var key = props.rowInd * props.size + i + 1;
