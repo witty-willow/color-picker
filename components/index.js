@@ -7,6 +7,7 @@ import CreateYourOwn from './CreateYourOwn.js';
 import FilterBar from './FilterBar.js';
 import {Button, Grid} from 'react-bootstrap';
 import Templates from './Templates.js'
+import MiniGame from './miniGame.js';
 
 // emm's testing data for templates
 var colors = {
@@ -35,6 +36,7 @@ class App extends React.Component {
       appClass: 'app-main-full',
       sidebarClass: 'app-sidebar-hidden',
       createClass: 'create-family-hidden',
+      playGame: false,
       familyName: '',
       palette: {
         color1: {name: 'Cyan', hex: '#2DE1FC', rgb: {a: 1, b: 252, g: 225, r: 45}},
@@ -77,17 +79,17 @@ class App extends React.Component {
       var include = false;
       for (var key in obj) {
         if (key.slice(0,5) === 'color') {
-          var colorRgb = this.hexToRGB(obj[key], 16);
+          var colorRgb = this.hexToRGB(obj[key].hex, 16);
           if (color === 'red') {
-            if (colorRgb.red > (1.5 * colorRgb.blue) && colorRgb.red > (1.5 * colorRgb.green))
+            if (colorRgb.red > (1.7 * colorRgb.blue) && colorRgb.red > (1.7 * colorRgb.green))
               include = true;
           }
           if (color === 'blue') {
-            if (colorRgb.blue > (1.5 * colorRgb.red) && colorRgb.blue > (1.5 * colorRgb.green))
+            if (colorRgb.blue > (1.7 * colorRgb.red) && colorRgb.blue > (1.7 * colorRgb.green))
               include = true;
           }
           if (color === 'green') {
-            if (colorRgb.green > (1.5 * colorRgb.blue) && colorRgb.green > (1.5 * colorRgb.red))
+            if (colorRgb.green > (1.7 * colorRgb.blue) && colorRgb.green > (1.7 * colorRgb.red))
               include = true;
           }
           if (color === 'all') {
@@ -281,6 +283,13 @@ class App extends React.Component {
 
   }
 
+
+  playGame() {
+    this.setState({
+      playGame: !this.state.playGame
+    })
+  }
+
   handlePaletteChange(palette) {
     this.setState({
       palette: palette
@@ -303,24 +312,52 @@ class App extends React.Component {
   }
 
   render() {
-    return (
-      <div className="app-body">
-        <FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
-        <div>
-          <div className={this.state.appClass}>
-            <div id="0" className={this.state.createClass}>
-            <CreateYourOwn fetchColors={this.fetchColors.bind(this)} palette={this.state.palette} familyName={this.state.familyName} handlePaletteChange={this.handlePaletteChange.bind(this)} handleFormChange={this.handleFormChange.bind(this)}/>
+    if(this.state.playGame){
+      return (
+        <div className="app-body">
+          <FilterBar className="app-nav" playGame={this.playGame.bind(this)} handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
+          <br/>
+          <br/>
+          <br/>
+          <MiniGame/>
+        </div>
+      )
+    } else {
+      return (
+        <div className="app-body">
+          <FilterBar playGame={this.playGame.bind(this)} className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
+          <div>
+            <div className={this.state.appClass}>
+              <div id="0" className={this.state.createClass}>
+              <CreateYourOwn fetchColors={this.fetchColors.bind(this)} palette={this.state.palette} familyName={this.state.familyName} handlePaletteChange={this.handlePaletteChange.bind(this)} handleFormChange={this.handleFormChange.bind(this)}/>
+              </div>
+              <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
             </div>
-            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
-          </div>
-          <div className={this.state.sidebarClass}>
-            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSubmitForm={this.toggleSubmitForm} toggleSidebarOff={this.toggleSidebarOff} fetchColors={this.fetchColors.bind(this)} handlePaletteEdit={this.handlePaletteEdit.bind(this)}/>
+            <div className={this.state.sidebarClass}>
+              <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSubmitForm={this.toggleSubmitForm} toggleSidebarOff={this.toggleSidebarOff} fetchColors={this.fetchColors.bind(this)} handlePaletteEdit={this.handlePaletteEdit.bind(this)}/>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
+
+/*
+<div className="app-body">
+<FilterBar className="app-nav"  handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
+  <div>
+    <div className={this.state.createClass}>
+    <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
+    </div>
+    <div className={this.state.appClass}>
+      <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
+    </div>
+    <div className={this.state.sidebarClass}>
+      <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff} fetchColors={this.fetchColors.bind(this)}/>
+    </div>
+*/
+
 
 ReactDOM.render(
   <App />,

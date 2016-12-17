@@ -108,3 +108,13 @@ body {
   opacity: 1;
   transition: opacity .6s ease-in;
 }
+
+.game {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game.row {
+  margin-left: auto;
+  margin-right: auto;
+}
