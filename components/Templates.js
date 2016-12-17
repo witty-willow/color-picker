@@ -7,7 +7,7 @@ class Templates extends React.Component {
     super(props);
     this.state = {
       obj1: { backgroundColor: props.colors.color1.hex },
-      obj2: { 'padding-top': '50px', 'padding-bottom': '50px', backgroundColor: props.colors.color2.hex },
+      obj2: { 'paddingTop': '50px', 'paddingBottom': '50px', backgroundColor: props.colors.color2.hex },
       obj3: { color: props.colors.color3.hex },
       obj4: { color: props.colors.color4.hex },
       obj5: { backgroundColor: props.colors.color5.hex, padding: '10px'}
