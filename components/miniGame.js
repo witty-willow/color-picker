@@ -24,7 +24,7 @@ class MiniGame extends React.Component {
   getColor() {
     var hex;
 
-    if (this.props.currentFamily) {
+    if (this.props.currentFamily.name) {
       var index = 'color' + Math.floor(Math.random() * 5);
       hex = this.props.currentFamily[index].hex;
     } else {
@@ -42,9 +42,9 @@ class MiniGame extends React.Component {
     }
   }
 
-  // componentWillMount(){
-  //   this.getColor();
-  // }
+  componentWillMount(){
+    this.getColor();
+  }
 
   getIndex(){
     var newInd = Math.ceil(Math.random()*Math.pow(this.state.size, 2));
@@ -59,7 +59,7 @@ class MiniGame extends React.Component {
 
   correct() {
     if(this.state.normal === this.state.lighter){
-      alert("Impressive! YOU WIN!!");
+      window.alert("Impressive! YOU WIN!!");
       this.setState({
         size: 2,
         gap: .10
@@ -81,7 +81,7 @@ class MiniGame extends React.Component {
     })
     this.getIndex();
     this.getColor();
-    alert('Wrong tile! YOU LOSE!!');
+    window.alert('Wrong tile! YOU LOSE!!');
   }
 
   onClickHandler() {
