@@ -35,7 +35,8 @@ class App extends React.Component {
       allFamilies: [],
       appClass: 'app-main-full',
       sidebarClass: 'app-sidebar-hidden',
-      createClass: 'create-family-hidden'
+      createClass: 'create-family-hidden',
+      playGame: false
     };
 
     this.handleStateChange = this.handleStateChange.bind(this);
@@ -261,29 +262,47 @@ class App extends React.Component {
 
   }
 
+  playGame() {
+    console.log('getting here?')
+    this.setState({
+      playGame: !this.state.playGame
+    })
+  }
+
   render() {
-    return (
-      <div className="app-body">
-      <br/>
-      <MiniGame/>
-      </div>
-    );
+    if(this.state.playGame){
+      return (
+        <div className="app-body">
+          <FilterBar className="app-nav" playGame={this.playGame.bind(this)} handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
+          <br/>
+          <br/>
+          <br/>
+          <MiniGame/>
+        </div>
+      )
+    } else {
+      return (
+        <div className="app-body">
+        <FilterBar className="app-nav" playGame={this.playGame.bind(this)} handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
+          <div>
+            <div className={this.state.createClass}>
+            <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
+            </div>
+            <div className={this.state.appClass}>
+              <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
+            </div>
+            <div className={this.state.sidebarClass}>
+              <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff} fetchColors={this.fetchColors.bind(this)}/>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 }
 
 /*
-<FilterBar className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
-        <div>
-          <div className={this.state.createClass}>
-          <CreateYourOwn fetchColors={this.fetchColors.bind(this)}/>
-          </div>
-          <div className={this.state.appClass}>
-            <ColorFamilyView setCurrentFamily={this.setCurrentFamily.bind(this)} colorFamilies={this.state.colorFamilies} toggleSidebarOn={this.toggleSidebarOn}/>
-          </div>
-          <div className={this.state.sidebarClass}>
-            <ColorFamilyInfoView currentFamily={this.state.currentFamily} toggleSidebarOff={this.toggleSidebarOff} fetchColors={this.fetchColors.bind(this)}/>
-          </div>
-        </div> */
+ */
 
 
 ReactDOM.render(

@@ -75,11 +75,20 @@ class MiniGame extends React.Component {
     }
 
     return (
-      <div class='game'>{rows}</div>
+      <Grid>
+      <Row>
+      <Col md={12}>
+      <div>
+        <h1>MiniGame</h1>
+        <h5>Select different colored tile</h5>
+        <div className='game'>{rows}</div>
+      </div>
+      </Col>
+      </Row>
+      </Grid>
     )
   }
 }
-
 
 // <Row onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
 //         <Col>

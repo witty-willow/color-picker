@@ -111,6 +111,12 @@ body {
   transition: opacity .6s ease-in;
 }
 
-.game{
-  text-align: center
+.game {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game.row {
+  margin-left: auto;
+  margin-right: auto;
 }

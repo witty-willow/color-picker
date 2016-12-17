@@ -36,7 +36,7 @@ class SingleBlock extends React.Component {
     }
     return (
       <div onClick={this.props.click} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
-      { (
+      {(
         <Col className="color-single" style={styles.background} xs={1}>
           <h4 style={styles.text}>{this.props.color}</h4>
         </Col>
