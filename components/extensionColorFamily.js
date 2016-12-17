@@ -53,8 +53,9 @@ class ExtensionColorFamily extends React.Component {
     var that = this;
     $.ajax({
       method: 'GET',
-      url: 'http://localhost:8000/api/ext',
+      // url: 'http://localhost:8000/api/ext',
       // for deploy: url: 'http://138.197.5.105:3000/api/ext',
+      url: 'http://138.197.5.105:3000/api/ext',
       success: function(resp) {
         if (resp !== 'No family selected'){
           console.log('res', resp)
@@ -125,8 +126,9 @@ class ExtensionColorFamily extends React.Component {
   saveBrowserColors() {
     $.ajax({
       method: 'POST',
-      url: 'http://localhost:8000/api/colors',
+      // url: 'http://localhost:8000/api/colors',
       // for deploy: url: 'http://138.197.5.105:3000/api/colors',
+      url: 'http://138.197.5.105:3000/api/colors',
       data: {name: this.state.siteName, palette: this.state.sitePalette},
       dataType: 'JSON',
       success: function (resp) {
