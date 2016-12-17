@@ -8,9 +8,9 @@ var Colume = (props) => {
   for(var i=0; i<props.size; i++){
     var key = props.rowInd * props.size + i + 1;
     if(key === props.index){
-      columes.push(<SingleBlock key={key} hover={props.hover} color={props.lighter} click={props.correct}/>)
+      columes.push(<SingleBlock height='10px' key={key} hover={props.hover} color={props.lighter} click={props.correct}/>)
     } else {
-      columes.push(<SingleBlock key={key} hover={props.hover} color={props.normal} click={props.incorrect}/>)
+      columes.push(<SingleBlock height='10px' key={key} hover={props.hover} color={props.normal} click={props.incorrect}/>)
     }
   }
 

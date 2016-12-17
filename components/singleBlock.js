@@ -5,6 +5,8 @@ class SingleBlock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      height: null,
+      width: null,
       hover: false
     };
     this.toggleHover = this.toggleHover.bind(this);
@@ -24,7 +26,8 @@ class SingleBlock extends React.Component {
     var styles = {
       background: {
         backgroundColor: this.props.color,
-        height: "100px",
+        height: this.props.height || "100px",
+        width: this.props.width || null,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
