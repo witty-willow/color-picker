@@ -4,7 +4,9 @@ import {Col} from 'react-bootstrap';
 class MatchSingle extends React.Component {
   constructor(props) {
     super(props);
+    console.log('block width', this.props.width)
     this.state = {
+      height: null,
       hover: false
     };
     this.toggleHover = this.toggleHover.bind(this);
@@ -25,6 +27,7 @@ class MatchSingle extends React.Component {
       background: {
         backgroundColor: this.props.color,
         height: "100px",
+        width: this.props.width,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
