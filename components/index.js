@@ -66,6 +66,16 @@ class App extends React.Component {
       currentFilter: color,
     });
 
+    // var filteredColorFamilies = this.state.allFamilies.filter(function(colorFamily) {
+    //   for(var i=1; i<=5; i++){
+    //     var color = 'color' + i;
+    //     var name = colorFamily[color].name.toLowerCase();
+    //     if(name.indexOf(search) !== -1){
+    //       return true;
+    //     }
+    //   }
+    // })
+
     // this.state.allFamilies.forEach(function (obj) {
     //   var include = false;
     //   for (var key in obj) {
@@ -92,9 +102,9 @@ class App extends React.Component {
     //     filteredColorFamilies.push(obj)
     //   }
     // }.bind(this))
-    // this.setState({
-    //   colorFamilies: filteredColorFamilies
-    // });
+    this.setState({
+      colorFamilies: filteredColorFamilies
+    });
   }
 
   filterByCopyCount(filter){
@@ -204,6 +214,7 @@ class App extends React.Component {
       method: 'GET',
       url: '/api/weekly',
       success: function (resp) {
+        console.log(resp)
 
         var sortedFamilyId = sortObj(resp);
 
@@ -221,7 +232,9 @@ class App extends React.Component {
           }
         })
 
-        console.log(sortedFamilyId, week)
+        week = week.filter(function(obj) {
+          return obj === undefined ? false : true; 
+        })
 
         that.setState({
           colorFamilies: week,
@@ -242,6 +255,9 @@ class App extends React.Component {
       success: function (resp) {
 
         var sortedFamilyId = sortObj(resp);
+        sortedFamilyId = sortedFamilyId.filter(function(id) {
+          return id === undefined ? false : true; 
+        })
 
         that.setState({
           currentFilter: 'Monthly',
@@ -257,11 +273,13 @@ class App extends React.Component {
           }
         })
 
-        console.log(sortedFamilyId, month)
+        month = month.filter(function(obj) {
+          return obj === undefined ? false : true; 
+        })
 
         that.setState({
           colorFamilies: month,
-          popularWeek: month
+          popularMonth: month
         });
       },
       error: function (error) {
@@ -271,7 +289,40 @@ class App extends React.Component {
   }
 
   sortByCopyCount(){
+    var that = this
+    $.ajax({
+      method: 'GET',
+      url: '/api/copycount',
+      success: function (resp) {
+        var sortedFamilyId = sortObj(resp);
 
+        that.setState({
+          currentFilter: 'All-Time',
+        });
+
+        var all = that.state.allFamilies;
+
+        var allTime = sortedFamilyId.map(function(id){
+          for(var i=0; i<all.length; i++){
+            if(all[i]._id === id) {
+              return all[i];
+            }
+          }
+        })
+
+        allTime = allTime.filter(function(obj) {
+          return obj === undefined ? false : true; 
+        })
+
+        that.setState({
+          colorFamilies: allTime,
+          popular: allTime
+        });
+      },
+      error: function (error) {
+        console.log('error', error);
+      }
+    })
   }
 
   playGame() {
@@ -307,6 +358,9 @@ class App extends React.Component {
       var searchedHsl = tinycolor(search).toHsl().h;
       if(tinycolor(search).toHex() === '000000' && search.toLowerCase() !== 'black'){
         var filteredFamilies = this.state.allFamilies.filter(function(colorFamily) {
+          if(colorFamily.name.toLowerCase().indexOf(search) !== -1){
+              return true;
+          }
           for(var i=1; i<=5; i++){
             var color = 'color' + i;
             var name = colorFamily[color].name.toLowerCase();
