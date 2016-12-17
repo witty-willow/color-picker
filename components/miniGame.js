@@ -69,7 +69,7 @@ class MiniGame extends React.Component {
     //Make rows
     var rows = []
     for(var i=0; i<this.state.size; i++){
-      rows.push(<Row onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} style={{height: '10px'}}>
+      rows.push(<Row onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
        <Colume correct={this.correct.bind(this)} incorrect={this.incorrect.bind(this)} index={this.state.index} rowInd={i} size={this.state.size} hover={this.state.hover} normal={this.state.normal} lighter={this.state.lighter} click={this.getColor.bind(this)}/>
       </Row>)
     }
@@ -78,7 +78,7 @@ class MiniGame extends React.Component {
       <Grid>
       <Row>
       <Col md={12}>
-      <div>
+      <div id='minigame'>
         <h1>MiniGame</h1>
         <h5>Select different colored tile</h5>
         <div className='game'>{rows}</div>
