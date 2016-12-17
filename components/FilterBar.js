@@ -26,8 +26,10 @@ var FilterBar = (props) => {
         <NavItem title='green' eventKey='green'>Green</NavItem>
       </Nav>
       <Nav style={{paddingTop: '8px'}} pullRight>
+        <input type="text" name="search" placeholder="Search.." onKeyPress={props.handleEnter} onKeyUp={props.handleSearch}/>
+        <span>  </span>
         <Button bsStyle="primary" onClick={props.playGame}>Play Game</Button>
-        <span>   </span>
+        <span>  </span>
         <Button bsStyle="primary" onClick={props.toggleSubmit}>Create New</Button>
       </Nav>
     </Navbar>
