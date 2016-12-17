@@ -83,10 +83,11 @@ app.post('/api/ext', function(req, res) {
   res.send('done');
 })
 
-app.post('/api/copycount', controller.increaseCount);
 app.get('/api/daily', controller.getDaily);
 app.get('/api/weekly', controller.getWeekly);
 app.get('/api/monthly', controller.getMonthly);
+app.get('/api/copycount', controller.getCopyCount);
+app.post('/api/copycount', controller.increaseCount);
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
