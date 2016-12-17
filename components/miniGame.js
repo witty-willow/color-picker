@@ -78,7 +78,7 @@ class MiniGame extends React.Component {
       <Grid>
       <Row>
       <Col md={12}>
-      <div>
+      <div id='minigame'>
         <h1>MiniGame</h1>
         <h5>Select different colored tile</h5>
         <div className='game'>{rows}</div>
