@@ -43,10 +43,18 @@ class MiniGame extends React.Component {
   }
 
   correct() {
-    this.setState({
-      size: ++this.state.size,
-      gap: this.state.gap * 0.75
-    })
+    if(this.state.normal === this.state.lighter){
+      alert("Impressive! YOU WIN!!");
+      this.setState({
+        size: 2,
+        gap: .10
+      })
+    } else {
+      this.setState({
+        size: ++this.state.size,
+        gap: this.state.gap * 0.80
+      })
+    }
     this.getIndex();
     this.getColor();
   }
@@ -58,7 +66,7 @@ class MiniGame extends React.Component {
     })
     this.getIndex();
     this.getColor();
-    console.log('Wrong tile! YOU LOSE!!');
+    alert('Wrong tile! YOU LOSE!!');
   }
 
   onClickHandler() {

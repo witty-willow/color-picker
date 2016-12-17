@@ -9,6 +9,7 @@ import FilterBar from './FilterBar.js';
 import {Button, Grid} from 'react-bootstrap';
 import Templates from './Templates.js'
 import MiniGame from './miniGame.js';
+import MatchGame from './MatchGame.js';
 
 // emm's testing data for templates
 var colors = {
@@ -407,7 +408,6 @@ class App extends React.Component {
         })
       }
     }
-    console.log(filteredFamilies)
     this.setState({
       currentFilter: search,
       colorFamilies: filteredFamilies
