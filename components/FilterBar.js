@@ -26,9 +26,9 @@ var FilterBar = (props) => {
         <NavItem title='green' eventKey='green'>Green</NavItem>
       </Nav>
       <Nav style={{paddingTop: '8px'}} pullRight>
+        <Button bsStyle="primary" onClick={props.playGame}>Play Game</Button>
         <Button bsStyle="primary" onClick={props.toggleSubmit}>Create New</Button>
       </Nav>
-
     </Navbar>
   )
 }
