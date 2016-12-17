@@ -422,7 +422,7 @@ class App extends React.Component {
           <br/>
           <br/>
           <br/>
-          <MiniGame/>
+          <MiniGame currentFamily={this.state.currentFamily}/>
         </div>
       )
     } else {

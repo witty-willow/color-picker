@@ -8,6 +8,7 @@ import tinycolor from 'tinycolor2';
 class MiniGame extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props', this.props.currentFamily);
     this.state = {
       normal: "#ef8275",
       lighter: "#f4aba3",
@@ -21,7 +22,14 @@ class MiniGame extends React.Component {
   }
 
   getColor() {
-    var hex = '#'+Math.random().toString(16).substr(-6);
+    var hex;
+
+    if (this.props.currentFamily) {
+      var index = 'color' + Math.floor(Math.random() * 5);
+      hex = this.props.currentFamily[index].hex;
+    } else {
+      hex = '#'+Math.random().toString(16).substr(-6); 
+    }
     var hsl = tinycolor(hex).toHsl();
     hsl.l += this.state.gap
     var lighter = tinycolor(hsl).toHexString();
@@ -29,7 +37,14 @@ class MiniGame extends React.Component {
       normal: hex,
       lighter: lighter
     })
+    if (hex === lighter) {
+      console.log('win')
+    }
   }
+
+  // componentWillMount(){
+  //   this.getColor();
+  // }
 
   getIndex(){
     var newInd = Math.ceil(Math.random()*Math.pow(this.state.size, 2));
@@ -74,6 +89,7 @@ class MiniGame extends React.Component {
       </Row>)
     }
 
+    console.log('family', this.props.currentFamily)
     return (
       <Grid>
       <Row>
@@ -81,6 +97,8 @@ class MiniGame extends React.Component {
       <div id='minigame'>
         <h1>MiniGame</h1>
         <h5>Select different colored tile</h5>
+        <h4>Level {this.state.size}</h4>
+        {this.props.currentFamily.name && <h5>Currently playing with <b>{this.props.currentFamily.name}</b></h5>}
         <div className='game'>{rows}</div>
       </div>
       </Col>

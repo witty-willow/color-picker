@@ -4,7 +4,6 @@ import {Col} from 'react-bootstrap';
 class SingleBlock extends React.Component {
   constructor(props) {
     super(props);
-    console.log('block width', this.props.width)
     this.state = {
       height: null,
       hover: false
@@ -38,7 +37,7 @@ class SingleBlock extends React.Component {
       styles.background.boxShadow = '-3px 0 10px'
     }
     return (
-      <div onClick={this.props.click} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
+      <div style={this.props.style} onClick={this.props.click} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
       {(
         <Col className="color-single" style={styles.background} xs={1}>
           <h4 style={styles.text}>{this.props.color}</h4>
