@@ -88,6 +88,6 @@ app.get('/api/daily', controller.getDaily);
 app.get('/api/weekly', controller.getWeekly);
 app.get('/api/monthly', controller.getMonthly);
 
-app.listen(8000, function () {
-  console.log('Example app listening on port 8000!')
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
 });
