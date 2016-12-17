@@ -303,42 +303,55 @@ class App extends React.Component {
 
   handleEnter(e){
     if (e.key === 'Enter') {
-      var search = e.target.value;
+      var search = e.target.value.toLowerCase();
       var searchedHsl = tinycolor(search).toHsl().h;
-      var filteredFamilies = this.state.allFamilies.filter(function(colorFamily) {
-        for(var i=1; i<=5; i++){
-          var color = 'color' + i;
-          var hex = colorFamily[color].hex;
-          var h = tinycolor(hex).toHsl().h;
-          var l = tinycolor(hex).toHsl().l;
-          if(search.toLowerCase() === 'black'){
-            if(l < 0.05) {
+      if(tinycolor(search).toHex() === '000000' && search.toLowerCase() !== 'black'){
+        var filteredFamilies = this.state.allFamilies.filter(function(colorFamily) {
+          for(var i=1; i<=5; i++){
+            var color = 'color' + i;
+            var name = colorFamily[color].name.toLowerCase();
+            if(name.indexOf(search) !== -1){
               return true;
-            }
-          } else if (search.toLowerCase() === 'white') {
-            if(l > 0.95) {
-              return true;
-            }
-          } else if (search.toLowerCase() === 'grey') {
-            var s = tinycolor(hex).toHsl().s;
-            if(s < 0.05){
-              return true;
-            }
-          } else {
-            if(h < searchedHsl + 25 && h > searchedHsl - 25 && l > 0.05 && l < 0.95) {
-              return true;
-            }
-            //Special case for red
-            if(searchedHsl < 25 || searchedHsl > 340) {
-              if(h < 25 || h > 335) {
-                if(l > 0.05 && l < 0.95){return true};
-              }
             }
           }
-          
-        }
-        return false;
-      })
+          return false;
+        })
+      } else {
+        var filteredFamilies = this.state.allFamilies.filter(function(colorFamily) {
+          for(var i=1; i<=5; i++){
+            var color = 'color' + i;
+            var hex = colorFamily[color].hex;
+            var h = tinycolor(hex).toHsl().h;
+            var l = tinycolor(hex).toHsl().l;
+            if(search.toLowerCase() === 'black'){
+              if(l < 0.05) {
+                return true;
+              }
+            } else if (search.toLowerCase() === 'white') {
+              if(l > 0.95) {
+                return true;
+              }
+            } else if (search.toLowerCase() === 'grey') {
+              var s = tinycolor(hex).toHsl().s;
+              if(s < 0.05){
+                return true;
+              }
+            } else {
+              if(h < searchedHsl + 25 && h > searchedHsl - 25 && l > 0.05 && l < 0.95) {
+                return true;
+              }
+              //Special case for red
+              if(searchedHsl < 25 || searchedHsl > 340) {
+                if(h < 25 || h > 335) {
+                  if(l > 0.05 && l < 0.95){return true};
+                }
+              }
+            }
+            
+          }
+          return false;
+        })
+      }
     }
     console.log(filteredFamilies)
     this.setState({
