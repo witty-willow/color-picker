@@ -36,7 +36,6 @@ module.exports = {
     //   console.log('removed')
     // })
     CopyCount.findOne({}, function(err, result) {
-      console.log(result)
       if(err){
         throw err;
       } else {
@@ -66,11 +65,10 @@ module.exports = {
 
         CopyCount.update({_id: result._id}, {$set: {data: data, date: date}}, {multi: true}, function (err, something) {
           if(err) {throw err}
-            console.log(something)
         })
       }
     });
-    res.end();
+    res.json('increased');
   },
 
   getDaily: function(req, res) {
@@ -78,7 +76,7 @@ module.exports = {
       if(err){
         throw err;
       } else {
-        res.send(result.date[today]);
+        res.json(result.date[today]);
       }
     });
   },
@@ -88,16 +86,17 @@ module.exports = {
       if(err){
         throw err;
       } 
+      // Make weekly function run once a day
       // else if (result.weeklyUpdated === today){
       //   res.send(result.weekly);
       // } 
       else {
-        var weekly = summery(result.date, today - 8, today - 1)
+        var weekly = summery(result.date, today - 7, today)
         console.log('weekly', weekly)
         CopyCount.update({_id: result._id}, {$set: {weeklyUpdated: today, weekly:weekly}}, function (err, something) {
           if(err) {throw err}
         })
-        res.send(result.weekly);
+        res.json(result.weekly);
       }
     });
   },
@@ -107,6 +106,7 @@ module.exports = {
       if(err){
         throw err;
       } 
+      // Make monthly function run once a day
       // else if (result.monthlyUpdated === today){
       //   res.send(result.monthly);
       // } 
@@ -115,7 +115,18 @@ module.exports = {
         CopyCount.update({_id: result._id}, {$set: {monthlyUpdated: today, monthly:monthly}}, function (err, something) {
           if(err) {throw err}
         })
-        res.send(result.monthly);
+        res.json(result.monthly);
+      }
+    });
+  },
+
+  getCopyCount: function(req, res) {
+    console.log('getting CopyCOunt')
+    CopyCount.findOne({}, function(err, result) {
+      if(err){
+        throw err;
+      } else {
+        res.json(result.data);
       }
     });
   }
