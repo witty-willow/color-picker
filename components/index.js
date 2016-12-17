@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import tinycolor from 'tinycolor2';
 import ColorFamilyView from './ColorFamilyView.js';
 import ColorFamilyInfoView from './ColorFamilyInfoView.js';
 import CreateYourOwn from './CreateYourOwn.js';
@@ -57,16 +58,6 @@ class App extends React.Component {
 
   }
 
-  //Convert hex values to rgb object
-  hexToRGB(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      red: parseInt(result[1], 16),
-      green: parseInt(result[2], 16),
-      blue: parseInt(result[3], 16)
-    } : null;
-  }
-
   //Filter display based on navbar color choices
   handleStateChange (color) {
     var filteredColorFamilies = [];
@@ -75,35 +66,35 @@ class App extends React.Component {
       currentFilter: color,
     });
 
-    this.state.allFamilies.forEach(function (obj) {
-      var include = false;
-      for (var key in obj) {
-        if (key.slice(0,5) === 'color') {
-          var colorRgb = this.hexToRGB(obj[key].hex, 16);
-          if (color === 'red') {
-            if (colorRgb.red > (1.7 * colorRgb.blue) && colorRgb.red > (1.7 * colorRgb.green))
-              include = true;
-          }
-          if (color === 'blue') {
-            if (colorRgb.blue > (1.7 * colorRgb.red) && colorRgb.blue > (1.7 * colorRgb.green))
-              include = true;
-          }
-          if (color === 'green') {
-            if (colorRgb.green > (1.7 * colorRgb.blue) && colorRgb.green > (1.7 * colorRgb.red))
-              include = true;
-          }
-          if (color === 'all') {
-            include = true;
-          }
-        }
-      }
-      if (include === true) {
-        filteredColorFamilies.push(obj)
-      }
-    }.bind(this))
-    this.setState({
-      colorFamilies: filteredColorFamilies
-    });
+    // this.state.allFamilies.forEach(function (obj) {
+    //   var include = false;
+    //   for (var key in obj) {
+    //     if (key.slice(0,5) === 'color') {
+    //       var colorRgb = this.hexToRGB(obj[key].hex, 16);
+    //       if (color === 'red') {
+    //         if (colorRgb.red > (1.7 * colorRgb.blue) && colorRgb.red > (1.7 * colorRgb.green))
+    //           include = true;
+    //       }
+    //       if (color === 'blue') {
+    //         if (colorRgb.blue > (1.7 * colorRgb.red) && colorRgb.blue > (1.7 * colorRgb.green))
+    //           include = true;
+    //       }
+    //       if (color === 'green') {
+    //         if (colorRgb.green > (1.7 * colorRgb.blue) && colorRgb.green > (1.7 * colorRgb.red))
+    //           include = true;
+    //       }
+    //       if (color === 'all') {
+    //         include = true;
+    //       }
+    //     }
+    //   }
+    //   if (include === true) {
+    //     filteredColorFamilies.push(obj)
+    //   }
+    // }.bind(this))
+    // this.setState({
+    //   colorFamilies: filteredColorFamilies
+    // });
   }
 
   filterByCopyCount(filter){
@@ -283,7 +274,6 @@ class App extends React.Component {
 
   }
 
-
   playGame() {
     this.setState({
       playGame: !this.state.playGame
@@ -311,6 +301,52 @@ class App extends React.Component {
     });
   }
 
+  handleEnter(e){
+    if (e.key === 'Enter') {
+      var search = e.target.value;
+      var searchedHsl = tinycolor(search).toHsl().h;
+      var filteredFamilies = this.state.allFamilies.filter(function(colorFamily) {
+        for(var i=1; i<=5; i++){
+          var color = 'color' + i;
+          var hex = colorFamily[color].hex;
+          var h = tinycolor(hex).toHsl().h;
+          var l = tinycolor(hex).toHsl().l;
+          if(search.toLowerCase() === 'black'){
+            if(l < 0.05) {
+              return true;
+            }
+          } else if (search.toLowerCase() === 'white') {
+            if(l > 0.95) {
+              return true;
+            }
+          } else if (search.toLowerCase() === 'grey') {
+            var s = tinycolor(hex).toHsl().s;
+            if(s < 0.05){
+              return true;
+            }
+          } else {
+            if(h < searchedHsl + 25 && h > searchedHsl - 25 && l > 0.05 && l < 0.95) {
+              return true;
+            }
+            //Special case for red
+            if(searchedHsl < 25 || searchedHsl > 340) {
+              if(h < 25 || h > 335) {
+                if(l > 0.05 && l < 0.95){return true};
+              }
+            }
+          }
+          
+        }
+        return false;
+      })
+    }
+    console.log(filteredFamilies)
+    this.setState({
+      currentFilter: search,
+      colorFamilies: filteredFamilies
+    });
+  }
+
   render() {
     if(this.state.playGame){
       return (
@@ -325,7 +361,7 @@ class App extends React.Component {
     } else {
       return (
         <div className="app-body">
-          <FilterBar playGame={this.playGame.bind(this)} className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
+          <FilterBar handleEnter={this.handleEnter.bind(this)} playingGame={this.state.playGame} playGame={this.playGame.bind(this)} className="app-nav" handleStateChange={this.handleStateChange} currentFilter={this.state.currentFilter} toggleSubmit={this.toggleSubmitForm} sortByToday={this.sortByToday.bind(this)} sortByWeek={this.sortByWeek.bind(this)} sortByMonth={this.sortByMonth.bind(this)} sortByCopyCount={this.sortByCopyCount.bind(this)}/>
           <div>
             <div className={this.state.appClass}>
               <div id="0" className={this.state.createClass}>
