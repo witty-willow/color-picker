@@ -18,7 +18,6 @@ class MiniGame extends React.Component {
       gap: .10
     };
     this.toggleHover = this.toggleHover.bind(this);
-    this.onClickHandler = this.onClickHandler.bind(this);
   }
 
   getColor() {
@@ -84,16 +83,12 @@ class MiniGame extends React.Component {
     window.alert('Wrong tile! YOU LOSE!!');
   }
 
-  onClickHandler() {
-
-  }
-
   render() {
     //Make rows
     var rows = []
     for(var i=0; i<this.state.size; i++){
       rows.push(<Row onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
-       <Colume correct={this.correct.bind(this)} incorrect={this.incorrect.bind(this)} index={this.state.index} rowInd={i} size={this.state.size} hover={this.state.hover} normal={this.state.normal} lighter={this.state.lighter} click={this.getColor.bind(this)}/>
+       <Colume correct={this.correct.bind(this)} incorrect={this.incorrect.bind(this)} index={this.state.index} rowInd={i} size={this.state.size} hover={this.state.hover} normal={this.state.normal} lighter={this.state.lighter}/>
       </Row>)
     }
 

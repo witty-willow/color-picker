@@ -11,9 +11,9 @@ var MatchColume = (props) => {
   for(var i=0; i<props.size; i++){
     var key = props.rowInd * props.size + i + 1;
     if(key === props.index){
-      columes.push(<MatchSingle width={width} key={key} hover={props.hover} color={props.lighter} click={props.correct}/>)
+      columes.push(<MatchSingle width={width} key={key} hover={props.hover} color={props.answer} click={props.correct}/>)
     } else {
-      columes.push(<MatchSingle width={width} key={key} hover={props.hover} color={props.normal} click={props.incorrect}/>)
+      columes.push(<MatchSingle width={width} key={key} hover={props.hover} color={props.similarColor[i]} click={props.incorrect}/>)
     }
   }
 
