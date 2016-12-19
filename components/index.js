@@ -10,6 +10,7 @@ import {Button, Grid} from 'react-bootstrap';
 import Templates from './Templates.js'
 import MiniGame from './miniGame.js';
 import MatchGame from './MatchGame.js';
+import ColorNameMatchGame from './ColorNameMatchGame.js';
 
 // emm's testing data for templates
 var colors = {
@@ -40,6 +41,8 @@ class App extends React.Component {
       createClass: 'create-family-hidden',
       playGame: false,
       familyName: '',
+      hiddenUnlocked: false,
+      matchGame: false,
       palette: {
         color1: {name: 'Cyan', hex: '#2DE1FC', rgb: {a: 1, b: 252, g: 225, r: 45}},
         color2: {name: 'Spring Green', hex: '#2AFC98', rgb: {a: 1, b: 152, g: 252, r: 42}},
@@ -59,6 +62,15 @@ class App extends React.Component {
 
   }
 
+  hexToRGB(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      red: parseInt(result[1], 16),
+      green: parseInt(result[2], 16),
+      blue: parseInt(result[3], 16)
+    } : null;
+  }
+
   //Filter display based on navbar color choices
   handleStateChange (color) {
     var filteredColorFamilies = [];
@@ -67,42 +79,42 @@ class App extends React.Component {
       currentFilter: color,
     });
 
-    // var filteredColorFamilies = this.state.allFamilies.filter(function(colorFamily) {
-    //   for(var i=1; i<=5; i++){
-    //     var color = 'color' + i;
-    //     var name = colorFamily[color].name.toLowerCase();
-    //     if(name.indexOf(search) !== -1){
-    //       return true;
-    //     }
-    //   }
-    // })
+    var filteredColorFamilies = this.state.allFamilies.filter(function(colorFamily) {
+      for(var i=1; i<=5; i++){
+        var color = 'color' + i;
+        var name = colorFamily[color].name.toLowerCase();
+        if(name.indexOf(color) !== -1){
+          return true;
+        }
+      }
+    })
 
-    // this.state.allFamilies.forEach(function (obj) {
-    //   var include = false;
-    //   for (var key in obj) {
-    //     if (key.slice(0,5) === 'color') {
-    //       var colorRgb = this.hexToRGB(obj[key].hex, 16);
-    //       if (color === 'red') {
-    //         if (colorRgb.red > (1.7 * colorRgb.blue) && colorRgb.red > (1.7 * colorRgb.green))
-    //           include = true;
-    //       }
-    //       if (color === 'blue') {
-    //         if (colorRgb.blue > (1.7 * colorRgb.red) && colorRgb.blue > (1.7 * colorRgb.green))
-    //           include = true;
-    //       }
-    //       if (color === 'green') {
-    //         if (colorRgb.green > (1.7 * colorRgb.blue) && colorRgb.green > (1.7 * colorRgb.red))
-    //           include = true;
-    //       }
-    //       if (color === 'all') {
-    //         include = true;
-    //       }
-    //     }
-    //   }
-    //   if (include === true) {
-    //     filteredColorFamilies.push(obj)
-    //   }
-    // }.bind(this))
+    this.state.allFamilies.forEach(function (obj) {
+      var include = false;
+      for (var key in obj) {
+        if (key.slice(0,5) === 'color') {
+          var colorRgb = this.hexToRGB(obj[key].hex, 16);
+          if (color === 'red') {
+            if (colorRgb.red > (1.7 * colorRgb.blue) && colorRgb.red > (1.7 * colorRgb.green))
+              include = true;
+          }
+          if (color === 'blue') {
+            if (colorRgb.blue > (1.7 * colorRgb.red) && colorRgb.blue > (1.7 * colorRgb.green))
+              include = true;
+          }
+          if (color === 'green') {
+            if (colorRgb.green > (1.7 * colorRgb.blue) && colorRgb.green > (1.7 * colorRgb.red))
+              include = true;
+          }
+          if (color === 'all') {
+            include = true;
+          }
+        }
+      }
+      if (include === true) {
+        filteredColorFamilies.push(obj)
+      }
+    }.bind(this))
     this.setState({
       colorFamilies: filteredColorFamilies
     });
@@ -120,6 +132,18 @@ class App extends React.Component {
     this.setState({
       currentFamily: familyData
     });
+  }
+
+  unlock(){
+    this.setState({
+      hiddenUnlocked: true
+    })
+  }
+
+  playMatchGame(){
+    this.setState({
+      matchGame: true
+    })
   }
 
 
@@ -359,8 +383,8 @@ class App extends React.Component {
       var searchedHsl = tinycolor(search).toHsl().h;
       if(tinycolor(search).toHex() === '000000' && search.toLowerCase() !== 'black'){
         var filteredFamilies = this.state.allFamilies.filter(function(colorFamily) {
-          if(colorFamily.name.toLowerCase().indexOf(search) !== -1){
-              return true;
+          if (colorFamily.name.toLowerCase().indexOf(search) !== -1){
+            return true;
           }
           for(var i=1; i<=5; i++){
             var color = 'color' + i;
@@ -415,6 +439,19 @@ class App extends React.Component {
   }
 
   render() {
+    var that = this
+    var whichgame = function(){
+      if(that.state.matchGame) {
+        return <MatchGame/>
+      } else if (that.state.hiddenUnlocked) {
+        return <MiniGame currentFamily={that.state.currentFamily} matchGame={that.playMatchGame.bind(that)}/>
+      } else {
+        return <ColorNameMatchGame unlock={that.unlock.bind(that)}/>
+      }
+    }
+
+    var game = whichgame()
+
     if(this.state.playGame){
       return (
         <div className="app-body">
@@ -422,7 +459,7 @@ class App extends React.Component {
           <br/>
           <br/>
           <br/>
-          <MiniGame currentFamily={this.state.currentFamily}/>
+          <div>{game}</div>
         </div>
       )
     } else {
