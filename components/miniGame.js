@@ -63,6 +63,7 @@ class MiniGame extends React.Component {
         size: 2,
         gap: .10
       })
+      this.props.matchGame();
     } else {
       this.setState({
         size: ++this.state.size,
