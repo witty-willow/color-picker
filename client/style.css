@@ -30,7 +30,7 @@ body {
 }
 
 .create-family-show {
-  margin-top: 70px;
+/*  margin-top: 70px;*/
   display: block;
   margin-left: 50px;
   margin-right: 50px;
@@ -38,8 +38,8 @@ body {
 }
 
 .create-family-hidden {
-  margin-top: -600px;
-  margin-bottom:100px;
+  margin-top: -500px;
+/*  margin-bottom:100px;*/
   display: block;
   margin-left: 50px;
   margin-right: 50px;
