@@ -2,25 +2,20 @@
 
 Forked from [Witty-Willow](https://github.com/witty-willow/color-picker). 
 
+## Table of Contents
+
+1. [Team](#team)
+1. [Requirements](#requirements)
+1. [Development](#development)
+    1. [Installing Dependencies](#installing-dependencies)
+1. [Roadmap](#roadmap)
+1. [Contributing](#contributing)
+
 ## Team
 
   - __Product Owner__: [Lisa Nam](https://github.com/lisanam)
   - __Scrum Master__: [Don Nguyen](https://github.com/nguyendkim)
   - __Development Team Members__: [Don Nguyen](https://github.com/nguyendkim), [Lisa Nam](https://github.com/lisanam), [Emmeline Lan](https://github.com/bloodymushroom), [Haris Muhammad](https://github.com/harismh)
-
-## Table of Contents
-
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Team](#team)
-1. [Contributing](#contributing)
-
-## Usage
-
-> Some usage instructions
 
 ## Requirements
 
@@ -51,7 +46,7 @@ npm install
 bower install
 ```
 
-### Roadmap
+## Roadmap
 
 View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
 
