@@ -1,12 +1,12 @@
 Colorz.io
 
-Many app developers lack the artistic savvy to create an aesthetically pleasing UI for their app clients. Our goal is to simplify the process of UI creation by helping developers pick the color scheme for their projects. Informed by some of the leading research in color theory, we aggregate and serve color schemes that suit developers needs.
+Forked from [Witty-Willow](https://github.com/witty-willow/color-picker). 
 
 ## Team
 
-  - __Product Owner__: Ethan Harry
-  - __Scrum Master__: Graham Perich
-  - __Development Team Members__: Ethan Harry, Graham Perich, Vinh Vu, Steve Graves
+  - __Product Owner__: [Lisa Nam](https://github.com/lisanam)
+  - __Scrum Master__: [Don Nguyen](https://github.com/nguyendkim)
+  - __Development Team Members__: [Don Nguyen](https://github.com/nguyendkim), [Lisa Nam](https://github.com/lisanam), [Emmeline Lan](https://github.com/bloodymushroom), [Haris Muhammad](https://github.com/harismh)
 
 ## Table of Contents
 
@@ -24,20 +24,29 @@ Many app developers lack the artistic savvy to create an aesthetically pleasing 
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Node
+- NPM
+- MongoDB
+- React Native
 
 ## Development
+
+From original fork, following was implemented:
+
+- Color picker with clickable color wheel
+- Adjustable color schemes with individual color selections
+- Sidebar with color names along with hex values
+- Naming ability for all saved schemes
+- Edit, delete, and preview functionality for all saved color schemes
+- Chrome extension for previews on any website
+- Phone companion app with photo analyzer
 
 ### Installing Dependencies
 
 From within the root directory:
 
-```sh
-sudo npm install -g bower
+```
+npm install -g bower
 npm install
 bower install
 ```
