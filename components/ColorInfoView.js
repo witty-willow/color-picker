@@ -21,8 +21,22 @@ class ColorInfoView extends React.Component {
       b: parseInt(result[3], 16)
     } : null;
   }
+  
+  componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+
+  // rgbToHex(rgb) {
+  //   var arr = rgb.split(',');
+  //   var r = arr[0].trim();
+  //   var g = arr[1].trim();
+  //   var b = arr[2].trim();
+  //   var rgb = b | (g << 8) | (r << 16);
+  //   return '#' + (0x1000000 + rgb).toString(16).slice(1)
+  // }
+
   onCopyHandler(copyVal) {
-    console.log(copyVal)
     var type = '';
     if (copyVal[0] === '#') {
       type = 'hex';
@@ -34,6 +48,9 @@ class ColorInfoView extends React.Component {
       toolTipText: copyVal,
       type: type
     });
+
+    this.props.copyCount()
+
     setTimeout(function() {
       this.setState({
         copied: false
@@ -77,20 +94,20 @@ class ColorInfoView extends React.Component {
     } else {
       styles.toolTip.opacity = 0;
     }
+
+    // added modal + template
     return (
       <Row style={styles.row}>
         <Col xs={3}>
           <Tooltip style={styles.toolTip} placement="top" className="in" id="tooltip">{this.state.toolTipText} Copied!</Tooltip>
           <div style={styles.preview}></div>
         </Col>
+        <Col xs={6}>
+          <span>{this.props.color.name}</span>
+        </Col>
         <Col xs={3}>
           <CopyToClipboard onCopy={this.onCopyHandler.bind(this)} text={this.props.color.hex}>
             <span>{this.props.color.hex}</span>
-          </CopyToClipboard>
-        </Col>
-        <Col xs={6}>
-          <CopyToClipboard onCopy={this.onCopyHandler.bind(this)} text={this.props.color.rgb}>
-            <span>{this.props.color.rgb}</span>
           </CopyToClipboard>
         </Col>
       </Row>

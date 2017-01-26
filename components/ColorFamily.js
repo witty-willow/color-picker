@@ -20,9 +20,12 @@ class ColorFamily extends React.Component {
 
   getFamilyColors() {
     var result = [];
-    for (var color in this.props.colorFamily) {
-      if (color.match(/^color./)) {
-        result.push(this.props.colorFamily[color]);
+    for (var key in this.props.colorFamily) {
+      var color = this.props.colorFamily[key];
+      if (color.hex) {
+        if (color.hex.match(/^#....../)) {
+          result.push({name: color.name, hex: color.hex, rgb: color.rgb});
+        }
       }
     }
     return result;
@@ -36,19 +39,27 @@ class ColorFamily extends React.Component {
   render() {
     var styles = {
       rowStyle: {
-        padding: "10px",
-        height: 'px'
       }
     }
-    return (
-      <Row style={styles.rowStyle} onClick={this.onClickHandler} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} >
-        {this.getFamilyColors().map(function(color, index) {
-          return <ColorFamilySingle hover={this.state.hover} color={color} key={index} index={index}/>
-        }.bind(this))}
-      </Row>
-    )
+    if (this.props.inCreate) {
+      return (
+        <Row style={styles.rowStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
+          {this.getFamilyColors().map(function(color, index) {
+            return this.props.isActiveView ? <span onClick={() => this.props.handleActiveColor(index + 1)} key={index}><ColorFamilySingle hover={this.state.hover} color={color.hex} key={index} index={index}/></span>
+              : <span onClick={() => this.props.handleActiveColorChange(color)} key={index}><ColorFamilySingle hover={this.state.hover} color={color.hex} key={index} index={index}/></span>
+          }.bind(this))}
+        </Row>
+      )
+    } else {
+      return (
+        <Row style={styles.rowStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} onClick={this.onClickHandler}>
+          {this.getFamilyColors().map(function(color, index) {
+            return <ColorFamilySingle hover={this.state.hover} color={color.hex} key={index} index={index}/>
+          }.bind(this))}
+        </Row>
+      )
+    }
   }
-
 }
 
 module.exports = ColorFamily;

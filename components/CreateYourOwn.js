@@ -1,6 +1,7 @@
 import React from 'react';
-import ColorInfoView from './ColorInfoView';
-import {Row, Col, Grid} from 'react-bootstrap';
+import {Row, Col, Grid, Button, FormControl, FormGroup} from 'react-bootstrap';
+import ColorFamily from './ColorFamily.js';
+import { ChromePicker } from 'react-color';
 import $ from 'jquery';
 
 class CreateYourOwn extends React.Component {
@@ -8,88 +9,157 @@ class CreateYourOwn extends React.Component {
     super(props);
 
     this.state = {
-      color1: '',
-      color2: '',
-      color3: '',
-      color4: '',
-      color5: '',
+      activeColor: '#FF0001',
+      activeElement: 1,
+      analogic: {
+        color1: {name: 'White', hex: '#FFFFFF'},
+        color2: {name: 'White', hex: '#FFFFFF'},
+        color3: {name: 'White', hex: '#FFFFFF'},
+        color4: {name: 'White', hex: '#FFFFFF'},
+        color5: {name: 'White', hex: '#FFFFFF'},
+      },
+      'analogic-complement': {
+        color1: {name: 'White', hex: '#FFFFFF'},
+        color2: {name: 'White', hex: '#FFFFFF'},
+        color3: {name: 'White', hex: '#FFFFFF'},
+        color4: {name: 'White', hex: '#FFFFFF'},
+        color5: {name: 'White', hex: '#FFFFFF'},
+      },
+      monochrome: {
+        color1: {name: 'White', hex: '#FFFFFF'},
+        color2: {name: 'White', hex: '#FFFFFF'},
+        color3: {name: 'White', hex: '#FFFFFF'},
+        color4: {name: 'White', hex: '#FFFFFF'},
+        color5: {name: 'White', hex: '#FFFFFF'},
+      }    
     };
 
-    this.handleChange=this.handleChange.bind(this);
-    this.handleSubmit=this.handleSubmit.bind(this);
+    this.handlePickerChange = this.handlePickerChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleColorAPI = this.handleColorAPI.bind(this);
+    this.handleActiveColor = this.handleActiveColor.bind(this);
+    this.fetchColors = this.fetchColors.bind(this);
+    this.handleActiveColorChange = this.handleActiveColorChange.bind(this);
+  }
+  
+  handlePickerChange(color) {
+    var palette = this.props.palette;
+    palette['color' + this.state.activeElement].hex = color.hex;
+    palette['color' + this.state.activeElement].rgb = color.rgb;
+
+    this.setState({
+      activeColor: color.hex
+    });
+
+    this.props.handlePaletteChange(palette);
+
   }
 
-  
-  handleChange(key) {
-    return function (e) {
-      var state = {};
-      state[key] = e.target.value;
-      this.setState(state);
-    }.bind(this)
+  handleActiveColor(number) {
+    this.setState({
+      activeElement: number,
+      activeColor: this.props.palette['color' + number].hex
+    });
   }
+
+  handleActiveColorChange(color) {
+    var palette = this.props.palette;
+
+    palette['color' + this.state.activeElement].name = color.name;
+    palette['color' + this.state.activeElement].hex = color.hex;
+    palette['color' + this.state.activeElement].rgb = color.rgb;
+    
+    this.setState({
+      activeColor: color.hex
+    });
+
+    this.props.handlePaletteChange(palette);
+
+  }
+
+  // handleFormChange(key) {
+  //   return function (e) {
+  //     var state = {};
+  //     state[key] = e.target.value;
+  //     this.setState(state);
+  //   }.bind(this);
+  // }
 
   handleSubmit(event) {
+    if (this.props.familyName === '') {
+      console.log('name cannot be empty');
+    } else {
+      $.ajax({
+        method: 'POST',
+        url: 'api/colors',
+        data: {name: this.props.familyName, palette: this.props.palette},
+        dataType: 'JSON',
+        success: function (resp) {
+          console.log('success', resp);
+          this.props.fetchColors();
+        }.bind(this),
+        error: function (error) {
+          console.log('error', error);
+        }
+      })
+    }
+  }
 
-    console.log(event)
-
+  handleColorAPI(mode) {
     $.ajax({
-      method: 'POST',
-      url: 'api/colors',
-      data: this.state,
-      dataType: 'JSON',
-      success: function (resp) {
-        console.log('success', resp);
-      },
-      error: function (error) {
-        console.log('error', error);
-      }
-    })
+      method: 'GET',
+      url: 'http://thecolorapi.com/scheme?hex=' + this.state.activeColor.slice(1) + '&mode=' + mode,
+      dataType: 'jsonp',
+      headers: {'Access-Control-Allow-Headers': '*', 'Content-Type':'application/json'},
+      success: function(res) {
+        console.log('Color API GET successful!');
+        this.setState({
+          [mode]: {
+            color1: {name: res.colors[0].name.value, hex: res.colors[0].hex.value},
+            color2: {name: res.colors[1].name.value, hex: res.colors[1].hex.value},
+            color3: {name: res.colors[2].name.value, hex: res.colors[2].hex.value},
+            color4: {name: res.colors[3].name.value, hex: res.colors[3].hex.value},
+            color5: {name: res.colors[4].name.value, hex: res.colors[4].hex.value}
+          }
+        });
+      }.bind(this)
+    });
+  }
+
+  fetchColors() {
+    this.handleColorAPI('monochrome');
+    this.handleColorAPI('analogic');
+    this.handleColorAPI('analogic-complement');
   }
 
   render() {
     return (
-      <form className="content-wrap" onSubmit={this.handleSubmit}>
-        <h5>Create your own!</h5>
-        <br/>
-
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon1">Color 1 </span>
-          <input type="text" className="form-control" placeholder="Hex code" aria-describedby="basic-addon1" value={this.state.color1} onChange={this.handleChange('color1')}></input>
-        </div>
-
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon2">Color 2 </span>
-          <input type="text" className="form-control" placeholder="Hex code" aria-describedby="basic-addon2" value={this.state.color2} onChange={this.handleChange('color2')}></input>
-        </div>
-
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon3">Color 3 </span>
-          <input type="text" className="form-control" placeholder="Hex code" aria-describedby="basic-addon3" value={this.state.color3} onChange={this.handleChange('color3')}></input>
-        </div>
-
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon4">Color 4 </span>
-          <input type="text" className="form-control" placeholder="Hex code" aria-describedby="basic-addon4" value={this.state.color4} onChange={this.handleChange('color4')}></input>
-        </div>
-
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon5">Color 5 </span>
-          <input type="text" className="form-control" placeholder="Hex code" aria-describedby="basic-addon5" value={this.state.color5} onChange={this.handleChange('color5')}></input>
-        </div>
-
-        <div className="input-group">
-          <span className="input-group-btn">
-            <button className="btn btn-default" type="submit">Submit</button>
-          </span>
-        </div>
-
-      </form>
+      <Grid>
+        <Row>
+          <Col xs={12} md={12}>
+            <FormGroup bsSize="large">
+              <FormControl name="title" placeholder="Enter name..." value={this.props.familyName} onChange={this.props.handleFormChange('familyName')}/>
+            </FormGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={3}> 
+            <ChromePicker color={this.state.activeColor} onChangeComplete={this.handlePickerChange.bind(this)}/> <br/>
+            <Button onClick={this.fetchColors.bind(this)} bsSize="large" block>Suggest Colors</Button> <br/>
+            <Button onClick={this.handleSubmit.bind(this)} bsSize="large" bsStyle="success" block>Save Palette</Button> 
+          </Col>
+          <Col xs={12} md={9}>
+            <ColorFamily inCreate={true} isActiveView={true} handleActiveColor={this.handleActiveColor} colorFamily={this.props.palette}/> <br/>
+            <Row>
+              <Col xs={12} md={12}><ColorFamily inCreate={true} isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state.monochrome}/></Col>
+              <Col xs={12} md={12}><ColorFamily inCreate={true} isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state.analogic}/></Col>
+              <Col xs={12} md={12}><ColorFamily inCreate={true} isActiveView={false} handleActiveColorChange={this.handleActiveColorChange} colorFamily={this.state['analogic-complement']}/></Col>
+            </Row>
+          </Col> 
+        </Row> <br/> 
+      </Grid>
     )
   }
 }
 
 module.exports = CreateYourOwn;
-
-        {/*{this.convertHexToRGB().map(function(color, index) {
-          return <ColorInfoView color={color} key={index} index={index}/>
-        })}*/}

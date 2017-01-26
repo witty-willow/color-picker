@@ -1,6 +1,8 @@
 import React from 'react';
 import ColorInfoView from './ColorInfoView';
-import {Panel, Button, Row, Col, Grid} from 'react-bootstrap';
+import {Panel, Button, Row, Col, Grid, Modal} from 'react-bootstrap';
+import Templates from './Templates';
+import $ from 'jquery';
 
 
 var hexToRGB = function(hex) {
@@ -15,111 +17,155 @@ var hexToRGB = function(hex) {
 class ColorFamilyInfoView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { 
+      show: false
+    }
+      this.showModal = this.showModal.bind(this);
+      this.hideModal = this.hideModal.bind(this);
+      this.sendToExt = this.sendToExt.bind(this);
+
+      this.deletePalette = this.deletePalette.bind(this);
+      this.editPalette = this.editPalette.bind(this);
   }
+
+  
+  showModal() {
+    this.setState({show: true});
+  }
+
+  
+  hideModal() {
+    this.setState({show: false});
+  }
+
 
   convertHexToRGB() {
     var objArr = [];
-    for (var key in this.props.currentFamily) {
-      if(key.match(/^color./)) {
+    var family = this.props.currentFamily;
+    for (var key in family) {
+      if (family[key].hex) {
         var newObj = {};
-        var rgbObj = hexToRGB(this.props.currentFamily[key]);
-        var rgb = 'rgb(' + rgbObj.r + ', ' + rgbObj.g + ', ' + rgbObj.b + ')';
-        var newObj = {hex: this.props.currentFamily[key], rgb: rgb};
+        var newObj = {name: family[key].name, hex: family[key].hex};
         objArr.push(newObj);
       }
     }
     return objArr;
   }
 
-  render() {
-    console.log(this.props.currentFamily);
-
-    var styles = {
-      borderColor1: {
-        margin: '1px',
-        borderWidth: '2px',
-        borderColor: this.props.currentFamily.color1
-      },   
-      bgColor1: {
-        margin: '1px',
-        backgroundColor: this.props.currentFamily.color1
+  copyCount() {
+    console.log(JSON.stringify(this.props.currentFamily))
+    $.ajax({
+      method: 'POST',
+      url: '/api/copycount',
+      data: {familyId: this.props.currentFamily._id},
+      dataType: 'JSON',
+      success: function (resp) {
+        console.log('success', resp);
       },
-
-      borderColor2: {
-        margin: '1px',
-        borderWidth: '2px',
-        borderColor: this.props.currentFamily.color2
-      },       
-      bgColor2: {
-        margin: '1px',
-        backgroundColor: this.props.currentFamily.color2
-      },
-
-      borderColor3: {
-        margin: '1px',
-        borderWidth: '2px',
-        borderColor: this.props.currentFamily.color3
-      },   
-      bgColor3: {
-        margin: '1px',
-        backgroundColor: this.props.currentFamily.color3
-      },
-
-      borderColor4: {
-        margin: '1px',
-        borderWidth: '2px',
-        borderColor: this.props.currentFamily.color4
-      },   
-      bgColor4: {
-        margin: '1px',
-        backgroundColor: this.props.currentFamily.color4
-      },
-
-      borderColor5: {
-        margin: '1px',
-        borderWidth: '2px',
-        borderColor: this.props.currentFamily.color5
-      },   
-      bgColor5: {
-        margin: '1px',
-        backgroundColor: this.props.currentFamily.color5
+      error: function (error) {
+        console.log('error', error);
       }
+    })
+  }
+
+  sendToExt() {
+    var that = this;
+    // sent this.props.currentFamily
+    $.ajax({
+      method: 'POST',
+      url: 'api/ext',
+      data: {currentFamily: that.props.currentFamily},
+      dataType: 'JSON',
+      success: function (resp) {
+        console.log('success', resp);
+      }.bind(this),
+      error: function (error) {
+        console.log('error', error);
+      }
+    })
+  }
+
+  deletePalette() {
+    $.ajax({
+      method: 'DELETE',
+      url: 'api/colors',
+      data: {name: this.props.currentFamily.name},
+      success: function(resp) {
+        console.log('success', resp);
+        this.props.toggleSidebarOff();
+        this.props.fetchColors();
+      }.bind(this),
+      error: function(error) {
+        console.log('error', error);
+      }
+    })
+  }
+
+  editPalette() {
+    this.props.handlePaletteEdit(this.props.currentFamily, this.props.currentFamily.name);
+    this.props.toggleSidebarOff();
+    this.props.toggleSubmitForm();
+  }
+
+  render() {
+    var styles = {
+      toolTip: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        position: 'absolute',
+        opacity: 0,
+        top: '-1px',
+        transition: 'opacity 0.2s ease-in-out',
+        zIndex: '1000',
+      },
     }
-
+    var that = this;
     return (
-      <div className="sidebar-content">
-        <h5>Click a Code to Copy!</h5>
-        <Button onClick={this.props.toggleSidebarOff}>Hide Sidebar</Button>
-        <div className="color-family-info">
-          {this.convertHexToRGB().map(function(color, index) {
-            return <ColorInfoView color={color} key={index} index={index}/>
-          })}
-          
-           <h5> Example UI Elements</h5>
+      <Row>
+        <Col md={12}>
+          <div className="sidebar-content">
+            <h3>{this.props.currentFamily.name}</h3>
+            <h5>Click a Code to Copy!</h5>
+            <div className="color-family-info">
+              {Object.keys(this.props.currentFamily).map((color, index) => {
+                if (this.props.currentFamily[color].hex) {
+                  return <ColorInfoView color={this.props.currentFamily[color]} key={index} index={index} copyCount={that.copyCount.bind(that)}/>
+                }
+              })}
+            </div>
 
-          <Panel style={styles.bgColor5}>
-          Panel
-          </Panel>
-            <Button style={styles.bgColor1}> Color 1 </Button>
-            <Button style={styles.bgColor2}> Color 2 </Button>
-            <Button style={styles.bgColor3}> Color 3 </Button>
-            <Button style={styles.bgColor4}> Color 4 </Button>   
-            <Button style={styles.bgColor5}> Color 5 </Button> <br/><br/> 
+            <div>
+              <Button block bsStyle="primary" onClick={this.showModal}> Preview Palette </Button> <br></br>
+              <Button block bsStyle="danger" onClick={this.deletePalette}> Delete Palette </Button> <br></br>
+              <Button block bsStyle="warning" onClick={this.editPalette}> Edit Palette </Button> <br></br>
+              <Button block bsStyle="success" onClick={this.sendToExt}>Send to Extension </Button> <br></br>              
+              <Button block bsStyle="default" onClick={this.props.toggleSidebarOff}> Hide Sidebar </Button> <br></br>
+            </div>
+            
+            <Modal
+              {...this.props}
+              show={this.state.show}
+              onHide={this.hideModal}
+              dialogClassName="custom-modal"
+              class='modal'
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-lg">Modal Heading</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Templates colors={this.props.currentFamily}/>
+              </Modal.Body>
+            </Modal>
 
-          <Panel style={styles.borderColor5}>
-          Panel
-          </Panel>
-            <Button style={styles.borderColor1}> Color 1 </Button>
-            <Button style={styles.borderColor2}> Color 2 </Button>
-            <Button style={styles.borderColor3}> Color 3 </Button>
-            <Button style={styles.borderColor4}> Color 4 </Button>   
-            <Button style={styles.borderColor5}> Color 5 </Button>
-
-        </div>
-
-      </div>
+          </div>
+        </Col>
+      </Row>
     )
   }
 }
+
+
+
+
 
 module.exports = ColorFamilyInfoView;
